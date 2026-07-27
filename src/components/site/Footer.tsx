@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Instagram, Mail, MapPin, Phone } from "lucide-react";
+import { Logo } from "@/components/site/Logo";
 import { STUDIO, whatsappLink } from "@/data/site";
 
 export function Footer() {
@@ -7,12 +8,7 @@ export function Footer() {
     <footer className="border-t border-border bg-secondary/60">
       <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:grid-cols-[1.4fr_1fr_1fr] md:px-8 md:py-20">
         <div>
-          <p className="font-display text-2xl">
-            Kloche
-            <span className="ml-1.5 align-middle text-[0.6rem] uppercase tracking-[0.35em] opacity-70">
-              Interiors
-            </span>
-          </p>
+          <Logo className="text-2xl" markClassName="h-9 w-9" />
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
             A Nairobi interior design studio making warm, considered homes and workplaces
             across Kenya.

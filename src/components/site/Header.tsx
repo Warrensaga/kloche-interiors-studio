@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Logo } from "@/components/site/Logo";
 import { cn } from "@/lib/utils";
 import { STUDIO } from "@/data/site";
 
@@ -47,14 +48,11 @@ export function Header({ transparent = false }: { transparent?: boolean }) {
           to="/"
           onClick={() => setOpen(false)}
           className={cn(
-            "font-display text-xl leading-none tracking-tight transition-colors md:text-2xl",
+            "text-xl leading-none tracking-tight transition-colors md:text-2xl",
             solid ? "text-foreground" : "text-primary-foreground",
           )}
         >
-          Kloche
-          <span className="ml-1.5 align-middle text-[0.6rem] uppercase tracking-[0.35em] opacity-70">
-            Interiors
-          </span>
+          <Logo markClassName="h-7 w-7 md:h-8 md:w-8" />
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">
