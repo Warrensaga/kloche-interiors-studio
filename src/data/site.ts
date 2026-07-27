@@ -1,9 +1,9 @@
 export const STUDIO = {
   name: "Kloche Interiors",
   tagline: "Interiors that feel like home",
-  phoneDisplay: "+254 712 480 335",
-  whatsapp: "254712480335",
-  email: "hello@klocheinteriors.co.ke",
+  phoneDisplay: "+254 717 634 003",
+  whatsapp: "254717634003",
+  email: "klocheinteriors@gmail.com",
   address: "Karuna Road, Nairobi, Kenya",
   hours: [
     { day: "Monday – Friday", time: "9:00 – 18:00" },

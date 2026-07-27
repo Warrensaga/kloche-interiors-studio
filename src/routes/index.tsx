@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef, useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
-import { IMAGES, PROJECTS, SERVICES, TESTIMONIALS, whatsappLink } from "@/data/site";
+import { IMAGES, PROJECTS, SERVICES, STUDIO, TESTIMONIALS, whatsappLink } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, SectionHeading } from "@/components/site/Sections";
 import { absoluteUrl } from "@/lib/seo";
@@ -36,8 +36,8 @@ export const Route = createFileRoute("/")({
         rel: "preload",
         as: "image",
         href: imageAt(IMAGES.hero, 1920),
-        imagesrcset: srcSet(IMAGES.hero),
-        imagesizes: "100vw",
+        imageSrcSet: srcSet(IMAGES.hero),
+        imageSizes: "100vw",
         fetchPriority: "high",
       },
     ],
@@ -50,20 +50,16 @@ export const Route = createFileRoute("/")({
           name: "Kloche Interiors",
           url: absoluteUrl("/"),
           image: IMAGES.hero,
-          telephone: "+254717634003",
-          email: "klocheinteriors@gmail.com",
+          telephone: STUDIO.phoneDisplay,
+          email: STUDIO.email,
           address: {
             "@type": "PostalAddress",
-            streetAddress: "Karuna Rd",
-            addressLocality: "Westlands, Nairobi",
+            streetAddress: "Karuna Road",
+            addressLocality: "Nairobi",
             addressCountry: "KE",
           },
-          openingHours: "Mo-Sa 08:00-17:00",
-          aggregateRating: {
-            "@type": "AggregateRating",
-            ratingValue: "4.8",
-            reviewCount: "10",
-          },
+          openingHours: ["Mo-Fr 09:00-18:00", "Sa 10:00-15:00"],
+          sameAs: [STUDIO.instagram],
           priceRange: "$$$",
         }),
       },
