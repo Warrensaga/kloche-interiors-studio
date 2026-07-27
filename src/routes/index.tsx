@@ -5,6 +5,7 @@ import { ArrowRight, ChevronLeft, ChevronRight, MessageCircle } from "lucide-rea
 import { IMAGES, PROJECTS, SERVICES, TESTIMONIALS, whatsappLink } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, SectionHeading } from "@/components/site/Sections";
+import { InstagramFeed } from "@/components/site/InstagramFeed";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -195,6 +196,7 @@ function Home() {
         </div>
       </section>
 
+      <InstagramFeed />
       <Testimonials />
       <CtaBanner />
     </>
