@@ -6,6 +6,7 @@ import { Reveal } from "@/components/site/Reveal";
 import { PageHero, CtaBanner, SectionHeading } from "@/components/site/Sections";
 import { BeforeAfter } from "@/components/site/BeforeAfter";
 import { absoluteUrl } from "@/lib/seo";
+import { SIZES, SmartImage } from "@/components/site/SmartImage";
 
 const HERO = PROJECTS[1].cover;
 
@@ -78,10 +79,13 @@ function Portfolio() {
                   className="group block overflow-hidden rounded-3xl bg-card shadow-soft hover-lift"
                 >
                   <div className="aspect-4/3 overflow-hidden">
-                    <img
+                    <SmartImage
                       src={p.cover}
                       alt={`${p.name}, ${p.location}`}
-                      loading="lazy"
+                      baseWidth={800}
+                      sizes={SIZES.third}
+                      ratio="4 / 3"
+                      priority={i < 3}
                       className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>

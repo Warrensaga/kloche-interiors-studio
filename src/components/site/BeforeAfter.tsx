@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from "react";
+import { SIZES, SmartImage } from "./SmartImage";
 
 export function BeforeAfter({
   before,
@@ -34,11 +35,19 @@ export function BeforeAfter({
       onPointerUp={() => (dragging.current = false)}
       onPointerCancel={() => (dragging.current = false)}
     >
-      <img src={after} alt="After renovation" className="absolute inset-0 h-full w-full object-cover" />
+      <SmartImage
+        src={after}
+        alt="After renovation"
+        baseWidth={1400}
+        sizes={SIZES.content}
+        className="absolute inset-0 h-full w-full object-cover"
+      />
       <div className="absolute inset-0 overflow-hidden" style={{ width: `${pos}%` }}>
-        <img
+        <SmartImage
           src={before}
           alt="Before renovation"
+          baseWidth={1400}
+          sizes={SIZES.content}
           className="absolute inset-0 h-full w-full object-cover"
           style={{ width: ref.current?.offsetWidth ?? "100%", maxWidth: "none" }}
         />

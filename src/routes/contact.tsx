@@ -7,6 +7,7 @@ import { IMAGES, PROJECTS, SERVICES, STUDIO, whatsappLink } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { PageHero } from "@/components/site/Sections";
 import { absoluteUrl } from "@/lib/seo";
+import { SIZES, SmartImage } from "@/components/site/SmartImage";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -294,11 +295,13 @@ function Contact() {
           </div>
           <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
             {PROJECTS.slice(0, 4).map((p) => (
-              <img
+              <SmartImage
                 key={p.id}
                 src={p.cover}
                 alt={`Instagram post featuring ${p.name}`}
-                loading="lazy"
+                baseWidth={600}
+                sizes={SIZES.quarter}
+                ratio="1 / 1"
                 className="aspect-square w-full rounded-2xl object-cover shadow-soft"
               />
             ))}

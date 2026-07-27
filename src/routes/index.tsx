@@ -6,6 +6,8 @@ import { IMAGES, PROJECTS, SERVICES, TESTIMONIALS, whatsappLink } from "@/data/s
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, SectionHeading } from "@/components/site/Sections";
 import { absoluteUrl } from "@/lib/seo";
+import { SIZES, SmartImage } from "@/components/site/SmartImage";
+import { imageAt, srcSet } from "@/lib/images";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -30,7 +32,14 @@ export const Route = createFileRoute("/")({
     ],
     links: [
       { rel: "canonical", href: absoluteUrl("/") },
-      { rel: "preload", as: "image", href: IMAGES.hero, fetchPriority: "high" },
+      {
+        rel: "preload",
+        as: "image",
+        href: imageAt(IMAGES.hero, 1920),
+        imagesrcset: srcSet(IMAGES.hero),
+        imagesizes: "100vw",
+        fetchPriority: "high",
+      },
     ],
     scripts: [
       {
@@ -75,7 +84,11 @@ function Home() {
       <section ref={heroRef} className="relative h-[100svh] overflow-hidden">
         <motion.img
           style={{ y }}
-          src={IMAGES.hero}
+          src={imageAt(IMAGES.hero, 1920)}
+          srcSet={srcSet(IMAGES.hero)}
+          sizes={SIZES.full}
+          fetchPriority="high"
+          decoding="sync"
           alt="A softly lit contemporary living room designed by Kloche Interiors"
           className="absolute inset-0 h-[118%] w-full object-cover"
         />
@@ -179,10 +192,12 @@ function Home() {
                   className="group block overflow-hidden rounded-3xl bg-card shadow-soft hover-lift"
                 >
                   <div className="aspect-4/5 overflow-hidden">
-                    <img
+                    <SmartImage
                       src={p.cover}
                       alt={`${p.name} interior in ${p.location}`}
-                      loading="lazy"
+                      baseWidth={640}
+                      sizes={SIZES.quarter}
+                      ratio="4 / 5"
                       className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>

@@ -3,6 +3,7 @@ import { IMAGES, STATS } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, PageHero, SectionHeading } from "@/components/site/Sections";
 import { absoluteUrl } from "@/lib/seo";
+import { SIZES, SmartImage } from "@/components/site/SmartImage";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -71,10 +72,12 @@ function About() {
 
           <Reveal delay={0.12}>
             <figure className="overflow-hidden rounded-3xl shadow-soft lg:sticky lg:top-28">
-              <img
+              <SmartImage
                 src={IMAGES.furniture}
                 alt="Handcrafted walnut furniture and linen textures in a Kloche Interiors room"
-                loading="lazy"
+                baseWidth={900}
+                sizes={SIZES.half}
+                ratio="4 / 5"
                 className="img-zoom aspect-4/5 w-full object-cover"
               />
             </figure>
@@ -113,10 +116,12 @@ function About() {
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[IMAGES.studio1, IMAGES.studio3, IMAGES.studio4, IMAGES.studio2].map((src, i) => (
               <Reveal key={src} delay={i * 0.07}>
-                <img
+                <SmartImage
                   src={src}
                   alt="Behind the scenes at the Kloche Interiors studio"
-                  loading="lazy"
+                  baseWidth={600}
+                  sizes={SIZES.quarter}
+                  ratio="1 / 1"
                   className="aspect-square w-full rounded-3xl object-cover shadow-soft"
                 />
               </Reveal>
