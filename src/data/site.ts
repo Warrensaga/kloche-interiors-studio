@@ -10,7 +10,7 @@ export const STUDIO = {
     { day: "Saturday", time: "10:00 – 15:00" },
     { day: "Sunday & Public Holidays", time: "By appointment" },
   ],
-  instagram: "https://instagram.com",
+  instagram: "https://www.instagram.com/klocheinteriors_construction?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
 };
 
 export const whatsappLink = (

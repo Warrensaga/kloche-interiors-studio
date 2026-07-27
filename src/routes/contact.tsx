@@ -284,7 +284,7 @@ function Contact() {
               rel="noreferrer"
               className="inline-flex items-center gap-2 text-[0.72rem] uppercase tracking-[0.2em] text-accent"
             >
-              <Instagram size={14} /> @klocheinteriors
+              <Instagram size={14} /> @klocheinteriors_construction
             </a>
           </div>
           <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
