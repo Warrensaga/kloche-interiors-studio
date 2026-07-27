@@ -217,7 +217,7 @@ function Contact() {
               href={whatsappLink()}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-4 rounded-3xl bg-forest p-7 text-cream shadow-soft transition-transform hover:-translate-y-0.5"
+              className="flex items-center gap-4 rounded-3xl bg-forest p-7 text-cream shadow-soft hover-lift"
             >
               <MessageCircle size={26} className="shrink-0" />
               <span>
