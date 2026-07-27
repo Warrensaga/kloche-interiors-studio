@@ -15,7 +15,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { WhatsAppButton } from "@/components/site/WhatsAppButton";
-import { PageTransition } from "@/components/site/Reveal";
+import { PageTransition, ScrollProgress } from "@/components/site/Reveal";
 
 function NotFoundComponent() {
   return (
@@ -139,6 +139,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="flex min-h-screen flex-col">
+        <ScrollProgress />
         <Header transparent={transparent} />
         <main className="flex-1">
           <PageTransition key={pathname}>
