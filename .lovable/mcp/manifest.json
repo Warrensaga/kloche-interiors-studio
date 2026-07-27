@@ -1,0 +1,110 @@
+{
+  "version": 1,
+  "sdk_version": "0.24.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "kloche-interiors-mcp",
+      "version": "0.1.0",
+      "title": "Kloche Interiors"
+    },
+    "tools": [
+      {
+        "name": "list_portfolio_projects",
+        "title": "List portfolio projects",
+        "description": "List Kloche Interiors portfolio projects, optionally filtered by category (Residential, Commercial, Kitchens, Living Spaces).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "category": {
+              "description": "Optional category filter. One of: Residential, Commercial, Kitchens, Living Spaces",
+              "type": "string"
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_portfolio_project",
+        "title": "Get portfolio project",
+        "description": "Get full details for one Kloche Interiors portfolio project by its id, including description, scope, gallery images and timeline.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Project id, e.g. 'karen-villa'."
+            }
+          },
+          "required": [
+            "id"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_services",
+        "title": "List design services",
+        "description": "List the interior design services Kloche Interiors offers, what each includes, and the studio's project process steps.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_pricing",
+        "title": "Get pricing packages",
+        "description": "Get Kloche Interiors pricing tiers, the feature comparison table across tiers, and pricing-related FAQs.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_studio_info",
+        "title": "Get studio contact info",
+        "description": "Get Kloche Interiors studio details: name, tagline, Nairobi address, phone, email, opening hours and WhatsApp booking link.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
