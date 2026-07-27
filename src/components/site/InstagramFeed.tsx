@@ -26,8 +26,9 @@ function InstagramEmbed({ permalink }: InstagramEmbedProps) {
     if (typeof window === "undefined" || !containerRef.current) return;
 
     const process = () => {
-      if ((window as Window & { instgrm?: { Embeds: { process: () => void } } }).instgrm?.Embeds) {
-        window.instgrm.Embeds.process();
+      const ig = (window as Window & { instgrm?: { Embeds: { process: () => void } } }).instgrm;
+      if (ig?.Embeds) {
+        ig.Embeds.process();
       }
     };
 
