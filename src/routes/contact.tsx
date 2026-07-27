@@ -23,7 +23,9 @@ export const Route = createFileRoute("/contact")({
       },
       { property: "og:image", content: IMAGES.studio3 },
       { name: "twitter:image", content: IMAGES.studio3 },
+      { property: "og:url", content: "/contact" },
     ],
+    links: [{ rel: "canonical", href: "/contact" }],
   }),
   component: Contact,
 });
