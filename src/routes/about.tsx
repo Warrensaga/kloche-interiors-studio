@@ -35,29 +35,12 @@ function About() {
       />
 
       <section className="section-y">
-        <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <Reveal className="mb-12 md:mb-16">
-            <img
-              src={IMAGES.studio3}
-              alt="Kloche Interiors studio workspace with material samples and natural light"
-              className="aspect-16/9 w-full rounded-3xl object-cover shadow-soft"
-              loading="lazy"
-            />
-          </Reveal>
-        </div>
-
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 md:grid-cols-[0.85fr_1.15fr] md:gap-16 md:px-8">
+        <div className="mx-auto max-w-3xl px-5 md:px-8">
           <Reveal>
-            <img
-              src={IMAGES.aboutFounder}
-              alt="Keith Locho, founder and principal interior designer"
-              className="aspect-4/5 w-full rounded-3xl object-cover shadow-soft"
-            />
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className="eyebrow">Founder Profile & Story</p>
-            <h2 className="mt-4 text-3xl md:text-4xl">Keith Locho</h2>
-            <div className="mt-6 space-y-5 text-base leading-relaxed text-muted-foreground">
+            <p className="eyebrow">Founder Profile &amp; Story</p>
+            <h2 className="mt-4 text-3xl md:text-5xl">Keith Locho</h2>
+
+            <div className="mt-8 space-y-6 text-base leading-relaxed text-muted-foreground md:text-lg md:leading-[1.85]">
               <p>
                 "I started Kloche Interiors with a simple realization: spaces are not just
                 structures to occupy; they are canvases for the soul," says founder and

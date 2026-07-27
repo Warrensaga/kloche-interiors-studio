@@ -70,7 +70,7 @@ function Portfolio() {
                 <Link
                   to="/portfolio/$projectId"
                   params={{ projectId: p.id }}
-                  className="group block overflow-hidden rounded-3xl bg-card shadow-soft transition-transform duration-500 hover:-translate-y-1"
+                  className="group block overflow-hidden rounded-3xl bg-card shadow-soft hover-lift"
                 >
                   <div className="aspect-4/3 overflow-hidden">
                     <img
