@@ -1,24 +1,256 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { motion, useScroll, useTransform } from "motion/react";
+import { useRef, useState } from "react";
+import { ArrowRight, ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
+import { IMAGES, PROJECTS, SERVICES, TESTIMONIALS, whatsappLink } from "@/data/site";
+import { Reveal } from "@/components/site/Reveal";
+import { CtaBanner, SectionHeading } from "@/components/site/Sections";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "Kloche Interiors — Interior Design Studio in Nairobi" },
+      {
+        name: "description",
+        content:
+          "Warm, considered interiors for homes and workplaces across Nairobi and Kenya. Full home design, space planning, sourcing and renovation consulting.",
+      },
+      { property: "og:title", content: "Kloche Interiors — Interiors that feel like home" },
+      {
+        property: "og:description",
+        content:
+          "A Nairobi interior design studio creating warm, considered homes and workplaces across Kenya.",
+      },
+      { property: "og:image", content: IMAGES.hero },
+      { name: "twitter:image", content: IMAGES.hero },
+    ],
+  }),
+  component: Home,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Home() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      {/* Hero */}
+      <section ref={heroRef} className="relative h-[100svh] overflow-hidden">
+        <motion.img
+          style={{ y }}
+          src={IMAGES.hero}
+          alt="A softly lit contemporary living room designed by Kloche Interiors"
+          className="absolute inset-0 h-[118%] w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-charcoal/60 via-charcoal/35 to-charcoal/80" />
+
+        <motion.div
+          style={{ opacity: fade }}
+          className="relative mx-auto flex h-full max-w-7xl flex-col justify-end px-5 pb-20 md:px-8 md:pb-28"
+        >
+          <Reveal delay={0.1}>
+            <p className="eyebrow text-cream/70">Interior Design Studio · Nairobi, Kenya</p>
+          </Reveal>
+          <Reveal delay={0.2}>
+            <h1 className="mt-5 max-w-4xl text-5xl leading-[1.03] text-cream md:text-7xl lg:text-8xl">
+              Interiors that feel like home
+            </h1>
+          </Reveal>
+          <Reveal delay={0.32}>
+            <p className="mt-6 max-w-lg text-base leading-relaxed text-cream/80">
+              We design warm, unhurried spaces — built from honest materials, Kenyan
+              craftsmanship and the way you actually live.
+            </p>
+          </Reveal>
+          <Reveal delay={0.42}>
+            <div className="mt-10 flex flex-wrap items-center gap-3">
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-4 text-[0.75rem] uppercase tracking-[0.2em] text-accent-foreground transition-opacity hover:opacity-90"
+              >
+                Book a Consultation <ArrowRight size={15} />
+              </Link>
+              <a
+                href={whatsappLink()}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-cream/40 px-7 py-4 text-[0.75rem] uppercase tracking-[0.2em] text-cream transition-colors hover:bg-cream/10"
+              >
+                <MessageCircle size={16} /> WhatsApp us
+              </a>
+            </div>
+          </Reveal>
+        </motion.div>
+      </section>
+
+      {/* Philosophy strip */}
+      <section className="section-y">
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 md:grid-cols-[0.9fr_1.1fr] md:px-8">
+          <Reveal>
+            <p className="eyebrow">The Studio</p>
+            <h2 className="mt-4 text-3xl md:text-4xl">
+              Rooms that hold light, texture and a little quiet.
+            </h2>
+          </Reveal>
+          <Reveal delay={0.1} className="flex flex-col justify-center gap-5">
+            <p className="text-base leading-relaxed text-muted-foreground">
+              Kloche is a Nairobi-based studio working across residential and commercial
+              interiors. We favour lime plaster over paint, solid timber over veneer, and
+              pieces made forty minutes away over pieces shipped from four continents.
+            </p>
+            <p className="text-base leading-relaxed text-muted-foreground">
+              Every project starts the same way: a long conversation about how you want a
+              space to feel at seven in the morning and nine at night.
+            </p>
+            <Link
+              to="/about"
+              className="group inline-flex w-fit items-center gap-2 text-[0.75rem] uppercase tracking-[0.2em] text-accent"
+            >
+              Our story
+              <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Featured projects */}
+      <section className="section-y bg-secondary/50">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <SectionHeading
+              eyebrow="Selected Work"
+              title="Featured projects"
+              body="A few recent spaces, from a Karen family villa to a creative agency in Gigiri."
+            />
+            <Reveal delay={0.1}>
+              <Link
+                to="/portfolio"
+                className="group inline-flex items-center gap-2 text-[0.75rem] uppercase tracking-[0.2em] text-accent"
+              >
+                View full portfolio
+                <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+              </Link>
+            </Reveal>
+          </div>
+
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {PROJECTS.slice(0, 4).map((p, i) => (
+              <Reveal key={p.id} delay={i * 0.08}>
+                <Link
+                  to="/portfolio/$projectId"
+                  params={{ projectId: p.id }}
+                  className="group block overflow-hidden rounded-3xl bg-card shadow-soft transition-transform duration-500 hover:-translate-y-1"
+                >
+                  <div className="aspect-4/5 overflow-hidden">
+                    <img
+                      src={p.cover}
+                      alt={`${p.name} interior in ${p.location}`}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="p-5">
+                    <p className="font-display text-lg">{p.name}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">{p.location}</p>
+                    <span className="mt-4 inline-flex rounded-full bg-secondary px-3 py-1 text-[0.65rem] uppercase tracking-[0.15em] text-muted-foreground">
+                      {p.style}
+                    </span>
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services preview */}
+      <section className="section-y">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <SectionHeading eyebrow="What We Do" title="Services" />
+            <Reveal delay={0.1}>
+              <Link
+                to="/services"
+                className="group inline-flex items-center gap-2 text-[0.75rem] uppercase tracking-[0.2em] text-accent"
+              >
+                See all services
+                <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+              </Link>
+            </Reveal>
+          </div>
+
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {SERVICES.map((s, i) => (
+              <Reveal key={s.id} delay={i * 0.07}>
+                <div className="h-full rounded-3xl border border-border/70 bg-card p-7 shadow-soft transition-shadow hover:shadow-lift">
+                  <span className="font-display text-2xl text-accent">0{i + 1}</span>
+                  <h3 className="mt-4 text-xl">{s.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.short}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <Testimonials />
+      <CtaBanner />
+    </>
+  );
+}
+
+function Testimonials() {
+  const [i, setI] = useState(0);
+  const t = TESTIMONIALS[i];
+  const go = (d: number) => setI((v) => (v + d + TESTIMONIALS.length) % TESTIMONIALS.length);
+
+  return (
+    <section className="section-y bg-secondary/50">
+      <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
+        <Reveal>
+          <p className="eyebrow">Kind Words</p>
+          <motion.blockquote
+            key={i}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mt-8 font-display text-2xl leading-snug md:text-4xl"
+          >
+            “{t.quote}”
+          </motion.blockquote>
+          <p className="mt-8 text-sm">{t.name}</p>
+          <p className="mt-1 text-xs text-muted-foreground">{t.detail}</p>
+
+          <div className="mt-10 flex items-center justify-center gap-3">
+            <button
+              aria-label="Previous testimonial"
+              onClick={() => go(-1)}
+              className="grid h-11 w-11 place-items-center rounded-full border border-border transition-colors hover:bg-accent hover:text-accent-foreground"
+            >
+              <ChevronLeft size={17} />
+            </button>
+            <div className="flex gap-1.5">
+              {TESTIMONIALS.map((_, idx) => (
+                <button
+                  key={idx}
+                  aria-label={`Testimonial ${idx + 1}`}
+                  onClick={() => setI(idx)}
+                  className={`h-1.5 rounded-full transition-all ${idx === i ? "w-6 bg-accent" : "w-1.5 bg-border"}`}
+                />
+              ))}
+            </div>
+            <button
+              aria-label="Next testimonial"
+              onClick={() => go(1)}
+              className="grid h-11 w-11 place-items-center rounded-full border border-border transition-colors hover:bg-accent hover:text-accent-foreground"
+            >
+              <ChevronRight size={17} />
+            </button>
+          </div>
+        </Reveal>
+      </div>
+    </section>
   );
 }
