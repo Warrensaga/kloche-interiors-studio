@@ -3,6 +3,7 @@ import { Armchair, HardHat, Home, Ruler, type LucideIcon } from "lucide-react";
 import { PROCESS, SERVICES } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, PageHero, SectionHeading } from "@/components/site/Sections";
+import { absoluteUrl } from "@/lib/seo";
 
 const ICONS: Record<string, LucideIcon> = { Home, Ruler, Armchair, HardHat };
 const HERO = SERVICES[0].image;
@@ -23,9 +24,11 @@ export const Route = createFileRoute("/services")({
       },
       { property: "og:image", content: HERO },
       { name: "twitter:image", content: HERO },
-      { property: "og:url", content: "/services" },
+      { property: "og:url", content: absoluteUrl("/services") },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/services" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/services") }],
   }),
   component: Services,
 });

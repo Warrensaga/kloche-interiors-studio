@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { IMAGES, PROJECTS, SERVICES, STUDIO, whatsappLink } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { PageHero } from "@/components/site/Sections";
+import { absoluteUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -23,9 +24,11 @@ export const Route = createFileRoute("/contact")({
       },
       { property: "og:image", content: IMAGES.studio3 },
       { name: "twitter:image", content: IMAGES.studio3 },
-      { property: "og:url", content: "/contact" },
+      { property: "og:url", content: absoluteUrl("/contact") },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/contact" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/contact") }],
   }),
   component: Contact,
 });

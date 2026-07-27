@@ -4,6 +4,7 @@ import { PROJECTS, type Project } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner } from "@/components/site/Sections";
 import { BeforeAfter } from "@/components/site/BeforeAfter";
+import { absoluteUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/portfolio/$projectId")({
   loader: ({ params }) => {
@@ -18,18 +19,42 @@ export const Route = createFileRoute("/portfolio/$projectId")({
       };
     }
     const p = loaderData.project;
+    const title = `${p.name} | Interior Design, ${p.location}`;
     return {
       meta: [
-        { title: `${p.name} — Kloche Interiors` },
+        { title },
         { name: "description", content: p.description.slice(0, 155) },
-        { property: "og:title", content: `${p.name} — Kloche Interiors` },
+        { property: "og:title", content: title },
         { property: "og:description", content: p.description.slice(0, 155) },
         { property: "og:image", content: p.cover },
         { name: "twitter:image", content: p.cover },
+        { name: "twitter:card", content: "summary_large_image" },
         { property: "og:type", content: "article" },
-        { property: "og:url", content: `/portfolio/${p.id}` },
+        { property: "og:url", content: absoluteUrl(`/portfolio/${p.id}`) },
       ],
-      links: [{ rel: "canonical", href: `/portfolio/${p.id}` }],
+      links: [
+        { rel: "canonical", href: absoluteUrl(`/portfolio/${p.id}`) },
+        { rel: "preload", as: "image", href: p.cover, fetchPriority: "high" },
+      ],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+              { "@type": "ListItem", position: 2, name: "Portfolio", item: absoluteUrl("/portfolio") },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: p.name,
+                item: absoluteUrl(`/portfolio/${p.id}`),
+              },
+            ],
+          }),
+        },
+      ],
     };
   },
   component: ProjectDetail,

@@ -9,6 +9,7 @@ import {
 import { COMPARISON, FAQS, IMAGES, TIERS } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { PageHero, SectionHeading } from "@/components/site/Sections";
+import { absoluteUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
@@ -26,9 +27,11 @@ export const Route = createFileRoute("/pricing")({
       },
       { property: "og:image", content: IMAGES.studio4 },
       { name: "twitter:image", content: IMAGES.studio4 },
-      { property: "og:url", content: "/pricing" },
+      { property: "og:url", content: absoluteUrl("/pricing") },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/pricing" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/pricing") }],
   }),
   component: Pricing,
 });
