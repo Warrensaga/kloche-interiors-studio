@@ -32,7 +32,14 @@ export const Route = createFileRoute("/")({
     ],
     links: [
       { rel: "canonical", href: absoluteUrl("/") },
-      { rel: "preload", as: "image", href: IMAGES.hero, fetchPriority: "high" },
+      {
+        rel: "preload",
+        as: "image",
+        href: imageAt(IMAGES.hero, 1920),
+        imagesrcset: srcSet(IMAGES.hero),
+        imagesizes: "100vw",
+        fetchPriority: "high",
+      },
     ],
     scripts: [
       {

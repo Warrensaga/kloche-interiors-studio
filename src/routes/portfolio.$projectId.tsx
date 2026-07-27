@@ -6,6 +6,7 @@ import { CtaBanner } from "@/components/site/Sections";
 import { BeforeAfter } from "@/components/site/BeforeAfter";
 import { absoluteUrl } from "@/lib/seo";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
+import { imageAt, srcSet } from "@/lib/images";
 
 export const Route = createFileRoute("/portfolio/$projectId")({
   loader: ({ params }) => {
@@ -35,7 +36,14 @@ export const Route = createFileRoute("/portfolio/$projectId")({
       ],
       links: [
         { rel: "canonical", href: absoluteUrl(`/portfolio/${p.id}`) },
-        { rel: "preload", as: "image", href: p.cover, fetchPriority: "high" },
+        {
+          rel: "preload",
+          as: "image",
+          href: imageAt(p.cover, 1920),
+          imagesrcset: srcSet(p.cover),
+          imagesizes: "100vw",
+          fetchPriority: "high",
+        },
       ],
       scripts: [
         {
