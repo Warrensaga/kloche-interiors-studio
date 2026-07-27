@@ -35,16 +35,7 @@ function About() {
       />
 
       <section className="section-y">
-        <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <Reveal className="mb-12 md:mb-16">
-            <img
-              src={IMAGES.studio3}
-              alt="Kloche Interiors studio workspace with material samples and natural light"
-              className="aspect-16/9 w-full rounded-3xl object-cover shadow-soft"
-              loading="lazy"
-            />
-          </Reveal>
-        </div>
+
 
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 md:grid-cols-[0.85fr_1.15fr] md:gap-16 md:px-8">
           <Reveal>
