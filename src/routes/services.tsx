@@ -4,6 +4,7 @@ import { PROCESS, SERVICES } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, PageHero, SectionHeading } from "@/components/site/Sections";
 import { absoluteUrl } from "@/lib/seo";
+import { SIZES, SmartImage } from "@/components/site/SmartImage";
 
 const ICONS: Record<string, LucideIcon> = { Home, Ruler, Armchair, HardHat };
 const HERO = SERVICES[0].image;
@@ -55,10 +56,13 @@ function Services() {
                 id={s.id}
               >
                 <Reveal className={flip ? "md:order-2" : undefined}>
-                  <img
+                  <SmartImage
                     src={s.image}
                     alt={`${s.title} project by Kloche Interiors`}
-                    loading="lazy"
+                    baseWidth={900}
+                    sizes={SIZES.half}
+                    ratio="4 / 3"
+                    priority={i === 0}
                     className="aspect-4/3 w-full rounded-3xl object-cover shadow-soft"
                   />
                 </Reveal>

@@ -5,6 +5,7 @@ import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner } from "@/components/site/Sections";
 import { BeforeAfter } from "@/components/site/BeforeAfter";
 import { absoluteUrl } from "@/lib/seo";
+import { SIZES, SmartImage } from "@/components/site/SmartImage";
 
 export const Route = createFileRoute("/portfolio/$projectId")({
   loader: ({ params }) => {
@@ -66,7 +67,14 @@ function ProjectDetail() {
   return (
     <>
       <section className="relative flex min-h-[70vh] items-end overflow-hidden">
-        <img src={project.cover} alt={project.name} className="absolute inset-0 h-full w-full object-cover" />
+        <SmartImage
+          src={project.cover}
+          alt={project.name}
+          priority
+          baseWidth={1920}
+          sizes={SIZES.full}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/45 to-charcoal/40" />
         <div className="relative mx-auto w-full max-w-7xl px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-40">
           <Reveal>
@@ -124,10 +132,12 @@ function ProjectDetail() {
               delay={(i % 2) * 0.08}
               className={i % 3 === 0 ? "md:col-span-2" : undefined}
             >
-              <img
+              <SmartImage
                 src={src}
                 alt={`${project.name} — photograph ${i + 1}`}
-                loading="lazy"
+                baseWidth={i % 3 === 0 ? 1400 : 900}
+                sizes={i % 3 === 0 ? SIZES.full : SIZES.half}
+                ratio={i % 3 === 0 ? "16 / 9" : "4 / 3"}
                 className={`w-full rounded-3xl object-cover shadow-soft ${
                   i % 3 === 0 ? "aspect-16/9" : "aspect-4/3"
                 }`}
@@ -165,10 +175,12 @@ function ProjectDetail() {
                     className="group block overflow-hidden rounded-3xl bg-card shadow-soft"
                   >
                     <div className="aspect-4/3 overflow-hidden">
-                      <img
+                      <SmartImage
                         src={p.cover}
                         alt={p.name}
-                        loading="lazy"
+                        baseWidth={700}
+                        sizes={SIZES.third}
+                        ratio="4 / 3"
                         className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                     </div>
