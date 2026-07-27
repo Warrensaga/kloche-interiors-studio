@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { IMAGES, STATS } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, PageHero, SectionHeading } from "@/components/site/Sections";
+import { absoluteUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -19,9 +20,11 @@ export const Route = createFileRoute("/about")({
       },
       { property: "og:image", content: IMAGES.studio1 },
       { name: "twitter:image", content: IMAGES.studio1 },
-      { property: "og:url", content: "/about" },
+      { property: "og:url", content: absoluteUrl("/about") },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/about" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/about") }],
   }),
   component: About,
 });

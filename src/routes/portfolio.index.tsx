@@ -5,6 +5,7 @@ import { CATEGORIES, PROJECTS, type Category } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { PageHero, CtaBanner, SectionHeading } from "@/components/site/Sections";
 import { BeforeAfter } from "@/components/site/BeforeAfter";
+import { absoluteUrl } from "@/lib/seo";
 
 const HERO = PROJECTS[1].cover;
 
@@ -24,9 +25,11 @@ export const Route = createFileRoute("/portfolio/")({
       },
       { property: "og:image", content: HERO },
       { name: "twitter:image", content: HERO },
-      { property: "og:url", content: "/portfolio" },
+      { property: "og:url", content: absoluteUrl("/portfolio") },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/portfolio" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/portfolio") }],
   }),
   component: Portfolio,
 });
