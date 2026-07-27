@@ -141,7 +141,7 @@ function Home() {
                 <Link
                   to="/portfolio/$projectId"
                   params={{ projectId: p.id }}
-                  className="group block overflow-hidden rounded-3xl bg-card shadow-soft transition-transform duration-500 hover:-translate-y-1"
+                  className="group block overflow-hidden rounded-3xl bg-card shadow-soft hover-lift"
                 >
                   <div className="aspect-4/5 overflow-hidden">
                     <img
@@ -184,7 +184,7 @@ function Home() {
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {SERVICES.map((s, i) => (
               <Reveal key={s.id} delay={i * 0.07}>
-                <div className="h-full rounded-3xl border border-border/70 bg-card p-7 shadow-soft transition-shadow hover:shadow-lift">
+                <div className="h-full rounded-3xl border border-border/70 bg-card p-7 shadow-soft hover-lift">
                   <span className="font-display text-2xl text-accent">0{i + 1}</span>
                   <h3 className="mt-4 text-xl">{s.title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.short}</p>
