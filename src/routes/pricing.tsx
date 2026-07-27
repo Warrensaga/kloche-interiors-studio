@@ -26,7 +26,9 @@ export const Route = createFileRoute("/pricing")({
       },
       { property: "og:image", content: IMAGES.studio4 },
       { name: "twitter:image", content: IMAGES.studio4 },
+      { property: "og:url", content: "/pricing" },
     ],
+    links: [{ rel: "canonical", href: "/pricing" }],
   }),
   component: Pricing,
 });

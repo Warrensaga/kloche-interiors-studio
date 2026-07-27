@@ -26,7 +26,10 @@ export const Route = createFileRoute("/portfolio/$projectId")({
         { property: "og:description", content: p.description.slice(0, 155) },
         { property: "og:image", content: p.cover },
         { name: "twitter:image", content: p.cover },
+        { property: "og:type", content: "article" },
+        { property: "og:url", content: `/portfolio/${p.id}` },
       ],
+      links: [{ rel: "canonical", href: `/portfolio/${p.id}` }],
     };
   },
   component: ProjectDetail,
