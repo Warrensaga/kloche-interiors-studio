@@ -104,6 +104,77 @@
           "properties": {}
         },
         "outputSchema": null
+      },
+      {
+        "name": "create_consultation_request",
+        "title": "Create consultation booking request",
+        "description": "Build a structured Kloche Interiors consultation booking request from a preferred date/time, budget range and project type. Returns a formatted enquiry summary plus a prefilled WhatsApp link and mailto link the client can use to send it — it does not book anything by itself.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100,
+              "description": "Client's full name."
+            },
+            "contact": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "description": "Client's phone number or email address for the reply."
+            },
+            "projectType": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 60,
+              "description": "Project type, ideally one of: Residential, Commercial, Kitchens, Living Spaces (other descriptions are accepted)."
+            },
+            "budgetRange": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 60,
+              "description": "Budget range, ideally one of: Under KES 200,000 | KES 200,000 – 1M | KES 1M – 3M | Over KES 3M | Not sure yet."
+            },
+            "preferredDate": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "description": "Preferred consultation date, e.g. '2026-08-14' or 'week of 10 August'."
+            },
+            "preferredTime": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "description": "Preferred time of day, e.g. '10:00' or 'weekday mornings'."
+            },
+            "location": {
+              "description": "Optional site location, e.g. 'Kilimani, Nairobi'.",
+              "type": "string",
+              "maxLength": 120
+            },
+            "notes": {
+              "description": "Optional extra context about the space or brief.",
+              "type": "string",
+              "maxLength": 1000
+            }
+          },
+          "required": [
+            "name",
+            "contact",
+            "projectType",
+            "budgetRange",
+            "preferredDate",
+            "preferredTime"
+          ]
+        },
+        "outputSchema": null
       }
     ]
   }
