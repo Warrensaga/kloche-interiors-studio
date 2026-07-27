@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef, useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
-import { IMAGES, PROJECTS, SERVICES, TESTIMONIALS, whatsappLink } from "@/data/site";
+import { IMAGES, PROJECTS, SERVICES, STUDIO, TESTIMONIALS, whatsappLink } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, SectionHeading } from "@/components/site/Sections";
 import { absoluteUrl } from "@/lib/seo";
