@@ -4,7 +4,7 @@ export const STUDIO = {
   phoneDisplay: "+254 712 480 335",
   whatsapp: "254712480335",
   email: "hello@klocheinteriors.co.ke",
-  address: "Riverside Drive, Westlands, Nairobi, Kenya",
+  address: "Karuna Road, Nairobi, Kenya",
   hours: [
     { day: "Monday – Friday", time: "9:00 – 18:00" },
     { day: "Saturday", time: "10:00 – 15:00" },
