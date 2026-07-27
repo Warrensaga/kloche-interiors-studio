@@ -23,7 +23,9 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:image", content: IMAGES.hero },
       { name: "twitter:image", content: IMAGES.hero },
+      { property: "og:url", content: "/" },
     ],
+    links: [{ rel: "canonical", href: "/" }],
   }),
   component: Home,
 });
