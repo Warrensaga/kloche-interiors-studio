@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { IMAGES, STATS, TEAM } from "@/data/site";
+import { IMAGES, STATS } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, PageHero, SectionHeading } from "@/components/site/Sections";
 
@@ -10,12 +10,12 @@ export const Route = createFileRoute("/about")({
       {
         name: "description",
         content:
-          "Meet Cheryl Kloche and the Nairobi studio behind Kloche Interiors — our story, philosophy and the team delivering every project.",
+          "Meet Keith Locho, founder and principal interior designer of Kloche Interiors — the story, philosophy and studio behind every project.",
       },
       { property: "og:title", content: "About — Kloche Interiors" },
       {
         property: "og:description",
-        content: "The story, philosophy and people behind Kloche Interiors in Nairobi.",
+        content: "The founder story, philosophy and studio behind Kloche Interiors in Nairobi.",
       },
       { property: "og:image", content: IMAGES.studio1 },
       { name: "twitter:image", content: IMAGES.studio1 },
@@ -29,8 +29,8 @@ function About() {
     <>
       <PageHero
         eyebrow="About"
-        title="A small studio, deliberately"
-        subtitle="We take on a limited number of projects each year so that every one gets the attention it was promised."
+        title="Keith Locho and the Soul of the Studio"
+        subtitle="A return to honest, natural resources and a studio on Karuna Road that honors them."
         image={IMAGES.studio2}
       />
 
@@ -39,34 +39,34 @@ function About() {
           <Reveal>
             <img
               src={IMAGES.aboutFounder}
-              alt="Cheryl Kloche, founder and principal designer"
+              alt="Keith Locho, founder and principal interior designer"
               className="aspect-4/5 w-full rounded-3xl object-cover shadow-soft"
             />
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="eyebrow">Founder</p>
-            <h2 className="mt-4 text-3xl md:text-4xl">Cheryl Kloche</h2>
+            <p className="eyebrow">Founder Profile & Story</p>
+            <h2 className="mt-4 text-3xl md:text-4xl">Keith Locho</h2>
             <div className="mt-6 space-y-5 text-base leading-relaxed text-muted-foreground">
               <p>
-                Cheryl trained in architecture at the University of Nairobi and spent six
-                years between a residential practice in Nairobi and a furniture atelier in
-                Cape Town before starting Kloche in 2018 — originally from the spare room of
-                a Kilimani apartment.
+                "I started Kloche Interiors with a simple realization: spaces are not just
+                structures to occupy; they are canvases for the soul," says founder and
+                principal interior designer <strong>Keith Locho</strong>. "After years of
+                practicing design in sub-Saharan Africa, I felt a deep pull to return to
+                honest, natural resources and create a studio on Karuna Road that honors
+                them."
               </p>
               <p>
-                Her approach comes from growing up between a coastal Kenyan home full of
-                carved wood and lime-washed walls, and a city flat where every square metre
-                had to work twice. That tension — generosity and discipline — sits behind
-                every layout the studio draws.
-              </p>
-              <p>
-                Today she leads a team of four, works with over forty Kenyan artisans and
-                still personally attends the first consultation on every project.
+                Our studio rejects the cold, sterile assembly-line look that occupies much
+                of modern design. Instead, we spend our days collaborating directly with
+                local Kenyan wood artisans, veteran stonemasons, and textile curators.
+                We seek physical depth over digital render aesthetics — focusing on how
+                raw walnut furniture fits against fine-texture linen, and how light cascades
+                across lime-wash wall formulations.
               </p>
             </div>
             <p className="mt-8 font-display text-xl italic text-foreground/80">
-              “A good interior isn't the one that photographs best. It's the one you're
-              relieved to come back to.”
+              "A good interior isn't the one that photographs best. It's the one you're
+              relieved to come back to."
             </p>
           </Reveal>
         </div>
@@ -93,30 +93,6 @@ function About() {
             body="We design for the twenty years after the photographs. That means honest materials that age well, layouts that survive a growing family, and a palette that doesn't date the moment the season turns."
             align="center"
           />
-        </div>
-      </section>
-
-      <section className="pb-24">
-        <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <p className="eyebrow">The Team</p>
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {TEAM.map((m, i) => (
-              <Reveal key={m.name} delay={i * 0.07}>
-                <div className="overflow-hidden rounded-3xl bg-card shadow-soft">
-                  <img
-                    src={m.photo}
-                    alt={`${m.name}, ${m.role}`}
-                    loading="lazy"
-                    className="aspect-4/5 w-full object-cover"
-                  />
-                  <div className="p-5">
-                    <p className="font-display text-lg">{m.name}</p>
-                    <p className="mt-1 text-xs text-muted-foreground">{m.role}</p>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
 
