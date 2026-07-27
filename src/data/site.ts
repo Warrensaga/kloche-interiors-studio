@@ -27,6 +27,7 @@ export const IMAGES = {
   studio2: u("1524758631624-e2822e304c36"),
   studio3: u("1567016432779-094069958ea5"),
   studio4: u("1615529182904-14819c35db37"),
+  furniture: u("1567538096630-e0c55bd6374c", 1200),
 };
 
 export type Category = "Residential" | "Commercial" | "Kitchens" | "Living Spaces";

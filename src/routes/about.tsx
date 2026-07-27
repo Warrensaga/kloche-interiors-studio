@@ -37,7 +37,7 @@ function About() {
       />
 
       <section className="section-y">
-        <div className="mx-auto max-w-3xl px-5 md:px-8">
+        <div className="mx-auto grid max-w-7xl items-start gap-12 px-5 md:px-8 lg:grid-cols-[1fr_0.85fr] lg:gap-16">
           <Reveal>
             <p className="eyebrow">Founder Profile &amp; Story</p>
             <h2 className="mt-4 text-3xl md:text-5xl">Keith Locho</h2>
@@ -65,8 +65,20 @@ function About() {
               relieved to come back to."
             </p>
           </Reveal>
+
+          <Reveal delay={0.12}>
+            <figure className="overflow-hidden rounded-3xl shadow-soft lg:sticky lg:top-28">
+              <img
+                src={IMAGES.furniture}
+                alt="Handcrafted walnut furniture and linen textures in a Kloche Interiors room"
+                loading="lazy"
+                className="img-zoom aspect-4/5 w-full object-cover"
+              />
+            </figure>
+          </Reveal>
         </div>
       </section>
+
 
       <section className="border-y border-border bg-secondary/50 py-14">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-5 md:grid-cols-4 md:px-8">
