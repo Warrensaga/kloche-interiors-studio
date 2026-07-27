@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "./Reveal";
+import { SIZES, SmartImage } from "./SmartImage";
 
 export function PageHero({
   eyebrow,
@@ -14,7 +15,14 @@ export function PageHero({
 }) {
   return (
     <section className="relative flex min-h-[62vh] items-end overflow-hidden">
-      <img src={image} alt="" className="absolute inset-0 h-full w-full object-cover" />
+      <SmartImage
+        src={image}
+        alt=""
+        priority
+        baseWidth={1920}
+        sizes={SIZES.full}
+        className="absolute inset-0 h-full w-full object-cover"
+      />
       <div className="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-charcoal/50 to-charcoal/40" />
       <div className="relative mx-auto w-full max-w-7xl px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-40">
         <Reveal>
