@@ -19,7 +19,9 @@ export const Route = createFileRoute("/about")({
       },
       { property: "og:image", content: IMAGES.studio1 },
       { name: "twitter:image", content: IMAGES.studio1 },
+      { property: "og:url", content: "/about" },
     ],
+    links: [{ rel: "canonical", href: "/about" }],
   }),
   component: About,
 });
