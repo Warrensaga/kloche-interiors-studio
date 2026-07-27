@@ -44,17 +44,17 @@ function Home() {
           alt="A softly lit contemporary living room designed by Kloche Interiors"
           className="absolute inset-0 h-[118%] w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-charcoal/60 via-charcoal/35 to-charcoal/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-charcoal/55 via-charcoal/45 to-charcoal/90" />
 
         <motion.div
           style={{ opacity: fade }}
-          className="relative mx-auto flex h-full max-w-7xl flex-col justify-end px-5 pb-20 md:px-8 md:pb-28"
+          className="relative mx-auto flex h-full max-w-7xl flex-col justify-end px-5 pb-14 md:px-8 md:pb-20"
         >
           <Reveal delay={0.1}>
             <p className="eyebrow text-cream/70">Interior Design Studio · Nairobi, Kenya</p>
           </Reveal>
           <Reveal delay={0.2}>
-            <h1 className="mt-5 max-w-4xl text-5xl leading-[1.03] text-cream md:text-7xl lg:text-8xl">
+            <h1 className="mt-5 max-w-4xl text-4xl leading-[1.05] text-cream sm:text-5xl md:text-7xl">
               Interiors that feel like home
             </h1>
           </Reveal>
@@ -65,7 +65,7 @@ function Home() {
             </p>
           </Reveal>
           <Reveal delay={0.42}>
-            <div className="mt-10 flex flex-wrap items-center gap-3">
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               <Link
                 to="/contact"
                 className="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-4 text-[0.75rem] uppercase tracking-[0.2em] text-accent-foreground transition-opacity hover:opacity-90"
