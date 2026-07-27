@@ -196,6 +196,7 @@ function Home() {
         </div>
       </section>
 
+      <InstagramFeed />
       <Testimonials />
       <CtaBanner />
     </>
