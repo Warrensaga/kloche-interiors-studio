@@ -5,15 +5,16 @@ import { ArrowRight, ChevronLeft, ChevronRight, MessageCircle } from "lucide-rea
 import { IMAGES, PROJECTS, SERVICES, TESTIMONIALS, whatsappLink } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, SectionHeading } from "@/components/site/Sections";
+import { absoluteUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Kloche Interiors — Interior Design Studio in Nairobi" },
+      { title: "Kloche Interiors | Luxury Interior Design Studio, Nairobi" },
       {
         name: "description",
         content:
-          "Warm, considered interiors for homes and workplaces across Nairobi and Kenya. Full home design, space planning, sourcing and renovation consulting.",
+          "Bespoke interior design and renovation for Nairobi's most discerning homeowners. Residential, commercial and renovation design across Kenya.",
       },
       { property: "og:title", content: "Kloche Interiors — Interiors that feel like home" },
       {
@@ -23,9 +24,41 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:image", content: IMAGES.hero },
       { name: "twitter:image", content: IMAGES.hero },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: absoluteUrl("/") },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [
+      { rel: "canonical", href: absoluteUrl("/") },
+      { rel: "preload", as: "image", href: IMAGES.hero, fetchPriority: "high" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "HomeAndConstructionBusiness",
+          name: "Kloche Interiors",
+          url: absoluteUrl("/"),
+          image: IMAGES.hero,
+          telephone: "+254717634003",
+          email: "klocheinteriors@gmail.com",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Karuna Rd",
+            addressLocality: "Westlands, Nairobi",
+            addressCountry: "KE",
+          },
+          openingHours: "Mo-Sa 08:00-17:00",
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: "4.8",
+            reviewCount: "10",
+          },
+          priceRange: "$$$",
+        }),
+      },
+    ],
   }),
   component: Home,
 });
