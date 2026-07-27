@@ -31,14 +31,51 @@ export const Route = createFileRoute("/contact")({
 const inputClass =
   "mt-2 w-full rounded-2xl border border-border bg-card px-4 py-3.5 text-sm outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-accent";
 
-function Contact() {
-  const [sent, setSent] = useState(false);
+interface BookingResult {
+  summary: string;
+  whatsappUrl: string;
+  mailtoUrl: string;
+}
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+function Contact() {
+  const [sending, setSending] = useState(false);
+  const [booking, setBooking] = useState<BookingResult | null>(null);
+
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSent(true);
-    toast.success("Thank you — we'll be in touch within two working days.");
-    e.currentTarget.reset();
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+    setSending(true);
+    try {
+      const res = await fetch("/.mcp/invoke-tool/create_consultation_request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json, text/event-stream",
+        },
+        body: JSON.stringify({
+          name: String(fd.get("name") ?? ""),
+          contact: `${fd.get("phone") ?? ""} / ${fd.get("email") ?? ""}`,
+          projectType: String(fd.get("projectType") ?? ""),
+          budgetRange: String(fd.get("budget") ?? ""),
+          preferredDate: String(fd.get("preferredDate") ?? ""),
+          preferredTime: String(fd.get("preferredTime") ?? ""),
+          notes: String(fd.get("message") ?? ""),
+        }),
+      });
+      if (!res.ok) throw new Error(`Request failed (${res.status})`);
+      const data = (await res.json()) as {
+        isError?: boolean;
+        structuredContent?: BookingResult;
+      };
+      if (data.isError || !data.structuredContent) throw new Error("Could not build your request.");
+      setBooking(data.structuredContent);
+      toast.success("Booking request ready — send it via WhatsApp or email.");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -109,6 +146,22 @@ function Contact() {
                     <option>Above KES 6M</option>
                   </select>
                 </label>
+                <label className="block text-xs uppercase tracking-[0.15em] text-muted-foreground">
+                  Preferred date
+                  <input required name="preferredDate" type="date" className={inputClass} />
+                </label>
+                <label className="block text-xs uppercase tracking-[0.15em] text-muted-foreground">
+                  Preferred time
+                  <select required name="preferredTime" defaultValue="" className={inputClass}>
+                    <option value="" disabled>
+                      Select one
+                    </option>
+                    <option>Morning (9:00 – 12:00)</option>
+                    <option>Afternoon (12:00 – 15:00)</option>
+                    <option>Late afternoon (15:00 – 18:00)</option>
+                    <option>Flexible</option>
+                  </select>
+                </label>
                 <label className="block text-xs uppercase tracking-[0.15em] text-muted-foreground sm:col-span-2">
                   Message
                   <textarea
@@ -122,15 +175,42 @@ function Contact() {
               </div>
               <button
                 type="submit"
-                className="mt-7 w-full rounded-full bg-accent py-4 text-[0.75rem] uppercase tracking-[0.2em] text-accent-foreground transition-opacity hover:opacity-90"
+                disabled={sending}
+                className="mt-7 w-full rounded-full bg-accent py-4 text-[0.75rem] uppercase tracking-[0.2em] text-accent-foreground transition-opacity hover:opacity-90 disabled:opacity-60"
               >
-                {sent ? "Enquiry sent" : "Send enquiry"}
+                {sending ? "Preparing…" : "Prepare booking request"}
               </button>
               <p className="mt-4 text-center text-xs text-muted-foreground">
                 Prefer voice notes? WhatsApp is usually fastest.
               </p>
+
+              {booking && (
+                <div className="mt-7 rounded-2xl border border-border/70 bg-background p-5">
+                  <p className="eyebrow">Your booking request</p>
+                  <pre className="mt-4 whitespace-pre-wrap font-sans text-sm text-muted-foreground">
+                    {booking.summary}
+                  </pre>
+                  <div className="mt-5 flex flex-wrap gap-3">
+                    <a
+                      href={booking.whatsappUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full bg-forest px-5 py-3 text-[0.7rem] uppercase tracking-[0.2em] text-cream"
+                    >
+                      <MessageCircle size={14} /> Send on WhatsApp
+                    </a>
+                    <a
+                      href={booking.mailtoUrl}
+                      className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-3 text-[0.7rem] uppercase tracking-[0.2em]"
+                    >
+                      <Mail size={14} /> Open email draft
+                    </a>
+                  </div>
+                </div>
+              )}
             </form>
           </Reveal>
+
 
           <Reveal delay={0.1} className="space-y-6">
             <a
