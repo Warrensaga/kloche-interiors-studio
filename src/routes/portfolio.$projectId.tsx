@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
-import { PROJECTS } from "@/data/site";
+import { PROJECTS, type Project } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner } from "@/components/site/Sections";
 import { BeforeAfter } from "@/components/site/BeforeAfter";
@@ -33,7 +33,7 @@ export const Route = createFileRoute("/portfolio/$projectId")({
 });
 
 function ProjectDetail() {
-  const { project } = Route.useLoaderData();
+  const { project } = Route.useLoaderData() as { project: Project };
 
   return (
     <>
