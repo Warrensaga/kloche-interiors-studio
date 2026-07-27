@@ -109,8 +109,15 @@ function Pricing() {
       <section className="section-y bg-secondary/50">
         <div className="mx-auto max-w-6xl px-5 md:px-8">
           <SectionHeading eyebrow="Compare" title="What's in each tier" align="center" />
-          <Reveal delay={0.1} className="mt-12 overflow-x-auto rounded-3xl bg-card shadow-soft">
+          <p className="mt-4 text-center text-xs text-muted-foreground md:hidden">
+            Swipe the table sideways to compare tiers
+          </p>
+          <Reveal
+            delay={0.1}
+            className="mt-8 overflow-x-auto rounded-3xl bg-card shadow-soft [-webkit-overflow-scrolling:touch] md:mt-12"
+          >
             <table className="w-full min-w-160 text-left text-sm">
+
               <thead>
                 <tr className="border-b border-border">
                   <th className="p-5 text-xs uppercase tracking-[0.18em] text-muted-foreground">
