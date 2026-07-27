@@ -40,7 +40,7 @@ function About() {
             <p className="eyebrow">Founder Profile &amp; Story</p>
             <h2 className="mt-4 text-3xl md:text-5xl">Keith Locho</h2>
 
-            <div className="mt-6 space-y-5 text-base leading-relaxed text-muted-foreground">
+            <div className="mt-8 space-y-6 text-base leading-relaxed text-muted-foreground md:text-lg md:leading-[1.85]">
               <p>
                 "I started Kloche Interiors with a simple realization: spaces are not just
                 structures to occupy; they are canvases for the soul," says founder and
