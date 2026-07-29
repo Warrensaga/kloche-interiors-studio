@@ -84,7 +84,7 @@ export function Header({ transparent = false }: { transparent?: boolean }) {
             to="/contact"
             className="hidden rounded-full bg-accent px-5 py-2.5 text-[0.75rem] uppercase tracking-[0.18em] text-accent-foreground transition-all hover:opacity-90 lg:inline-flex"
           >
-            Book a Consultation
+            Start Your Transformation
           </Link>
           <button
             type="button"
@@ -126,7 +126,7 @@ export function Header({ transparent = false }: { transparent?: boolean }) {
             onClick={() => setOpen(false)}
             className="mt-5 rounded-full bg-accent px-5 py-3.5 text-center text-[0.75rem] uppercase tracking-[0.18em] text-accent-foreground"
           >
-            Book a Consultation
+            Start Your Transformation
           </Link>
           <p className="py-4 text-xs text-muted-foreground">{STUDIO.phoneDisplay}</p>
         </nav>

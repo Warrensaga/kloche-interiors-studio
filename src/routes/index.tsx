@@ -103,9 +103,11 @@ function Home() {
             </h1>
           </Reveal>
           <Reveal delay={0.32}>
-            <p className="mt-6 max-w-lg text-base leading-relaxed text-cream/80">
-              We design warm, unhurried spaces — built from honest materials, Kenyan
-              craftsmanship and the way you actually live.
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-cream/80">
+              At Kloche Interiors &amp; Construction, we design and transform spaces that feel
+              as good as they look. From thoughtful interior design and renovations to
+              construction finishes and custom interiors, we bring your vision to life through
+              intentional design, quality craftsmanship and meticulous execution.
             </p>
           </Reveal>
           <Reveal delay={0.42}>
@@ -114,8 +116,9 @@ function Home() {
                 to="/contact"
                 className="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-4 text-[0.75rem] uppercase tracking-[0.2em] text-accent-foreground transition-opacity hover:opacity-90"
               >
-                Book a Consultation <ArrowRight size={15} />
+                Start Your Transformation <ArrowRight size={15} />
               </Link>
+
               <a
                 href={whatsappLink()}
                 target="_blank"
@@ -135,19 +138,31 @@ function Home() {
           <Reveal>
             <p className="eyebrow">The Studio</p>
             <h2 className="mt-4 text-3xl md:text-4xl">
-              Rooms that hold light, texture and a little quiet.
+              We transform spaces into places you love to live in
             </h2>
           </Reveal>
           <Reveal delay={0.1} className="flex flex-col justify-center gap-5">
             <p className="text-base leading-relaxed text-muted-foreground">
-              Kloche is a Nairobi-based studio working across residential and commercial
-              interiors. We favour lime plaster over paint, solid timber over veneer, and
-              pieces made forty minutes away over pieces shipped from four continents.
+              Kloche Interiors &amp; Construction is an interior design and construction
+              company dedicated to creating thoughtful, functional and beautifully considered
+              spaces.
             </p>
             <p className="text-base leading-relaxed text-muted-foreground">
-              Every project starts the same way: a long conversation about how you want a
-              space to feel at seven in the morning and nine at night.
+              We work across residential and commercial projects, bringing together interior
+              design, renovation and construction expertise to create spaces that reflect the
+              people who use them.
             </p>
+            <p className="text-base leading-relaxed text-muted-foreground">
+              From the first idea and initial concept to the final finish, we manage the
+              details that turn a space into something truly personal. Our approach combines
+              creativity with practical execution, ensuring that every project is designed
+              with purpose and delivered with care.
+            </p>
+            <p className="text-base leading-relaxed text-muted-foreground">
+              Because to us, great interiors aren’t simply about how a space looks. They’re
+              about how it makes you feel and how well it serves the life lived within it.
+            </p>
+
             <Link
               to="/about"
               className="group inline-flex w-fit items-center gap-2 text-[0.75rem] uppercase tracking-[0.2em] text-accent"
