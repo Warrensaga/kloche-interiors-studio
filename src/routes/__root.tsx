@@ -1,7 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
-  Link,
   createRootRouteWithContext,
   useRouter,
   useRouterState,
@@ -16,26 +15,16 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { WhatsAppButton } from "@/components/site/WhatsAppButton";
 import { PageTransition, ScrollProgress } from "@/components/site/Reveal";
+import { ErrorState } from "@/components/site/ErrorState";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="font-display text-7xl text-foreground">404</h1>
-        <h2 className="mt-4 text-xl text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
-        </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-[0.75rem] uppercase tracking-[0.2em] text-accent-foreground"
-          >
-            Go home
-          </Link>
-        </div>
-      </div>
-    </div>
+    <ErrorState
+      code="404"
+      eyebrow="Page not found"
+      title="This room doesn't exist"
+      body="The page you were looking for may have moved or never existed. Let's get you back to something beautiful."
+    />
   );
 }
 
@@ -47,33 +36,15 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
-        </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
-          <button
-            onClick={() => {
-              router.invalidate();
-              reset();
-            }}
-            className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-[0.75rem] uppercase tracking-[0.2em] text-accent-foreground"
-          >
-            Try again
-          </button>
-          <a
-            href="/"
-            className="inline-flex items-center justify-center rounded-full border border-input bg-background px-6 py-3 text-[0.75rem] uppercase tracking-[0.2em] text-foreground"
-          >
-            Go home
-          </a>
-        </div>
-      </div>
-    </div>
+    <ErrorState
+      eyebrow="Something went wrong"
+      title="This page didn't load"
+      body="An unexpected error interrupted things on our end. Try again, or head back home while we sort it out."
+      onRetry={() => {
+        router.invalidate();
+        reset();
+      }}
+    />
   );
 }
 
