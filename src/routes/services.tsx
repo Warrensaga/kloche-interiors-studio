@@ -28,8 +28,35 @@ export const Route = createFileRoute("/services")({
       { property: "og:url", content: absoluteUrl("/services") },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Services — Kloche Interiors" },
+      {
+        name: "twitter:description",
+        content: "Full home design, space planning, sourcing and renovation consulting in Nairobi.",
+      },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/services") }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "Interior design services — Kloche Interiors",
+          url: absoluteUrl("/services"),
+          itemListElement: SERVICES.map((s, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            item: {
+              "@type": "Service",
+              name: s.title,
+              description: s.description,
+              areaServed: "Nairobi, Kenya",
+              provider: { "@type": "HomeAndConstructionBusiness", name: "Kloche Interiors" },
+            },
+          })),
+        }),
+      },
+    ],
   }),
   component: Services,
 });

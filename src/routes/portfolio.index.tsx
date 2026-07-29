@@ -29,8 +29,33 @@ export const Route = createFileRoute("/portfolio/")({
       { property: "og:url", content: absoluteUrl("/portfolio") },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Portfolio — Kloche Interiors" },
+      {
+        name: "twitter:description",
+        content: "Selected interior design projects across Nairobi and Kenya.",
+      },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/portfolio") }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "Portfolio — Kloche Interiors",
+          url: absoluteUrl("/portfolio"),
+          mainEntity: {
+            "@type": "ItemList",
+            itemListElement: PROJECTS.map((p, i) => ({
+              "@type": "ListItem",
+              position: i + 1,
+              name: p.name,
+              url: absoluteUrl(`/portfolio/${p.id}`),
+            })),
+          },
+        }),
+      },
+    ],
   }),
   component: Portfolio,
 });

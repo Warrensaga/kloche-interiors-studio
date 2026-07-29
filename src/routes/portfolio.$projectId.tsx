@@ -31,6 +31,8 @@ export const Route = createFileRoute("/portfolio/$projectId")({
         { property: "og:image", content: p.cover },
         { name: "twitter:image", content: p.cover },
         { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: p.description.slice(0, 155) },
         { property: "og:type", content: "article" },
         { property: "og:url", content: absoluteUrl(`/portfolio/${p.id}`) },
       ],
