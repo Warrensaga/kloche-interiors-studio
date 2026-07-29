@@ -103,9 +103,11 @@ function Home() {
             </h1>
           </Reveal>
           <Reveal delay={0.32}>
-            <p className="mt-6 max-w-lg text-base leading-relaxed text-cream/80">
-              We design warm, unhurried spaces — built from honest materials, Kenyan
-              craftsmanship and the way you actually live.
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-cream/80">
+              At Kloche Interiors &amp; Construction, we design and transform spaces that feel
+              as good as they look. From thoughtful interior design and renovations to
+              construction finishes and custom interiors, we bring your vision to life through
+              intentional design, quality craftsmanship and meticulous execution.
             </p>
           </Reveal>
           <Reveal delay={0.42}>
@@ -114,8 +116,9 @@ function Home() {
                 to="/contact"
                 className="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-4 text-[0.75rem] uppercase tracking-[0.2em] text-accent-foreground transition-opacity hover:opacity-90"
               >
-                Book a Consultation <ArrowRight size={15} />
+                Start Your Transformation <ArrowRight size={15} />
               </Link>
+
               <a
                 href={whatsappLink()}
                 target="_blank"
