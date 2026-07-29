@@ -54,7 +54,7 @@ export function CtaBanner({
             to="/contact"
             className="mt-9 inline-flex rounded-full bg-accent px-8 py-4 text-[0.75rem] uppercase tracking-[0.2em] text-accent-foreground transition-opacity hover:opacity-90"
           >
-            Book a Consultation
+            Start Your Transformation
           </Link>
         </Reveal>
       </div>
