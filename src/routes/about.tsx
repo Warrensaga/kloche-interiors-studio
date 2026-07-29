@@ -24,8 +24,30 @@ export const Route = createFileRoute("/about")({
       { property: "og:url", content: absoluteUrl("/about") },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "About — Kloche Interiors" },
+      {
+        name: "twitter:description",
+        content: "The founder story, philosophy and studio behind Kloche Interiors in Nairobi.",
+      },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/about") }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "AboutPage",
+          name: "About Kloche Interiors",
+          url: absoluteUrl("/about"),
+          mainEntity: {
+            "@type": "HomeAndConstructionBusiness",
+            name: "Kloche Interiors",
+            url: absoluteUrl("/"),
+            founder: { "@type": "Person", name: "Keith Locho" },
+          },
+        }),
+      },
+    ],
   }),
   component: About,
 });

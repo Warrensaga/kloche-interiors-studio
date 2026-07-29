@@ -28,8 +28,36 @@ export const Route = createFileRoute("/contact")({
       { property: "og:url", content: absoluteUrl("/contact") },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Contact — Kloche Interiors" },
+      {
+        name: "twitter:description",
+        content: "Book a consultation with our Nairobi interior design studio.",
+      },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/contact") }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ContactPage",
+          name: "Contact Kloche Interiors",
+          url: absoluteUrl("/contact"),
+          mainEntity: {
+            "@type": "HomeAndConstructionBusiness",
+            name: STUDIO.name,
+            telephone: STUDIO.phoneDisplay,
+            email: STUDIO.email,
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "Karuna Road",
+              addressLocality: "Nairobi",
+              addressCountry: "KE",
+            },
+          },
+        }),
+      },
+    ],
   }),
   component: Contact,
 });

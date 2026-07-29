@@ -29,6 +29,12 @@ export const Route = createFileRoute("/")({
       { property: "og:url", content: absoluteUrl("/") },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Kloche Interiors — Interiors that feel like home" },
+      {
+        name: "twitter:description",
+        content:
+          "Interior design, renovations and construction finishes for homes and workplaces in Nairobi, Kenya.",
+      },
     ],
     links: [
       { rel: "canonical", href: absoluteUrl("/") },

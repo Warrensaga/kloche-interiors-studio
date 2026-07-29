@@ -30,8 +30,27 @@ export const Route = createFileRoute("/pricing")({
       { property: "og:url", content: absoluteUrl("/pricing") },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Pricing — Kloche Interiors" },
+      {
+        name: "twitter:description",
+        content: "Interior design packages in KES for homes and workplaces in Nairobi.",
+      },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/pricing") }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: FAQS.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }),
+      },
+    ],
   }),
   component: Pricing,
 });
