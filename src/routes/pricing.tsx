@@ -523,7 +523,7 @@ function Pricing() {
                     <SmartImage
                       src={p.cover}
                       alt={`${p.name} — ${p.projectType} in ${p.location}`}
-                      aspectRatio="4/3"
+                      ratio="4/3"
                       sizes={SIZES.quarter}
                       className="h-full w-full object-cover"
                     />
