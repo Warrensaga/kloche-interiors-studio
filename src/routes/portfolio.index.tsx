@@ -118,6 +118,12 @@ function Portfolio() {
                     <div className="min-w-0">
                       <h2 className="truncate font-display text-xl">{p.name}</h2>
                       <p className="mt-1 text-xs text-muted-foreground">{p.location}</p>
+                      <p className="mt-3 text-[0.7rem] uppercase tracking-[0.16em] text-accent">
+                        {p.projectType}
+                      </p>
+                      <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+                        {p.scope.join(" • ")}
+                      </p>
                       <span className="mt-4 inline-flex rounded-full bg-secondary px-3 py-1 text-[0.65rem] uppercase tracking-[0.15em] text-muted-foreground">
                         {p.style}
                       </span>
