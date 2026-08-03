@@ -124,9 +124,10 @@ function Portfolio() {
                       <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
                         {p.scope.join(" • ")}
                       </p>
-                      <span className="mt-4 inline-flex rounded-full bg-secondary px-3 py-1 text-[0.65rem] uppercase tracking-[0.15em] text-muted-foreground">
+                      <span className="mt-4 inline-flex max-w-full break-words rounded-full bg-secondary px-3 py-1 text-[0.65rem] uppercase tracking-[0.15em] text-muted-foreground">
                         {p.style}
                       </span>
+
                     </div>
                     <ArrowUpRight
                       size={20}
