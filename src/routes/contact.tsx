@@ -203,7 +203,8 @@ function Contact() {
                     </option>
                     {budgetOptions.map((b) => (
                       <option key={b}>{b}</option>
-                    ))}
+                  </select>
+
 
                 </label>
                 <label className="block text-xs uppercase tracking-[0.15em] text-muted-foreground">
