@@ -203,7 +203,9 @@ function Contact() {
                     </option>
                     {budgetOptions.map((b) => (
                       <option key={b}>{b}</option>
+                    ))}
                   </select>
+
 
 
                 </label>
