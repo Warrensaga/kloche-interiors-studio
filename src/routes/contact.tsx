@@ -59,11 +59,22 @@ export const Route = createFileRoute("/contact")({
       },
     ],
   }),
+  validateSearch: (search: Record<string, unknown>) => ({
+    budget: typeof search["budget"] === "string" ? (search["budget"] as string) : undefined,
+    service: typeof search["service"] === "string" ? (search["service"] as string) : undefined,
+  }),
   component: Contact,
 });
 
 const inputClass =
   "mt-2 w-full rounded-2xl border border-border bg-card px-4 py-3.5 text-sm outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-accent";
+
+const BUDGET_OPTIONS = [
+  "Under KES 300,000",
+  "KES 300,000 – 1M",
+  "KES 1M – 3M",
+  "Above KES 3M",
+];
 
 interface BookingResult {
   summary: string;
@@ -72,8 +83,12 @@ interface BookingResult {
 }
 
 function Contact() {
+  const { budget, service } = Route.useSearch();
   const [sending, setSending] = useState(false);
   const [booking, setBooking] = useState<BookingResult | null>(null);
+  const budgetOptions =
+    budget && !BUDGET_OPTIONS.includes(budget) ? [budget, ...BUDGET_OPTIONS] : BUDGET_OPTIONS;
+
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -154,10 +169,18 @@ function Contact() {
                 </label>
                 <label className="block text-xs uppercase tracking-[0.15em] text-muted-foreground">
                   Project type
-                  <select required name="projectType" defaultValue="" className={inputClass}>
+                  <select
+                    required
+                    name="projectType"
+                    defaultValue={service ?? ""}
+                    className={inputClass}
+                  >
                     <option value="" disabled>
                       Select one
                     </option>
+                    {service && !SERVICES.some((s) => s.title === service) ? (
+                      <option value={service}>{service}</option>
+                    ) : null}
                     {SERVICES.map((s) => (
                       <option key={s.id} value={s.title}>
                         {s.title}
@@ -169,16 +192,22 @@ function Contact() {
                 </label>
                 <label className="block text-xs uppercase tracking-[0.15em] text-muted-foreground">
                   Budget range
-                  <select required name="budget" defaultValue="" className={inputClass}>
+                  <select
+                    required
+                    name="budget"
+                    defaultValue={budget ?? ""}
+                    className={inputClass}
+                  >
                     <option value="" disabled>
                       Select one
                     </option>
-                    <option>Under KES 500,000</option>
-                    <option>KES 500,000 – 1.5M</option>
-                    <option>KES 1.5M – 3M</option>
-                    <option>KES 3M – 6M</option>
-                    <option>Above KES 6M</option>
+                    {budgetOptions.map((b) => (
+                      <option key={b}>{b}</option>
+                    ))}
                   </select>
+
+
+
                 </label>
                 <label className="block text-xs uppercase tracking-[0.15em] text-muted-foreground">
                   Preferred date
