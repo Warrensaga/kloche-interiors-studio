@@ -40,7 +40,41 @@ export const Route = createFileRoute("/pricing")({
           })),
         }),
       },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "Kloche Interiors — starting rates",
+          url: absoluteUrl("/pricing"),
+          itemListElement: OFFERINGS.filter((o) => o.from.startsWith("KSh")).map((o, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            item: {
+              "@type": "Service",
+              name: o.title,
+              description: o.blurb,
+              areaServed: "Nairobi, Kenya",
+              provider: { "@type": "HomeAndConstructionBusiness", name: "Kloche Interiors" },
+              offers: {
+                "@type": "Offer",
+                priceCurrency: "KES",
+                price: o.from.replace(/[^0-9]/g, ""),
+                priceSpecification: {
+                  "@type": "PriceSpecification",
+                  priceCurrency: "KES",
+                  minPrice: o.from.replace(/[^0-9]/g, ""),
+                  valueAddedTaxIncluded: false,
+                },
+                availability: "https://schema.org/InStock",
+                url: absoluteUrl("/pricing"),
+              },
+            },
+          })),
+        }),
+      },
     ],
+
   }),
   component: Pricing,
 });
