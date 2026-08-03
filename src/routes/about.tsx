@@ -113,9 +113,9 @@ function About() {
       <section className="section-y">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <SectionHeading
-            eyebrow="Philosophy"
-            title="Warmth first, trends never"
-            body="We design for the twenty years after the photographs. That means honest materials that age well, layouts that survive a growing family, and a palette that doesn't date the moment the season turns."
+            eyebrow={PHILOSOPHY.eyebrow}
+            title={PHILOSOPHY.title}
+            body={PHILOSOPHY.body}
             align="center"
           />
         </div>
