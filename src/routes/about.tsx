@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { IMAGES, STATS } from "@/data/site";
+import { FOUNDER, IMAGES, PHILOSOPHY, STATS } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, PageHero, SectionHeading } from "@/components/site/Sections";
 import { absoluteUrl } from "@/lib/seo";
