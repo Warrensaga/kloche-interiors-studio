@@ -97,7 +97,7 @@ function Portfolio() {
 
           <div className="mt-12 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
             {projects.map((p, i) => (
-              <Reveal key={p.id} delay={(i % 3) * 0.08}>
+              <Reveal key={p.id} delay={(i % 3) * 0.08} className="min-w-0">
                 <Link
                   to="/portfolio/$projectId"
                   params={{ projectId: p.id }}
