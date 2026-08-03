@@ -70,7 +70,7 @@ const OFFERINGS: {
   {
     number: "01",
     title: "Interior Design Consultation",
-    from: "On request",
+    from: "KSh 30,000",
     fromLabel: "Starting from",
     blurb:
       "Perfect for clients seeking professional design advice before starting a project.",
@@ -103,7 +103,7 @@ const OFFERINGS: {
   {
     number: "03",
     title: "3D Visualisation",
-    from: "On request",
+    from: "KSh 20,000",
     fromLabel: "Starting from",
     blurb: "See your future space before construction begins.",
     listLabel: "Includes",
@@ -117,7 +117,7 @@ const OFFERINGS: {
   {
     number: "04",
     title: "Bathroom Renovations",
-    from: "On request",
+    from: "KSh 150,000",
     fromLabel: "Projects typically start from",
     blurb: "A full wet-room rebuild, handled end to end by one team.",
     listLabel: "Typical scope may include",
@@ -136,7 +136,7 @@ const OFFERINGS: {
   {
     number: "05",
     title: "Kitchen Renovations",
-    from: "On request",
+    from: "KSh 200,000",
     fromLabel: "Projects typically start from",
     blurb: "Investment depends on the level of joinery, surfaces and services involved.",
     listLabel: "Depending on",
