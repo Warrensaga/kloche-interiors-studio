@@ -345,7 +345,7 @@ function Contact() {
               href={STUDIO.instagram}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 text-[0.72rem] uppercase tracking-[0.2em] text-accent"
+              className="inline-flex max-w-full flex-wrap items-center gap-2 break-all text-[0.72rem] uppercase tracking-[0.2em] text-accent"
             >
               <Instagram size={14} /> @klocheinteriors_construction
             </a>
