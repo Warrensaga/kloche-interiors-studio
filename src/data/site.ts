@@ -37,6 +37,7 @@ export interface Project {
   name: string;
   location: string;
   style: string;
+  projectType: string;
   categories: Category[];
   cover: string;
   gallery: string[];
@@ -53,6 +54,7 @@ export const PROJECTS: Project[] = [
     name: "Karen Garden Villa",
     location: "Karen, Nairobi",
     style: "Warm Contemporary",
+    projectType: "Full Home Transformation",
     categories: ["Residential", "Living Spaces"],
     cover: u("1600607687939-ce8a6c25118c"),
     gallery: [
@@ -82,6 +84,7 @@ export const PROJECTS: Project[] = [
     name: "Westlands Penthouse",
     location: "Westlands, Nairobi",
     style: "Quiet Luxury",
+    projectType: "Residential Interior Design",
     categories: ["Residential", "Living Spaces"],
     cover: u("1600210492486-724fe5c67fb0"),
     gallery: [
@@ -106,6 +109,7 @@ export const PROJECTS: Project[] = [
     name: "Kilimani Kitchen Renewal",
     location: "Kilimani, Nairobi",
     style: "Earthy Minimal",
+    projectType: "Kitchen Renovation",
     categories: ["Kitchens", "Residential"],
     cover: u("1556909212-d5b604d0c90d"),
     gallery: [
@@ -130,6 +134,7 @@ export const PROJECTS: Project[] = [
     name: "Gigiri Studio Offices",
     location: "Gigiri, Nairobi",
     style: "Soft Modern Workplace",
+    projectType: "Commercial Fit-out",
     categories: ["Commercial"],
     cover: u("1497366754035-f200968a6e72"),
     gallery: [
@@ -154,6 +159,7 @@ export const PROJECTS: Project[] = [
     name: "Lavington Living Room",
     location: "Lavington, Nairobi",
     style: "Layered Neutrals",
+    projectType: "Interior Styling & Refresh",
     categories: ["Living Spaces", "Residential"],
     cover: u("1567767292278-a4f21aa2d36e"),
     gallery: [
@@ -178,6 +184,7 @@ export const PROJECTS: Project[] = [
     name: "Runda Family Home",
     location: "Runda, Nairobi",
     style: "Classic Warm",
+    projectType: "Full Property Transformation",
     categories: ["Residential"],
     cover: u("1600585154526-990dced4db0d"),
     gallery: [
