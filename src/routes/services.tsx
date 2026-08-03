@@ -94,14 +94,17 @@ function Services() {
                   />
                 </Reveal>
                 <Reveal delay={0.1} className={flip ? "md:order-1" : undefined}>
-                  <span className="grid h-14 w-14 place-items-center rounded-2xl bg-secondary text-accent">
-                    <Icon size={24} />
-                  </span>
+                  <div className="flex items-center gap-4">
+                    <span className="grid h-14 w-14 place-items-center rounded-2xl bg-secondary text-accent">
+                      <Icon size={24} />
+                    </span>
+                    <span className="eyebrow text-accent">Service 0{i + 1}</span>
+                  </div>
                   <h2 className="mt-6 text-3xl md:text-4xl">{s.title}</h2>
                   <p className="mt-4 text-base leading-relaxed text-muted-foreground">
                     {s.description}
                   </p>
-                  <p className="eyebrow mt-8">What's included</p>
+                  <p className="eyebrow mt-8">Services include</p>
                   <ul className="mt-4 grid gap-3 sm:grid-cols-2">
                     {s.includes.map((item) => (
                       <li key={item} className="flex gap-3 text-sm text-muted-foreground">
@@ -120,13 +123,13 @@ function Services() {
       <section className="section-y bg-secondary/50">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <SectionHeading
-            eyebrow="How It Works"
-            title="Our process"
-            body="Four stages, clearly scoped, with an approval point before anything is ordered."
+            eyebrow="The Kloche Process"
+            title="From Vision to Reality"
+            body="Five stages, clearly scoped, with an approval point before anything is ordered."
             align="center"
           />
-          <div className="relative mt-16 grid gap-10 md:grid-cols-4">
-            <div className="absolute left-0 right-0 top-6 hidden h-px bg-border md:block" />
+          <div className="relative mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
+            <div className="absolute left-0 right-0 top-6 hidden h-px bg-border lg:block" />
             {PROCESS.map((p, i) => (
               <Reveal key={p.step} delay={i * 0.1} className="relative">
                 <span className="relative z-10 grid h-12 w-12 place-items-center rounded-full bg-accent font-display text-sm text-accent-foreground">
@@ -138,13 +141,33 @@ function Services() {
             ))}
           </div>
           <Reveal delay={0.2} className="mt-16 text-center">
+            <p className="mx-auto max-w-2xl font-display text-2xl leading-snug md:text-3xl">
+              {PROCESS_CLOSING}
+            </p>
             <Link
               to="/pricing"
-              className="inline-flex rounded-full border border-border px-7 py-3.5 text-[0.72rem] uppercase tracking-[0.2em] transition-colors hover:bg-accent hover:text-accent-foreground"
+              className="mt-9 inline-flex rounded-full border border-border px-7 py-3.5 text-[0.72rem] uppercase tracking-[0.2em] transition-colors hover:bg-accent hover:text-accent-foreground"
             >
               See packages & pricing
             </Link>
           </Reveal>
+        </div>
+      </section>
+
+      <section className="section-y">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <SectionHeading eyebrow="Why Kloche?" title="Four pillars we work by" align="center" />
+          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {PILLARS.map((p, i) => (
+              <Reveal key={p.title} delay={i * 0.08}>
+                <div className="h-full rounded-3xl border border-border/70 bg-card p-7 shadow-soft hover-lift">
+                  <span className="font-display text-2xl text-accent">0{i + 1}</span>
+                  <h3 className="mt-4 text-xl">{p.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
