@@ -121,6 +121,10 @@ function ProjectDetail() {
               ))}
             </ul>
             <div className="mt-8 grid grid-cols-2 gap-4 border-t border-border pt-6">
+              <div className="col-span-2">
+                <p className="eyebrow">Project Type</p>
+                <p className="mt-2 font-display text-xl">{project.projectType}</p>
+              </div>
               <div>
                 <p className="eyebrow">Duration</p>
                 <p className="mt-2 font-display text-xl">{project.duration}</p>
