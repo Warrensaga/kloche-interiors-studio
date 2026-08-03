@@ -5,7 +5,7 @@ import { CATEGORIES, PROJECTS, type Category } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { PageHero, CtaBanner, SectionHeading } from "@/components/site/Sections";
 import { BeforeAfter } from "@/components/site/BeforeAfter";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, breadcrumbLd } from "@/lib/seo";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 
 const HERO = PROJECTS[1].cover;
@@ -37,6 +37,7 @@ export const Route = createFileRoute("/portfolio/")({
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/portfolio") }],
     scripts: [
+      breadcrumbLd([{ name: "Portfolio", path: "/portfolio" }]),
       {
         type: "application/ld+json",
         children: JSON.stringify({

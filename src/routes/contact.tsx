@@ -6,7 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { IMAGES, PROJECTS, SERVICES, STUDIO, whatsappLink } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { PageHero } from "@/components/site/Sections";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, breadcrumbLd } from "@/lib/seo";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 
 export const Route = createFileRoute("/contact")({
@@ -36,6 +36,7 @@ export const Route = createFileRoute("/contact")({
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/contact") }],
     scripts: [
+      breadcrumbLd([{ name: "Contact", path: "/contact" }]),
       {
         type: "application/ld+json",
         children: JSON.stringify({

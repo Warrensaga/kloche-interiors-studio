@@ -3,7 +3,7 @@ import { Armchair, Building2, HardHat, Home, Ruler, type LucideIcon } from "luci
 import { PILLARS, PROCESS, PROCESS_CLOSING, SERVICES } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, PageHero, SectionHeading } from "@/components/site/Sections";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, breadcrumbLd } from "@/lib/seo";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 
 const ICONS: Record<string, LucideIcon> = { Home, Ruler, Armchair, HardHat, Building2 };
@@ -36,6 +36,7 @@ export const Route = createFileRoute("/services")({
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/services") }],
     scripts: [
+      breadcrumbLd([{ name: "Services", path: "/services" }]),
       {
         type: "application/ld+json",
         children: JSON.stringify({

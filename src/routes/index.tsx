@@ -5,7 +5,7 @@ import { ArrowRight, ChevronLeft, ChevronRight, MessageCircle } from "lucide-rea
 import { IMAGES, PHILOSOPHY, PILLARS, PROJECTS, SERVICES, STUDIO, TESTIMONIALS, whatsappLink } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, SectionHeading } from "@/components/site/Sections";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, breadcrumbLd } from "@/lib/seo";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 import { imageAt, srcSet } from "@/lib/images";
 
@@ -48,6 +48,7 @@ export const Route = createFileRoute("/")({
       },
     ],
     scripts: [
+      breadcrumbLd([]),
       {
         type: "application/ld+json",
         children: JSON.stringify({
