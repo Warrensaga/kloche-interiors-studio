@@ -66,8 +66,8 @@ function Services() {
     <>
       <PageHero
         eyebrow="Services"
-        title="Four ways we work together"
-        subtitle="From a single room that needs direction to a whole home delivered turnkey — pick the level of involvement that suits you."
+        title="Our key services"
+        subtitle="Interior design, renovation and construction, custom interiors and commercial spaces — one studio, from first idea to final finish."
         image={HERO}
       />
 
