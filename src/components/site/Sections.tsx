@@ -14,7 +14,7 @@ export function PageHero({
   image: string;
 }) {
   return (
-    <section className="relative flex min-h-[62vh] items-end overflow-hidden">
+    <section className="relative flex min-h-[62svh] items-end overflow-hidden">
       <SmartImage
         src={image}
         alt=""

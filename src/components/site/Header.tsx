@@ -26,11 +26,24 @@ export function Header({ transparent = false }: { transparent?: boolean }) {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    const onResize = () => {
+      if (window.innerWidth >= 1024) setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("resize", onResize);
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", onResize);
     };
   }, [open]);
+
 
   const solid = !transparent || scrolled || open;
 
@@ -104,8 +117,10 @@ export function Header({ transparent = false }: { transparent?: boolean }) {
 
       <div
         className={cn(
-          "overflow-hidden border-t border-border bg-background transition-[max-height,opacity] duration-500 lg:hidden",
-          open ? "max-h-[70vh] opacity-100" : "max-h-0 opacity-0",
+          "overflow-y-auto overscroll-contain border-t border-border bg-background transition-[max-height,opacity] duration-500 lg:hidden",
+          open ? "max-h-[calc(100svh-4.5rem)] opacity-100" : "max-h-0 opacity-0",
+
+
         )}
       >
         <nav className="flex flex-col px-5 py-4">

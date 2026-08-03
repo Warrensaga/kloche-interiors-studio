@@ -76,7 +76,7 @@ function ProjectDetail() {
 
   return (
     <>
-      <section className="relative flex min-h-[70vh] items-end overflow-hidden">
+      <section className="relative flex min-h-[70svh] items-end overflow-hidden">
         <SmartImage
           src={project.cover}
           alt={project.name}

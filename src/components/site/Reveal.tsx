@@ -1,4 +1,4 @@
-import { motion, useInView, useScroll, useSpring } from "motion/react";
+import { motion, useInView, useReducedMotion, useScroll, useSpring } from "motion/react";
 import { useRef, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
@@ -16,14 +16,20 @@ export function Reveal({
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-40px" });
+  const reduced = useReducedMotion();
+
+  if (reduced) {
+    return <div className={cn(className)}>{children}</div>;
+  }
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y, filter: "blur(8px)" }}
-      animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : undefined}
-      transition={{ duration: 0.85, delay, ease: EASE }}
+      initial={{ opacity: 0, y }}
+      animate={inView ? { opacity: 1, y: 0 } : undefined}
+      transition={{ duration: 0.7, delay, ease: EASE }}
+      style={{ willChange: "transform, opacity" }}
       className={cn(className)}
     >
       {children}
@@ -43,11 +49,17 @@ export function Stagger({
   delay?: number;
   step?: number;
 }) {
+  const reduced = useReducedMotion();
+
+  if (reduced) {
+    return <div className={cn(className)}>{children}</div>;
+  }
+
   return (
     <motion.div
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: true, margin: "-40px" }}
       variants={{
         hidden: {},
         show: { transition: { staggerChildren: step, delayChildren: delay } },
@@ -66,13 +78,19 @@ export function StaggerItem({
   children: ReactNode;
   className?: string;
 }) {
+  const reduced = useReducedMotion();
+
+  if (reduced) {
+    return <div className={cn(className)}>{children}</div>;
+  }
+
   return (
     <motion.div
       variants={{
-        hidden: { opacity: 0, y: 24, filter: "blur(6px)" },
-        show: { opacity: 1, y: 0, filter: "blur(0px)" },
+        hidden: { opacity: 0, y: 20 },
+        show: { opacity: 1, y: 0 },
       }}
-      transition={{ duration: 0.8, ease: EASE }}
+      transition={{ duration: 0.65, ease: EASE }}
       className={cn(className)}
     >
       {children}
@@ -81,11 +99,14 @@ export function StaggerItem({
 }
 
 export function PageTransition({ children }: { children: ReactNode }) {
+  const reduced = useReducedMotion();
+  if (reduced) return <div>{children}</div>;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: EASE }}
+      transition={{ duration: 0.5, ease: EASE }}
     >
       {children}
     </motion.div>
@@ -101,7 +122,7 @@ export function ScrollProgress() {
     <motion.div
       aria-hidden
       style={{ scaleX }}
-      className="fixed inset-x-0 top-0 z-[60] h-[2px] origin-left bg-accent/80"
+      className="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[2px] origin-left bg-accent/80"
     />
   );
 }
