@@ -1,12 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Armchair, HardHat, Home, Ruler, type LucideIcon } from "lucide-react";
-import { PROCESS, SERVICES } from "@/data/site";
+import { Armchair, Building2, HardHat, Home, Ruler, type LucideIcon } from "lucide-react";
+import { PILLARS, PROCESS, PROCESS_CLOSING, SERVICES } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, PageHero, SectionHeading } from "@/components/site/Sections";
 import { absoluteUrl } from "@/lib/seo";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 
-const ICONS: Record<string, LucideIcon> = { Home, Ruler, Armchair, HardHat };
+const ICONS: Record<string, LucideIcon> = { Home, Ruler, Armchair, HardHat, Building2 };
 const HERO = SERVICES[0].image;
 
 export const Route = createFileRoute("/services")({
