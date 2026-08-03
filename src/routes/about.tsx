@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { FOUNDER, IMAGES, PHILOSOPHY, STATS } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, PageHero, SectionHeading } from "@/components/site/Sections";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, breadcrumbLd } from "@/lib/seo";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 
 export const Route = createFileRoute("/about")({
@@ -32,6 +32,7 @@ export const Route = createFileRoute("/about")({
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/about") }],
     scripts: [
+      breadcrumbLd([{ name: "About", path: "/about" }]),
       {
         type: "application/ld+json",
         children: JSON.stringify({

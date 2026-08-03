@@ -5,7 +5,7 @@ import { IMAGES, PROJECTS } from "@/data/site";
 import { Reveal, Stagger, StaggerItem } from "@/components/site/Reveal";
 import { PageHero } from "@/components/site/Sections";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, breadcrumbLd } from "@/lib/seo";
 
 const PAGE_TITLE = "Investment Guide — Kloche Interiors Nairobi";
 const PAGE_DESC =
@@ -28,6 +28,7 @@ export const Route = createFileRoute("/pricing")({
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/pricing") }],
     scripts: [
+      breadcrumbLd([{ name: "Investment Guide", path: "/pricing" }]),
       {
         type: "application/ld+json",
         children: JSON.stringify({
