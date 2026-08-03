@@ -59,11 +59,22 @@ export const Route = createFileRoute("/contact")({
       },
     ],
   }),
+  validateSearch: (search: Record<string, unknown>) => ({
+    budget: typeof search["budget"] === "string" ? (search["budget"] as string) : undefined,
+    service: typeof search["service"] === "string" ? (search["service"] as string) : undefined,
+  }),
   component: Contact,
 });
 
 const inputClass =
   "mt-2 w-full rounded-2xl border border-border bg-card px-4 py-3.5 text-sm outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-accent";
+
+const BUDGET_OPTIONS = [
+  "Under KES 300,000",
+  "KES 300,000 – 1M",
+  "KES 1M – 3M",
+  "Above KES 3M",
+];
 
 interface BookingResult {
   summary: string;
@@ -72,8 +83,12 @@ interface BookingResult {
 }
 
 function Contact() {
+  const { budget, service } = Route.useSearch();
   const [sending, setSending] = useState(false);
   const [booking, setBooking] = useState<BookingResult | null>(null);
+  const budgetOptions =
+    budget && !BUDGET_OPTIONS.includes(budget) ? [budget, ...BUDGET_OPTIONS] : BUDGET_OPTIONS;
+
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
