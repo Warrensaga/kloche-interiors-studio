@@ -6,6 +6,7 @@ import {
   useRouterState,
   HeadContent,
   Scripts,
+  ScriptOnce,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
@@ -16,6 +17,8 @@ import { Footer } from "@/components/site/Footer";
 import { WhatsAppButton } from "@/components/site/WhatsAppButton";
 import { PageTransition, ScrollProgress } from "@/components/site/Reveal";
 import { ErrorState } from "@/components/site/ErrorState";
+import { themeInitScript } from "@/components/site/ThemeToggle";
+
 
 function NotFoundComponent() {
   return (
@@ -96,9 +99,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
+        <ScriptOnce>{themeInitScript}</ScriptOnce>
       </head>
       <body>
         {children}
@@ -107,6 +111,7 @@ function RootShell({ children }: { children: ReactNode }) {
     </html>
   );
 }
+
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();

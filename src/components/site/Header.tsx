@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { Logo } from "@/components/site/Logo";
 import { cn } from "@/lib/utils";
 import { STUDIO } from "@/data/site";
+import { ThemeToggle } from "@/components/site/ThemeToggle";
+
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -93,12 +95,20 @@ export function Header({ transparent = false }: { transparent?: boolean }) {
         </nav>
 
         <div className="flex items-center gap-2">
+          <ThemeToggle
+            className={cn(
+              solid
+                ? "border-border text-foreground"
+                : "border-primary-foreground/30 text-primary-foreground",
+            )}
+          />
           <Link
             to="/contact"
             className="hidden rounded-full bg-accent px-5 py-2.5 text-[0.75rem] uppercase tracking-[0.18em] text-accent-foreground transition-all hover:opacity-90 lg:inline-flex"
           >
             Start Your Transformation
           </Link>
+
           <button
             type="button"
             aria-label={open ? "Close menu" : "Open menu"}
