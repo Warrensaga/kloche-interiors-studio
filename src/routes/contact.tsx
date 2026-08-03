@@ -169,10 +169,18 @@ function Contact() {
                 </label>
                 <label className="block text-xs uppercase tracking-[0.15em] text-muted-foreground">
                   Project type
-                  <select required name="projectType" defaultValue="" className={inputClass}>
+                  <select
+                    required
+                    name="projectType"
+                    defaultValue={service ?? ""}
+                    className={inputClass}
+                  >
                     <option value="" disabled>
                       Select one
                     </option>
+                    {service && !SERVICES.some((s) => s.title === service) ? (
+                      <option value={service}>{service}</option>
+                    ) : null}
                     {SERVICES.map((s) => (
                       <option key={s.id} value={s.title}>
                         {s.title}
@@ -184,16 +192,19 @@ function Contact() {
                 </label>
                 <label className="block text-xs uppercase tracking-[0.15em] text-muted-foreground">
                   Budget range
-                  <select required name="budget" defaultValue="" className={inputClass}>
+                  <select
+                    required
+                    name="budget"
+                    defaultValue={budget ?? ""}
+                    className={inputClass}
+                  >
                     <option value="" disabled>
                       Select one
                     </option>
-                    <option>Under KES 500,000</option>
-                    <option>KES 500,000 – 1.5M</option>
-                    <option>KES 1.5M – 3M</option>
-                    <option>KES 3M – 6M</option>
-                    <option>Above KES 6M</option>
-                  </select>
+                    {budgetOptions.map((b) => (
+                      <option key={b}>{b}</option>
+                    ))}
+
                 </label>
                 <label className="block text-xs uppercase tracking-[0.15em] text-muted-foreground">
                   Preferred date
