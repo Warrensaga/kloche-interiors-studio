@@ -72,8 +72,8 @@ function Portfolio() {
     <>
       <PageHero
         eyebrow="Portfolio"
-        title="Spaces we've shaped"
-        subtitle="Homes, kitchens and workplaces across Nairobi — each one built around a specific way of living."
+        title="Spaces We've Transformed."
+        subtitle="Every project begins with a vision and ends with a space that tells its own story. Explore a selection of our residential, commercial and hospitality projects, each shaped by thoughtful design, careful planning and considered execution."
         image={HERO}
       />
 
