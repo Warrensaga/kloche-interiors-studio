@@ -76,14 +76,20 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
-  const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const yRaw = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const fadeRaw = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const y = reduced ? undefined : yRaw;
+  const fade = reduced ? undefined : fadeRaw;
 
   return (
     <>
       {/* Hero */}
-      <section ref={heroRef} className="relative h-[100svh] overflow-hidden">
+      <section
+        ref={heroRef}
+        className="relative flex min-h-[100svh] flex-col overflow-hidden"
+      >
         <motion.img
           style={{ y }}
           src={imageAt(IMAGES.hero, 1920)}
@@ -98,8 +104,9 @@ function Home() {
 
         <motion.div
           style={{ opacity: fade }}
-          className="relative mx-auto flex h-full max-w-7xl flex-col justify-end px-5 pb-14 md:px-8 md:pb-20"
+          className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-5 pb-14 pt-28 md:px-8 md:pb-20 md:pt-32"
         >
+
           <Reveal delay={0.1}>
             <p className="eyebrow text-cream/70">Interior Design Studio · Nairobi, Kenya</p>
           </Reveal>
