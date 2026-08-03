@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef, useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
-import { IMAGES, PROJECTS, SERVICES, STUDIO, TESTIMONIALS, whatsappLink } from "@/data/site";
+import { IMAGES, PHILOSOPHY, PILLARS, PROJECTS, SERVICES, STUDIO, TESTIMONIALS, whatsappLink } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, SectionHeading } from "@/components/site/Sections";
 import { absoluteUrl } from "@/lib/seo";
@@ -262,8 +262,40 @@ function Home() {
         </div>
       </section>
 
+      {/* Why Kloche */}
+      <section className="section-y bg-secondary/50">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <SectionHeading eyebrow="Why Kloche?" title="Four pillars we work by" align="center" />
+          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {PILLARS.map((p, i) => (
+              <Reveal key={p.title} delay={i * 0.08}>
+                <div className="h-full rounded-3xl border border-border/70 bg-card p-7 shadow-soft hover-lift">
+                  <span className="font-display text-2xl text-accent">0{i + 1}</span>
+                  <h3 className="mt-4 text-xl">{p.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Philosophy */}
+      <section className="section-y">
+        <div className="mx-auto max-w-3xl px-5 text-center md:px-8">
+          <Reveal>
+            <p className="eyebrow">{PHILOSOPHY.eyebrow}</p>
+            <h2 className="mt-4 text-3xl md:text-5xl">{PHILOSOPHY.title}</h2>
+            <p className="mt-5 text-base leading-relaxed text-muted-foreground">
+              {PHILOSOPHY.body}
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
       <Testimonials />
       <CtaBanner />
+
     </>
   );
 }

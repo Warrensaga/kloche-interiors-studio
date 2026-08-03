@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { IMAGES, STATS } from "@/data/site";
+import { FOUNDER, IMAGES, PHILOSOPHY, STATS } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, PageHero, SectionHeading } from "@/components/site/Sections";
 import { absoluteUrl } from "@/lib/seo";
@@ -57,39 +57,28 @@ function About() {
     <>
       <PageHero
         eyebrow="About"
-        title="Keith Locho and the Soul of the Studio"
-        subtitle="A return to honest, natural resources and a studio on Karuna Road that honors them."
+        title="Meet the Founder"
+        subtitle="Keith Locho — Founder & Creative Director, Kloche Interiors & Construction."
         image={IMAGES.studio2}
       />
 
       <section className="section-y">
         <div className="mx-auto grid max-w-7xl items-start gap-12 px-5 md:px-8 lg:grid-cols-[1fr_0.85fr] lg:gap-16">
           <Reveal>
-            <p className="eyebrow">Founder Profile &amp; Story</p>
-            <h2 className="mt-4 text-3xl md:text-5xl">Keith Locho</h2>
+            <p className="eyebrow">Meet the Founder</p>
+            <h2 className="mt-4 text-3xl md:text-5xl">{FOUNDER.name}</h2>
+            <p className="mt-3 text-sm uppercase tracking-[0.18em] text-muted-foreground">
+              {FOUNDER.role}
+            </p>
 
             <div className="mt-8 space-y-6 text-base leading-relaxed text-muted-foreground md:text-lg md:leading-[1.85]">
-              <p>
-                "I started Kloche Interiors with a simple realization: spaces are not just
-                structures to occupy; they are canvases for the soul," says founder and
-                principal interior designer <strong>Keith Locho</strong>. "After years of
-                practicing design in sub-Saharan Africa, I felt a deep pull to return to
-                honest, natural resources and create a studio on Karuna Road that honors
-                them."
-              </p>
-              <p>
-                Our studio rejects the cold, sterile assembly-line look that occupies much
-                of modern design. Instead, we spend our days collaborating directly with
-                local Kenyan wood artisans, veteran stonemasons, and textile curators.
-                We seek physical depth over digital render aesthetics — focusing on how
-                raw walnut furniture fits against fine-texture linen, and how light cascades
-                across lime-wash wall formulations.
-              </p>
+              {FOUNDER.paragraphs.map((p) => (
+                <p key={p}>{p}</p>
+              ))}
             </div>
-            <p className="mt-8 font-display text-xl italic text-foreground/80">
-              "A good interior isn't the one that photographs best. It's the one you're
-              relieved to come back to."
-            </p>
+            <blockquote className="mt-8 border-l-2 border-accent pl-6 font-display text-xl italic text-foreground/80">
+              “{FOUNDER.quote}”
+            </blockquote>
           </Reveal>
 
           <Reveal delay={0.12}>
@@ -124,9 +113,9 @@ function About() {
       <section className="section-y">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <SectionHeading
-            eyebrow="Philosophy"
-            title="Warmth first, trends never"
-            body="We design for the twenty years after the photographs. That means honest materials that age well, layouts that survive a growing family, and a palette that doesn't date the moment the season turns."
+            eyebrow={PHILOSOPHY.eyebrow}
+            title={PHILOSOPHY.title}
+            body={PHILOSOPHY.body}
             align="center"
           />
         </div>

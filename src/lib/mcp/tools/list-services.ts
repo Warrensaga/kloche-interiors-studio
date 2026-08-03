@@ -1,5 +1,5 @@
 import { defineTool } from "@lovable.dev/mcp-js";
-import { PROCESS, SERVICES } from "@/data/site";
+import { PHILOSOPHY, PILLARS, PROCESS, PROCESS_CLOSING, SERVICES } from "@/data/site";
 
 export default defineTool({
   name: "list_services",
@@ -16,7 +16,13 @@ export default defineTool({
       description: s.description,
       includes: s.includes,
     }));
-    const payload = { services, process: PROCESS };
+    const payload = {
+      services,
+      process: PROCESS,
+      processClosing: PROCESS_CLOSING,
+      whyKloche: PILLARS,
+      philosophy: PHILOSOPHY,
+    };
     return {
       content: [{ type: "text", text: JSON.stringify(payload, null, 2) }],
       structuredContent: payload,

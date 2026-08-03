@@ -37,6 +37,7 @@ export interface Project {
   name: string;
   location: string;
   style: string;
+  projectType: string;
   categories: Category[];
   cover: string;
   gallery: string[];
@@ -53,6 +54,7 @@ export const PROJECTS: Project[] = [
     name: "Karen Garden Villa",
     location: "Karen, Nairobi",
     style: "Warm Contemporary",
+    projectType: "Full Home Transformation",
     categories: ["Residential", "Living Spaces"],
     cover: u("1600607687939-ce8a6c25118c"),
     gallery: [
@@ -82,6 +84,7 @@ export const PROJECTS: Project[] = [
     name: "Westlands Penthouse",
     location: "Westlands, Nairobi",
     style: "Quiet Luxury",
+    projectType: "Residential Interior Design",
     categories: ["Residential", "Living Spaces"],
     cover: u("1600210492486-724fe5c67fb0"),
     gallery: [
@@ -106,6 +109,7 @@ export const PROJECTS: Project[] = [
     name: "Kilimani Kitchen Renewal",
     location: "Kilimani, Nairobi",
     style: "Earthy Minimal",
+    projectType: "Kitchen Renovation",
     categories: ["Kitchens", "Residential"],
     cover: u("1556909212-d5b604d0c90d"),
     gallery: [
@@ -130,6 +134,7 @@ export const PROJECTS: Project[] = [
     name: "Gigiri Studio Offices",
     location: "Gigiri, Nairobi",
     style: "Soft Modern Workplace",
+    projectType: "Commercial Fit-out",
     categories: ["Commercial"],
     cover: u("1497366754035-f200968a6e72"),
     gallery: [
@@ -154,6 +159,7 @@ export const PROJECTS: Project[] = [
     name: "Lavington Living Room",
     location: "Lavington, Nairobi",
     style: "Layered Neutrals",
+    projectType: "Interior Styling & Refresh",
     categories: ["Living Spaces", "Residential"],
     cover: u("1567767292278-a4f21aa2d36e"),
     gallery: [
@@ -178,6 +184,7 @@ export const PROJECTS: Project[] = [
     name: "Runda Family Home",
     location: "Runda, Nairobi",
     style: "Classic Warm",
+    projectType: "Full Property Transformation",
     categories: ["Residential"],
     cover: u("1600585154526-990dced4db0d"),
     gallery: [
@@ -218,94 +225,153 @@ export interface Service {
 
 export const SERVICES: Service[] = [
   {
-    id: "full-home-design",
+    id: "interior-design",
     icon: "Home",
-    title: "Full Home Design",
-    short: "End-to-end design for new builds and whole-home transformations.",
+    title: "Interior Design",
+    short:
+      "Thoughtful interiors that balance aesthetics, functionality and the way you live or work.",
     description:
-      "From empty shell to fully styled home. We take responsibility for the entire interior — layout, materials, joinery, lighting, furniture and the final styling — so you make decisions once and live with them for years.",
+      "We create thoughtful interiors that balance aesthetics, functionality and the way you live or work. Our design process brings together space planning, concept development, moodboards, material selections, colour palettes, lighting and 3D visualisation to create a clear design direction for your space.",
     includes: [
-      "Site survey and detailed brief",
-      "Concept direction and mood boards",
-      "Full 3D visuals of every key room",
-      "Material, finish and lighting schedules",
-      "Contractor coordination and site visits",
-      "Final install, styling and handover",
+      "Space Planning",
+      "Concept Development",
+      "Moodboards & Material Selection",
+      "Colour & Finishes",
+      "Lighting Design",
+      "3D Renders & Visualisation",
+      "Furniture & Styling",
     ],
     image: u("1616594039964-ae9021a400a0", 1200),
   },
   {
-    id: "space-planning",
-    icon: "Ruler",
-    title: "Space Planning",
-    short: "Layouts that fix how a home actually works day to day.",
+    id: "renovation-construction",
+    icon: "HardHat",
+    title: "Renovation & Construction",
+    short:
+      "Carefully managed renovation and construction works, from preparation to final handover.",
     description:
-      "Most homes don't need more square metres — they need better ones. We re-plan circulation, storage and sightlines, then hand you drawings your contractor can build from.",
+      "We transform existing spaces through carefully managed renovation and construction works, combining design thinking with practical on-site execution. Whether you're refreshing a single room or undertaking a complete property transformation, we coordinate the process from preparation and procurement to finishes and final handover.",
     includes: [
-      "Measured survey and existing plan",
-      "Two to three layout options",
-      "Furniture and storage planning",
-      "Lighting and socket positions",
-      "Technical drawing pack",
+      "Interior Renovations",
+      "Construction Management",
+      "Project Management",
+      "Procurement & Material Sourcing",
+      "Gypsum & Ceiling Works",
+      "Tiling & Flooring",
+      "Painting & Finishes",
+      "Electrical & Plumbing Coordination",
     ],
     image: u("1503174971373-b1f69850bded", 1200),
   },
   {
-    id: "furniture-sourcing",
+    id: "custom-interiors",
     icon: "Armchair",
-    title: "Furniture Sourcing & Styling",
-    short: "A curated mix of Kenyan makers and imported pieces.",
+    title: "Custom Interiors & Fittings",
+    short:
+      "Bespoke elements that bring character, functionality and cohesion to your space.",
     description:
-      "We work with a trusted network of Nairobi workshops, weavers and stone yards, complemented by selected imports — then handle procurement, delivery and the styling day.",
+      "We design and create custom elements that bring character, functionality and cohesion to your space. From kitchens and wardrobes to feature walls and bespoke furniture, every detail is considered to complement the overall design of your interior.",
     includes: [
-      "Furniture and lighting schedule",
-      "Custom pieces with local artisans",
-      "Procurement and delivery management",
-      "Textiles, rugs and window treatments",
-      "Art curation and full styling day",
+      "Custom Kitchens",
+      "Bathroom Design & Renovation",
+      "Wardrobes & Storage",
+      "Custom Furniture",
+      "TV Walls & Feature Walls",
+      "Wainscoting",
+      "Fluted & Decorative Wall Treatments",
     ],
-    image: u("1493663284031-b7e3aefcae8e", 1200),
+    image: u("1556909212-d5b604d0c90d", 1200),
   },
   {
-    id: "renovation-consulting",
-    icon: "HardHat",
-    title: "Renovation Consulting",
-    short: "Design guidance and site oversight through the messy part.",
+    id: "commercial-hospitality",
+    icon: "Building2",
+    title: "Commercial & Hospitality Spaces",
+    short:
+      "Commercial environments designed to work, feel distinctive and leave a lasting impression.",
     description:
-      "For clients already renovating who need a designer's eye on the decisions that are expensive to reverse — structure, finishes, joinery detailing and budget sequencing.",
+      "We create commercial environments that are designed to work, feel distinctive and leave a lasting impression. From offices and retail spaces to hospitality and Airbnb properties, we combine functionality, brand identity and thoughtful design to create spaces that people want to experience.",
     includes: [
-      "Feasibility and budget review",
-      "Finish and material specification",
-      "Joinery detailing and shop drawings",
-      "Fortnightly site inspections",
-      "Snagging and close-out report",
+      "Office Fit-outs",
+      "Retail & Commercial Interiors",
+      "Airbnb Styling & Transformation",
+      "Hospitality Spaces",
+      "Space Planning",
+      "Interior Renovations",
+      "Custom Fixtures & Fittings",
     ],
-    image: u("1581858726788-75bc0f6a952d", 1200),
+    image: u("1497366754035-f200968a6e72", 1200),
   },
 ];
 
 export const PROCESS = [
   {
     step: "01",
-    title: "Consultation",
-    body: "A two-hour visit to your space. We listen to how you live, take measurements and agree on budget and scope before anything is drawn.",
+    title: "Discover",
+    body: "We start by understanding your space, your needs, your lifestyle and your vision.",
   },
   {
     step: "02",
-    title: "Concept & Mood Board",
-    body: "Layouts, material palettes and 3D visuals. You see and approve the whole direction before a single order is placed.",
+    title: "Design",
+    body: "We develop the concept, space plan, materials, finishes and visual direction that bring the vision together.",
   },
   {
     step: "03",
-    title: "Sourcing & Execution",
-    body: "We procure, commission and coordinate — managing artisans, contractors and deliveries with weekly updates from site.",
+    title: "Plan",
+    body: "We define the scope, budget, materials, timelines and execution plan before work begins.",
   },
   {
     step: "04",
-    title: "The Reveal",
-    body: "Install, style and hand over. You walk into a finished home, complete with a care guide for every material we used.",
+    title: "Build",
+    body: "Our team coordinates the renovation, construction and interior works, managing the details from site to finish.",
+  },
+  {
+    step: "05",
+    title: "Transform",
+    body: "We complete the final details, styling and finishing touches to deliver a space that feels uniquely yours.",
   },
 ];
+
+export const PROCESS_CLOSING =
+  "One vision. One process. One beautifully transformed space.";
+
+export const PILLARS = [
+  {
+    title: "Design With Purpose",
+    body: "Every design decision is made with your space, lifestyle and needs in mind.",
+  },
+  {
+    title: "From Concept to Completion",
+    body: "We bring design and execution together, giving you a more seamless journey from the initial idea to the finished space.",
+  },
+  {
+    title: "Attention to Detail",
+    body: "We believe the difference between a good space and a great one often lies in the details.",
+  },
+  {
+    title: "Built Around You",
+    body: "Your space should feel personal. We listen, collaborate and create environments that reflect your lifestyle and identity.",
+  },
+];
+
+export const PHILOSOPHY = {
+  eyebrow: "Our Philosophy",
+  title: "Where Style Meets Lifestyle.",
+  body: "We believe the best spaces are not simply beautiful. They are intentional, functional and personal. At Kloche, we design around the way you live, work and experience your space — bringing together style, comfort and purpose to create interiors that feel uniquely yours.",
+};
+
+export const FOUNDER = {
+  name: "Keith Locho",
+  role: "Founder & Creative Director, Kloche Interiors & Construction",
+  quote:
+    "I believe great spaces aren't defined by how much you put into them, but by how intentionally you design them.",
+  paragraphs: [
+    "Kloche was born from a simple belief: the spaces we live and work in should do more than look good — they should feel right.",
+    "As the founder of Kloche Interiors & Construction, Keith Locho brings together a passion for design, project management and the art of transforming spaces. His approach is rooted in understanding how people experience their environments and turning that understanding into spaces that are functional, intentional and distinctly personal.",
+    "With experience across interior design, construction and project management, Keith leads Kloche with a hands-on approach — from developing the initial vision and coordinating the details to overseeing execution and bringing the final concept to life.",
+    "For Keith, every project is an opportunity to create something meaningful: a home that feels like yours, a workplace that inspires, or a commercial space that leaves a lasting impression.",
+    "At the heart of Kloche is a commitment to creating spaces where style meets lifestyle.",
+  ],
+};
 
 export const TESTIMONIALS = [
   {
