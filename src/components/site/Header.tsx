@@ -117,8 +117,9 @@ export function Header({ transparent = false }: { transparent?: boolean }) {
 
       <div
         className={cn(
-          "overflow-y-auto overscroll-contain border-t border-border bg-background transition-[max-height,opacity] duration-400 lg:hidden",
+          "overflow-y-auto overscroll-contain border-t border-border bg-background transition-[max-height,opacity] duration-500 lg:hidden",
           open ? "max-h-[calc(100svh-4.5rem)] opacity-100" : "max-h-0 opacity-0",
+
 
         )}
       >
