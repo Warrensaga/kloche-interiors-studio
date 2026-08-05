@@ -67,7 +67,7 @@ export function SmartImage({
   if (!optimizable) return img;
 
   return (
-    <picture className={pictureClassName}>
+    <picture className={cn("contents", pictureClassName)}>
       <source type="image/avif" srcSet={srcSet(src, widths, "avif")} sizes={sizes} />
       <source type="image/webp" srcSet={srcSet(src, widths, "webp")} sizes={sizes} />
       {img}
