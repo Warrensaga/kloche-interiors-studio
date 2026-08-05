@@ -25,17 +25,37 @@ export function SmartImage({
   ratio,
   sizes = SIZES.full,
   style,
+  className,
   ...rest
 }: Props) {
+  const ref = useRef<HTMLImageElement>(null);
+  const [hydrated, setHydrated] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+    if (ref.current?.complete) setLoaded(true);
+  }, []);
+
+  const pending = hydrated && !loaded;
+
   return (
     <img
       {...rest}
+      ref={ref}
       src={imageAt(src, baseWidth)}
       srcSet={srcSet(src, widths)}
       sizes={sizes}
       loading={priority ? "eager" : "lazy"}
       fetchPriority={priority ? "high" : "auto"}
       decoding={priority ? "sync" : "async"}
+      onLoad={() => setLoaded(true)}
+      onError={() => setLoaded(true)}
+      className={cn(
+        "transition-opacity duration-700 ease-out",
+        pending ? "opacity-0 bg-muted" : "opacity-100",
+        className,
+      )}
       style={ratio ? { aspectRatio: ratio, ...style } : style}
     />
   );
