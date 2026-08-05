@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ImgHTMLAttributes } from "react";
-import { SIZES, imageAt, srcSet } from "@/lib/images";
+import { SIZES, imageAt, isOptimizable, srcSet } from "@/lib/images";
 import { cn } from "@/lib/utils";
 
 type Props = Omit<ImgHTMLAttributes<HTMLImageElement>, "src" | "srcSet"> & {
@@ -11,11 +11,13 @@ type Props = Omit<ImgHTMLAttributes<HTMLImageElement>, "src" | "srcSet"> & {
   priority?: boolean;
   /** Intrinsic aspect ratio, e.g. "4 / 3" — prevents layout shift. */
   ratio?: string;
+  /** Wrapper <picture> class — rarely needed. */
+  pictureClassName?: string;
 };
 
 /**
- * Responsive image with srcset/sizes, explicit aspect ratio and sensible
- * above/below-the-fold loading defaults.
+ * Responsive image with AVIF/WebP negotiation, srcset/sizes, explicit aspect
+ * ratio and sensible above/below-the-fold loading defaults.
  */
 export function SmartImage({
   src,
@@ -26,6 +28,7 @@ export function SmartImage({
   sizes = SIZES.full,
   style,
   className,
+  pictureClassName,
   ...rest
 }: Props) {
   const ref = useRef<HTMLImageElement>(null);
@@ -38,8 +41,9 @@ export function SmartImage({
   }, []);
 
   const pending = hydrated && !loaded;
+  const optimizable = isOptimizable(src);
 
-  return (
+  const img = (
     <img
       {...rest}
       ref={ref}
@@ -58,6 +62,16 @@ export function SmartImage({
       )}
       style={ratio ? { aspectRatio: ratio, ...style } : style}
     />
+  );
+
+  if (!optimizable) return img;
+
+  return (
+    <picture className={cn("contents", pictureClassName)}>
+      <source type="image/avif" srcSet={srcSet(src, widths, "avif")} sizes={sizes} />
+      <source type="image/webp" srcSet={srcSet(src, widths, "webp")} sizes={sizes} />
+      {img}
+    </picture>
   );
 }
 

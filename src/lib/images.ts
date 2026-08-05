@@ -1,19 +1,30 @@
-const DEFAULT_WIDTHS = [400, 640, 828, 1080, 1400, 1920, 2400];
+const DEFAULT_WIDTHS = [320, 400, 640, 828, 1080, 1400, 1920, 2400];
+
+export type ImageFormat = "avif" | "webp" | "auto";
 
 /** True for the Unsplash CDN URLs used across the site. */
 function isUnsplash(url: string) {
   return url.startsWith("https://images.unsplash.com/");
 }
 
-/** Rewrite an Unsplash URL to a specific rendered width. */
-export function imageAt(url: string, width: number): string {
+export function isOptimizable(url: string) {
+  return isUnsplash(url);
+}
+
+/**
+ * Rewrite an Unsplash URL to a specific rendered width and (optionally) an
+ * explicit modern format. `auto` lets the CDN content-negotiate.
+ */
+export function imageAt(url: string, width: number, format: ImageFormat = "auto"): string {
   if (!isUnsplash(url)) return url;
   try {
     const u = new URL(url);
     u.searchParams.set("auto", "format");
     u.searchParams.set("fit", "crop");
     u.searchParams.set("w", String(width));
-    if (!u.searchParams.get("q")) u.searchParams.set("q", "80");
+    if (!u.searchParams.get("q")) u.searchParams.set("q", "75");
+    if (format === "auto") u.searchParams.delete("fm");
+    else u.searchParams.set("fm", format);
     return u.toString();
   } catch {
     return url;
@@ -24,9 +35,13 @@ export function imageAt(url: string, width: number): string {
  * Build a width-descriptor srcset. Widths above the source's own rendered
  * width are still valid — Unsplash resizes from the original asset.
  */
-export function srcSet(url: string, widths: number[] = DEFAULT_WIDTHS): string | undefined {
+export function srcSet(
+  url: string,
+  widths: number[] = DEFAULT_WIDTHS,
+  format: ImageFormat = "auto",
+): string | undefined {
   if (!isUnsplash(url)) return undefined;
-  return widths.map((w) => `${imageAt(url, w)} ${w}w`).join(", ");
+  return widths.map((w) => `${imageAt(url, w, format)} ${w}w`).join(", ");
 }
 
 /** Common `sizes` presets matching the site's grid breakpoints. */
@@ -37,3 +52,5 @@ export const SIZES = {
   quarter: "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw",
   content: "(min-width: 1024px) 50vw, (min-width: 640px) 90vw, 100vw",
 } as const;
+
+export { DEFAULT_WIDTHS };
