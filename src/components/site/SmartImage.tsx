@@ -1,5 +1,6 @@
-import type { ImgHTMLAttributes } from "react";
+import { useEffect, useRef, useState, type ImgHTMLAttributes } from "react";
 import { SIZES, imageAt, srcSet } from "@/lib/images";
+import { cn } from "@/lib/utils";
 
 type Props = Omit<ImgHTMLAttributes<HTMLImageElement>, "src" | "srcSet"> & {
   src: string;
