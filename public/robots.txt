@@ -5,4 +5,4 @@ Disallow: /mcp
 Disallow: /.mcp/
 Disallow: /.well-known/
 
-Sitemap: https://kloche-interiors-studio.vercel.app/sitemap.xml
+Sitemap: https://www.klocheinteriors.co.ke/sitemap.xml
