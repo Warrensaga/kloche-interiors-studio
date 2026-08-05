@@ -122,9 +122,13 @@
   --muted-foreground: oklch(0.75 0.016 70);
   --accent: oklch(0.72 0.115 40);
   --accent-foreground: oklch(0.16 0.01 60);
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 15%);
+  --border: oklch(1 0 0 / 18%);
+  --input: oklch(1 0 0 / 22%);
   --ring: oklch(0.72 0.115 40);
+  /* Brand tokens re-tuned for contrast on dark surfaces. */
+  --terracotta: oklch(0.72 0.115 40);
+  --taupe: oklch(0.76 0.02 66);
+  --forest: oklch(0.72 0.06 155);
 }
 
 @layer base {
