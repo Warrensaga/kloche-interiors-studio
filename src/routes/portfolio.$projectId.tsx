@@ -129,13 +129,13 @@ function ProjectDetail() {
       <section className="section-y">
         <div className="mx-auto grid max-w-7xl gap-14 px-5 md:grid-cols-[1.3fr_0.7fr] md:px-8">
           <Reveal>
-            <p className="eyebrow">The Project</p>
+            <h2 className="eyebrow">The Project</h2>
             <p className="mt-5 text-lg leading-relaxed text-foreground/85 md:text-xl">
               {project.description}
             </p>
           </Reveal>
           <Reveal delay={0.1} className="rounded-3xl bg-secondary/70 p-8">
-            <p className="eyebrow">Scope of Work</p>
+            <h2 className="eyebrow">Scope of Work</h2>
             <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
               {project.scope.map((s) => (
                 <li key={s} className="flex gap-3">
@@ -201,7 +201,7 @@ function ProjectDetail() {
 
       <section className="section-y">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <p className="eyebrow">Next projects</p>
+          <h2 className="eyebrow">Next projects</h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {PROJECTS.filter((p) => p.id !== project.id)
               .slice(0, 3)
