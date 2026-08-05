@@ -146,7 +146,7 @@ function Contact() {
         <div className="mx-auto grid max-w-7xl gap-14 px-5 md:grid-cols-[1.15fr_0.85fr] md:px-8">
           <Reveal>
             <form onSubmit={onSubmit} className="rounded-3xl bg-card p-7 shadow-soft md:p-9">
-              <p className="eyebrow">Project enquiry</p>
+              <h2 className="eyebrow">Project enquiry</h2>
               <div className="mt-7 grid gap-5 sm:grid-cols-2">
                 <label className="block text-xs uppercase tracking-[0.15em] text-muted-foreground">
                   Name
@@ -297,7 +297,7 @@ function Contact() {
             </a>
 
             <div className="rounded-3xl border border-border/70 bg-card p-7 shadow-soft">
-              <p className="eyebrow">Studio</p>
+              <h2 className="eyebrow">Studio</h2>
               <ul className="mt-5 space-y-4 text-sm text-muted-foreground">
                 <li className="flex gap-3">
                   <MapPin size={16} className="mt-0.5 shrink-0 text-accent" />
@@ -345,7 +345,7 @@ function Contact() {
       <section className="pb-24">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <p className="eyebrow">Latest on Instagram</p>
+            <h2 className="eyebrow">Latest on Instagram</h2>
             <a
               href={STUDIO.instagram}
               target="_blank"
