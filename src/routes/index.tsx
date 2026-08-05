@@ -109,7 +109,7 @@ function Home() {
         >
 
           <Reveal delay={0.1}>
-            <p className="eyebrow text-cream/70">Interior Design Studio · Nairobi, Kenya</p>
+            <p className="eyebrow text-cream/85">Interior Design Studio · Nairobi, Kenya</p>
           </Reveal>
           <Reveal delay={0.2}>
             <h1 className="mt-5 max-w-4xl text-4xl leading-[1.05] text-cream sm:text-5xl md:text-7xl">

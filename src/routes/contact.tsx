@@ -72,7 +72,7 @@ export const Route = createFileRoute("/contact")({
 });
 
 const inputClass =
-  "mt-2 w-full rounded-2xl border border-border bg-card px-4 py-3.5 text-sm outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-accent";
+  "mt-2 w-full rounded-2xl border border-border bg-card px-4 py-3.5 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-accent";
 
 const BUDGET_OPTIONS = [
   "Under KES 300,000",
