@@ -489,7 +489,7 @@ function Pricing() {
       <section className="section-y bg-charcoal text-cream">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <Reveal>
-            <p className="eyebrow text-cream/60">Our process</p>
+            <p className="eyebrow text-cream/80">Our process</p>
             <h2 className="mt-4 text-3xl md:text-4xl">From first conversation to handover</h2>
           </Reveal>
           <div className="mt-14 grid gap-10 md:grid-cols-5">
@@ -498,7 +498,7 @@ function Pricing() {
                 <div className="border-t border-cream/20 pt-6">
                   <span className="font-display text-3xl text-terracotta">{s.n}</span>
                   <h3 className="mt-3 font-display text-xl">{s.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-cream/70">{s.body}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-cream/85">{s.body}</p>
                 </div>
               </Reveal>
             ))}
@@ -582,7 +582,7 @@ function Pricing() {
         <div className="mx-auto max-w-3xl px-5 text-center md:px-8">
           <Reveal>
             <h2 className="text-3xl md:text-5xl">Ready to transform your space?</h2>
-            <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-cream/70 md:text-base">
+            <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-cream/85 md:text-base">
               Whether you're planning a complete renovation, refreshing a single room or creating a
               commercial space from the ground up, we'd love to hear about your vision. Let's
               discuss your project and prepare a proposal tailored specifically to your needs.

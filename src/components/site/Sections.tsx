@@ -26,7 +26,7 @@ export function PageHero({
       <div className="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-charcoal/50 to-charcoal/40" />
       <div className="relative mx-auto w-full max-w-7xl px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-40">
         <Reveal>
-          <p className="eyebrow text-cream/70">{eyebrow}</p>
+          <p className="eyebrow text-cream/85">{eyebrow}</p>
           <h1 className="mt-4 max-w-3xl text-4xl text-cream md:text-6xl">{title}</h1>
           <p className="mt-5 max-w-xl text-base leading-relaxed text-cream/80">{subtitle}</p>
         </Reveal>
@@ -47,7 +47,7 @@ export function CtaBanner({
       <div className="mx-auto max-w-3xl px-5 text-center md:px-8">
         <Reveal>
           <h2 className="text-3xl md:text-5xl">{title}</h2>
-          <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-cream/70 md:text-base">
+          <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-cream/85 md:text-base">
             {body}
           </p>
           <Link

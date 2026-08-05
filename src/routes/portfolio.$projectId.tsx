@@ -114,12 +114,12 @@ function ProjectDetail() {
           <Reveal>
             <Link
               to="/portfolio"
-              className="inline-flex items-center gap-2 text-[0.7rem] uppercase tracking-[0.2em] text-cream/70 transition-colors hover:text-cream"
+              className="inline-flex items-center gap-2 text-[0.7rem] uppercase tracking-[0.2em] text-cream/85 transition-colors hover:text-cream"
             >
               <ArrowLeft size={14} /> All projects
             </Link>
             <h1 className="mt-6 max-w-3xl text-4xl text-cream md:text-6xl">{project.name}</h1>
-            <p className="mt-4 text-sm uppercase tracking-[0.2em] text-cream/70">
+            <p className="mt-4 text-sm uppercase tracking-[0.2em] text-cream/85">
               {project.location} · {project.style} · {project.year}
             </p>
           </Reveal>

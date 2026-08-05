@@ -38,7 +38,7 @@ export function ErrorState({
 
       <div className="relative mx-auto w-full max-w-3xl px-5 py-28 text-center md:px-8 md:py-36">
         <Reveal>
-          <p className="eyebrow text-cream/60">{eyebrow}</p>
+          <p className="eyebrow text-cream/80">{eyebrow}</p>
           {code ? (
             <p className="font-display mt-6 text-7xl leading-none text-accent md:text-8xl">
               {code}
@@ -80,7 +80,7 @@ export function ErrorState({
                 <li key={l.to}>
                   <Link
                     to={l.to}
-                    className="text-[0.7rem] uppercase tracking-[0.2em] text-cream/60 transition-colors hover:text-cream"
+                    className="text-[0.7rem] uppercase tracking-[0.2em] text-cream/80 transition-colors hover:text-cream"
                   >
                     {l.label}
                   </Link>
