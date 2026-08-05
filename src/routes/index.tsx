@@ -99,7 +99,7 @@ function Home() {
           fetchPriority="high"
           decoding="sync"
           alt="A softly lit contemporary living room designed by Kloche Interiors"
-          className="absolute inset-0 h-[118%] w-full object-cover"
+          className="absolute inset-0 h-[118%] w-full bg-charcoal object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-charcoal/55 via-charcoal/45 to-charcoal/90" />
 

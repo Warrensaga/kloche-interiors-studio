@@ -60,10 +60,14 @@ export const Route = createFileRoute("/contact")({
       },
     ],
   }),
-  validateSearch: (search: Record<string, unknown>) => ({
-    budget: typeof search["budget"] === "string" ? (search["budget"] as string) : undefined,
-    service: typeof search["service"] === "string" ? (search["service"] as string) : undefined,
-  }),
+  validateSearch: (
+    search: Record<string, unknown>,
+  ): { budget?: string; service?: string } => {
+    const out: { budget?: string; service?: string } = {};
+    if (typeof search["budget"] === "string") out.budget = search["budget"];
+    if (typeof search["service"] === "string") out.service = search["service"];
+    return out;
+  },
   component: Contact,
 });
 
