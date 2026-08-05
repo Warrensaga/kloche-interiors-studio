@@ -21,7 +21,7 @@ export const Route = createFileRoute("/portfolio/$projectId")({
       };
     }
     const p = loaderData.project;
-    const title = `${p.name} | Interior Design, ${p.location}`;
+    const title = `${p.name} | Interiors, ${p.location}`;
     return {
       meta: [
         { title },
@@ -63,6 +63,30 @@ export const Route = createFileRoute("/portfolio/$projectId")({
                 item: absoluteUrl(`/portfolio/${p.id}`),
               },
             ],
+          }),
+        },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: `${p.name} — ${p.projectType} in ${p.location}`,
+            description: p.description,
+            image: [p.cover],
+            url: absoluteUrl(`/portfolio/${p.id}`),
+            mainEntityOfPage: absoluteUrl(`/portfolio/${p.id}`),
+            author: { "@type": "Organization", name: "Kloche Interiors" },
+            publisher: {
+              "@type": "Organization",
+              name: "Kloche Interiors",
+              url: absoluteUrl("/"),
+            },
+            about: {
+              "@type": "Service",
+              serviceType: p.projectType,
+              areaServed: p.location,
+              provider: { "@type": "Organization", name: "Kloche Interiors" },
+            },
           }),
         },
       ],
