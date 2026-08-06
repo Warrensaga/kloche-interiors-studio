@@ -32,7 +32,7 @@ function AdminLayout() {
     await queryClient.cancelQueries();
     queryClient.clear();
     await supabase.auth.signOut();
-    navigate({ to: "/auth", search: { redirect: "" }, replace: true });
+    navigate({ to: "/auth", search: { redirect: undefined }, replace: true });
   }
 
   return (
