@@ -79,10 +79,57 @@ export const Route = createFileRoute("/")({
       },
     ],
   }),
+  loader: () => listHomepageSections(),
+  errorComponent: ({ error }) => (
+    <div className="section-y mx-auto max-w-3xl px-5 text-center" role="alert">
+      <h2 className="text-2xl">Something went wrong</h2>
+      <p className="mt-3 text-sm text-muted-foreground">{error.message}</p>
+    </div>
+  ),
+  notFoundComponent: () => (
+    <div className="section-y mx-auto max-w-3xl px-5 text-center">Page not found.</div>
+  ),
   component: Home,
 });
 
 function Home() {
+  const sections = Route.useLoaderData();
+
+  return (
+    <>
+      {sections.map((s) => (
+        <SectionRenderer key={s.id} section={s} />
+      ))}
+    </>
+  );
+}
+
+function SectionRenderer({ section: s }: { section: HomepageSection }) {
+  switch (s.kind) {
+    case "hero":
+      return <Hero section={s} />;
+    case "richtext":
+      return <StudioIntro section={s} />;
+    case "projects":
+      return <FeaturedProjects section={s} />;
+    case "services":
+      return <ServicesPreview section={s} />;
+    case "pillars":
+      return <Pillars section={s} />;
+    case "stats":
+      return <Stats section={s} />;
+    case "philosophy":
+      return <Philosophy section={s} />;
+    case "testimonials":
+      return <Testimonials section={s} />;
+    case "cta":
+      return <CtaBanner title={s.title || undefined} body={s.body || undefined} />;
+    default:
+      return null;
+  }
+}
+
+function Hero({ section }: { section: HomepageSection }) {
   const heroRef = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
@@ -92,54 +139,44 @@ function Home() {
   const fade = reduced ? undefined : fadeRaw;
 
   return (
-    <>
-      {/* Hero */}
-      <section
-        ref={heroRef}
-        className="relative flex min-h-[100svh] flex-col overflow-hidden"
+    <section ref={heroRef} className="relative flex min-h-[100svh] flex-col overflow-hidden">
+      <motion.img
+        style={{ y }}
+        src={imageAt(IMAGES.hero, 1920)}
+        srcSet={srcSet(IMAGES.hero)}
+        sizes={SIZES.full}
+        fetchPriority="high"
+        decoding="sync"
+        alt="A softly lit contemporary living room designed by Kloche Interiors"
+        className="absolute inset-0 h-[118%] w-full bg-charcoal object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-charcoal/55 via-charcoal/45 to-charcoal/90" />
+
+      <motion.div
+        style={{ opacity: fade }}
+        className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-5 pb-14 pt-28 md:px-8 md:pb-20 md:pt-32"
       >
-        <motion.img
-          style={{ y }}
-          src={imageAt(IMAGES.hero, 1920)}
-          srcSet={srcSet(IMAGES.hero)}
-          sizes={SIZES.full}
-          fetchPriority="high"
-          decoding="sync"
-          alt="A softly lit contemporary living room designed by Kloche Interiors"
-          className="absolute inset-0 h-[118%] w-full bg-charcoal object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-charcoal/55 via-charcoal/45 to-charcoal/90" />
+        <Reveal delay={0.1}>
+          <p className="eyebrow text-cream/85">{section.eyebrow}</p>
+        </Reveal>
+        <Reveal delay={0.2}>
+          <h1 className="mt-5 max-w-4xl text-4xl leading-[1.05] text-cream sm:text-5xl md:text-7xl">
+            {section.title}
+          </h1>
+        </Reveal>
+        <Reveal delay={0.32}>
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-cream/80">{section.body}</p>
+        </Reveal>
+        <Reveal delay={0.42}>
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-4 text-[0.75rem] uppercase tracking-[0.2em] text-accent-foreground transition-opacity hover:opacity-90"
+            >
+              {section.content.ctaLabel ?? "Start Your Transformation"} <ArrowRight size={15} />
+            </Link>
 
-        <motion.div
-          style={{ opacity: fade }}
-          className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-5 pb-14 pt-28 md:px-8 md:pb-20 md:pt-32"
-        >
-
-          <Reveal delay={0.1}>
-            <p className="eyebrow text-cream/85">Interior Design Studio · Nairobi, Kenya</p>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <h1 className="mt-5 max-w-4xl text-4xl leading-[1.05] text-cream sm:text-5xl md:text-7xl">
-              Interiors that feel like home
-            </h1>
-          </Reveal>
-          <Reveal delay={0.32}>
-            <p className="mt-6 max-w-2xl text-base leading-relaxed text-cream/80">
-              At Kloche Interiors &amp; Construction, we design and transform spaces that feel
-              as good as they look. From thoughtful interior design and renovations to
-              construction finishes and custom interiors, we bring your vision to life through
-              intentional design, quality craftsmanship and meticulous execution.
-            </p>
-          </Reveal>
-          <Reveal delay={0.42}>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-4 text-[0.75rem] uppercase tracking-[0.2em] text-accent-foreground transition-opacity hover:opacity-90"
-              >
-                Start Your Transformation <ArrowRight size={15} />
-              </Link>
-
+            {section.content.showWhatsapp !== false && (
               <a
                 href={whatsappLink()}
                 target="_blank"
@@ -148,183 +185,213 @@ function Home() {
               >
                 <MessageCircle size={16} /> WhatsApp us
               </a>
-            </div>
-          </Reveal>
-        </motion.div>
-      </section>
+            )}
+          </div>
+        </Reveal>
+      </motion.div>
+    </section>
+  );
+}
 
-      {/* Philosophy strip */}
-      <section className="section-y">
-        <div className="mx-auto grid max-w-7xl gap-10 px-5 md:grid-cols-[0.9fr_1.1fr] md:px-8">
-          <Reveal>
-            <p className="eyebrow">The Studio</p>
-            <h2 className="mt-4 text-3xl md:text-4xl">
-              We transform spaces into places you love to live in
-            </h2>
-          </Reveal>
-          <Reveal delay={0.1} className="flex flex-col justify-center gap-5">
-            <p className="text-base leading-relaxed text-muted-foreground">
-              Kloche Interiors &amp; Construction is an interior design and construction
-              company dedicated to creating thoughtful, functional and beautifully considered
-              spaces.
+function StudioIntro({ section }: { section: HomepageSection }) {
+  const paragraphs = section.content.paragraphs ?? (section.body ? [section.body] : []);
+  return (
+    <section className="section-y">
+      <div className="mx-auto grid max-w-7xl gap-10 px-5 md:grid-cols-[0.9fr_1.1fr] md:px-8">
+        <Reveal>
+          <p className="eyebrow">{section.eyebrow}</p>
+          <h2 className="mt-4 text-3xl md:text-4xl">{section.title}</h2>
+        </Reveal>
+        <Reveal delay={0.1} className="flex flex-col justify-center gap-5">
+          {paragraphs.map((p, i) => (
+            <p key={i} className="text-base leading-relaxed text-muted-foreground">
+              {p}
             </p>
-            <p className="text-base leading-relaxed text-muted-foreground">
-              We work across residential and commercial projects, bringing together interior
-              design, renovation and construction expertise to create spaces that reflect the
-              people who use them.
-            </p>
-            <p className="text-base leading-relaxed text-muted-foreground">
-              From the first idea and initial concept to the final finish, we manage the
-              details that turn a space into something truly personal. Our approach combines
-              creativity with practical execution, ensuring that every project is designed
-              with purpose and delivered with care.
-            </p>
-            <p className="text-base leading-relaxed text-muted-foreground">
-              Because to us, great interiors aren’t simply about how a space looks. They’re
-              about how it makes you feel and how well it serves the life lived within it.
-            </p>
-
+          ))}
+          {section.content.linkLabel && (
             <Link
               to="/about"
               className="group inline-flex w-fit items-center gap-2 text-[0.75rem] uppercase tracking-[0.2em] text-accent"
             >
-              Our story
+              {section.content.linkLabel}
+              <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+            </Link>
+          )}
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function FeaturedProjects({ section }: { section: HomepageSection }) {
+  const limit = section.content.limit ?? 4;
+  return (
+    <section className="section-y bg-secondary/50">
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <SectionHeading eyebrow={section.eyebrow} title={section.title} body={section.body} />
+          <Reveal delay={0.1}>
+            <Link
+              to="/portfolio"
+              className="group inline-flex items-center gap-2 text-[0.75rem] uppercase tracking-[0.2em] text-accent"
+            >
+              {section.content.linkLabel ?? "View full portfolio"}
               <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
             </Link>
           </Reveal>
         </div>
-      </section>
 
-      {/* Featured projects */}
-      <section className="section-y bg-secondary/50">
-        <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <SectionHeading
-              eyebrow="Selected Work"
-              title="Featured projects"
-              body="A few recent spaces, from a Karen family villa to a creative agency in Gigiri."
-            />
-            <Reveal delay={0.1}>
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {PROJECTS.slice(0, limit).map((p, i) => (
+            <Reveal key={p.id} delay={i * 0.08}>
               <Link
-                to="/portfolio"
-                className="group inline-flex items-center gap-2 text-[0.75rem] uppercase tracking-[0.2em] text-accent"
+                to="/portfolio/$projectId"
+                params={{ projectId: p.id }}
+                className="group block overflow-hidden rounded-3xl bg-card shadow-soft hover-lift"
               >
-                View full portfolio
-                <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                <div className="aspect-4/5 overflow-hidden">
+                  <SmartImage
+                    src={p.cover}
+                    alt={`${p.name} interior in ${p.location}`}
+                    baseWidth={640}
+                    sizes={SIZES.quarter}
+                    ratio="4 / 5"
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-5">
+                  <p className="font-display text-lg">{p.name}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{p.location}</p>
+                  <span className="mt-4 inline-flex rounded-full bg-secondary px-3 py-1 text-[0.65rem] uppercase tracking-[0.15em] text-muted-foreground">
+                    {p.style}
+                  </span>
+                </div>
               </Link>
             </Reveal>
-          </div>
-
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {PROJECTS.slice(0, 4).map((p, i) => (
-              <Reveal key={p.id} delay={i * 0.08}>
-                <Link
-                  to="/portfolio/$projectId"
-                  params={{ projectId: p.id }}
-                  className="group block overflow-hidden rounded-3xl bg-card shadow-soft hover-lift"
-                >
-                  <div className="aspect-4/5 overflow-hidden">
-                    <SmartImage
-                      src={p.cover}
-                      alt={`${p.name} interior in ${p.location}`}
-                      baseWidth={640}
-                      sizes={SIZES.quarter}
-                      ratio="4 / 5"
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="p-5">
-                    <p className="font-display text-lg">{p.name}</p>
-                    <p className="mt-1 text-xs text-muted-foreground">{p.location}</p>
-                    <span className="mt-4 inline-flex rounded-full bg-secondary px-3 py-1 text-[0.65rem] uppercase tracking-[0.15em] text-muted-foreground">
-                      {p.style}
-                    </span>
-                  </div>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
+          ))}
         </div>
-      </section>
-
-      {/* Services preview */}
-      <section className="section-y">
-        <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <SectionHeading eyebrow="What We Do" title="Services" />
-            <Reveal delay={0.1}>
-              <Link
-                to="/services"
-                className="group inline-flex items-center gap-2 text-[0.75rem] uppercase tracking-[0.2em] text-accent"
-              >
-                See all services
-                <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-              </Link>
-            </Reveal>
-          </div>
-
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {SERVICES.map((s, i) => (
-              <Reveal key={s.id} delay={i * 0.07}>
-                <div className="h-full rounded-3xl border border-border/70 bg-card p-7 shadow-soft hover-lift">
-                  <span className="font-display text-2xl text-accent">0{i + 1}</span>
-                  <h3 className="mt-4 text-xl">{s.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.short}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Kloche */}
-      <section className="section-y bg-secondary/50">
-        <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <SectionHeading eyebrow="Why Kloche?" title="Four pillars we work by" align="center" />
-          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {PILLARS.map((p, i) => (
-              <Reveal key={p.title} delay={i * 0.08}>
-                <div className="h-full rounded-3xl border border-border/70 bg-card p-7 shadow-soft hover-lift">
-                  <span className="font-display text-2xl text-accent">0{i + 1}</span>
-                  <h3 className="mt-4 text-xl">{p.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Philosophy */}
-      <section className="section-y">
-        <div className="mx-auto max-w-3xl px-5 text-center md:px-8">
-          <Reveal>
-            <p className="eyebrow">{PHILOSOPHY.eyebrow}</p>
-            <h2 className="mt-4 text-3xl md:text-5xl">{PHILOSOPHY.title}</h2>
-            <p className="mt-5 text-base leading-relaxed text-muted-foreground">
-              {PHILOSOPHY.body}
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      <Testimonials />
-      <CtaBanner />
-
-    </>
+      </div>
+    </section>
   );
 }
 
-function Testimonials() {
+function ServicesPreview({ section }: { section: HomepageSection }) {
+  return (
+    <section className="section-y">
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <SectionHeading eyebrow={section.eyebrow} title={section.title} body={section.body} />
+          <Reveal delay={0.1}>
+            <Link
+              to="/services"
+              className="group inline-flex items-center gap-2 text-[0.75rem] uppercase tracking-[0.2em] text-accent"
+            >
+              {section.content.linkLabel ?? "See all services"}
+              <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+            </Link>
+          </Reveal>
+        </div>
+
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {SERVICES.map((s, i) => (
+            <Reveal key={s.id} delay={i * 0.07}>
+              <div className="h-full rounded-3xl border border-border/70 bg-card p-7 shadow-soft hover-lift">
+                <span className="font-display text-2xl text-accent">0{i + 1}</span>
+                <h3 className="mt-4 text-xl">{s.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.short}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Pillars({ section }: { section: HomepageSection }) {
+  return (
+    <section className="section-y bg-secondary/50">
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
+        <SectionHeading
+          eyebrow={section.eyebrow}
+          title={section.title}
+          body={section.body}
+          align="center"
+        />
+        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {PILLARS.map((p, i) => (
+            <Reveal key={p.title} delay={i * 0.08}>
+              <div className="h-full rounded-3xl border border-border/70 bg-card p-7 shadow-soft hover-lift">
+                <span className="font-display text-2xl text-accent">0{i + 1}</span>
+                <h3 className="mt-4 text-xl">{p.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Stats({ section }: { section: HomepageSection }) {
+  const items = (section.content.items ?? []) as StatItem[];
+  if (!items.length) return null;
+  return (
+    <section className="section-y">
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
+        {(section.eyebrow || section.title) && (
+          <SectionHeading
+            eyebrow={section.eyebrow}
+            title={section.title}
+            body={section.body}
+            align="center"
+          />
+        )}
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {items.map((it, i) => (
+            <Reveal key={i} delay={i * 0.08}>
+              <div className="rounded-3xl border border-border/70 bg-card p-7 text-center shadow-soft">
+                <p className="font-display text-4xl text-accent">{it.value}</p>
+                <p className="mt-3 text-sm text-muted-foreground">{it.label}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Philosophy({ section }: { section: HomepageSection }) {
+  return (
+    <section className="section-y">
+      <div className="mx-auto max-w-3xl px-5 text-center md:px-8">
+        <Reveal>
+          <p className="eyebrow">{section.eyebrow || PHILOSOPHY.eyebrow}</p>
+          <h2 className="mt-4 text-3xl md:text-5xl">{section.title || PHILOSOPHY.title}</h2>
+          <p className="mt-5 text-base leading-relaxed text-muted-foreground">
+            {section.body || PHILOSOPHY.body}
+          </p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function Testimonials({ section }: { section: HomepageSection }) {
+  const items = ((section.content.items ?? []) as TestimonialItem[]).length
+    ? (section.content.items as TestimonialItem[])
+    : TESTIMONIALS;
   const [i, setI] = useState(0);
-  const t = TESTIMONIALS[i];
-  const go = (d: number) => setI((v) => (v + d + TESTIMONIALS.length) % TESTIMONIALS.length);
+  const t = items[i % items.length]!;
+  const go = (d: number) => setI((v) => (v + d + items.length) % items.length);
 
   return (
     <section className="section-y bg-secondary/50">
       <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
         <Reveal>
-          <p className="eyebrow">Kind Words</p>
+          <p className="eyebrow">{section.eyebrow || "Kind Words"}</p>
           <motion.blockquote
             key={i}
             initial={{ opacity: 0, y: 12 }}
@@ -346,7 +413,7 @@ function Testimonials() {
               <ChevronLeft size={17} />
             </button>
             <div className="flex gap-1.5">
-              {TESTIMONIALS.map((_, idx) => (
+              {items.map((_, idx) => (
                 <button
                   key={idx}
                   aria-label={`Testimonial ${idx + 1}`}
@@ -368,3 +435,4 @@ function Testimonials() {
     </section>
   );
 }
+
