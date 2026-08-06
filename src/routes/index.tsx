@@ -8,6 +8,13 @@ import { CtaBanner, SectionHeading } from "@/components/site/Sections";
 import { absoluteUrl, breadcrumbLd } from "@/lib/seo";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 import { imageAt, srcSet } from "@/lib/images";
+import {
+  listHomepageSections,
+  type HomepageSection,
+  type StatItem,
+  type TestimonialItem,
+} from "@/lib/homepage.functions";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
