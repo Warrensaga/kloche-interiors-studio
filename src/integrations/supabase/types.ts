@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      homepage_sections: {
+        Row: {
+          body: string
+          content: Json
+          created_at: string
+          eyebrow: string
+          id: string
+          kind: string
+          section_key: string
+          sort_order: number
+          title: string
+          updated_at: string
+          visible: boolean
+        }
+        Insert: {
+          body?: string
+          content?: Json
+          created_at?: string
+          eyebrow?: string
+          id?: string
+          kind: string
+          section_key: string
+          sort_order?: number
+          title?: string
+          updated_at?: string
+          visible?: boolean
+        }
+        Update: {
+          body?: string
+          content?: Json
+          created_at?: string
+          eyebrow?: string
+          id?: string
+          kind?: string
+          section_key?: string
+          sort_order?: number
+          title?: string
+          updated_at?: string
+          visible?: boolean
+        }
+        Relationships: []
+      }
       project_images: {
         Row: {
           alt: string
