@@ -93,11 +93,11 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const sections = Route.useLoaderData();
+  const sections = Route.useLoaderData() as HomepageSection[];
 
   return (
     <>
-      {sections.map((s) => (
+      {sections.map((s: HomepageSection) => (
         <SectionRenderer key={s.id} section={s} />
       ))}
     </>
