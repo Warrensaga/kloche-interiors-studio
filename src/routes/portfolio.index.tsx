@@ -1,16 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { CATEGORIES, PROJECTS, type Category } from "@/data/site";
+import { CATEGORIES, PROJECTS, type Category, type Project } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { PageHero, CtaBanner, SectionHeading } from "@/components/site/Sections";
 import { BeforeAfter } from "@/components/site/BeforeAfter";
 import { absoluteUrl, breadcrumbLd } from "@/lib/seo";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
+import { listPublishedProjects } from "@/lib/projects.functions";
 
 const HERO = PROJECTS[1].cover;
 
 export const Route = createFileRoute("/portfolio/")({
+  loader: () => listPublishedProjects(),
   head: () => ({
     meta: [
       { title: "Portfolio — Kloche Interiors Nairobi" },
@@ -62,12 +64,13 @@ export const Route = createFileRoute("/portfolio/")({
 });
 
 function Portfolio() {
+  const all = Route.useLoaderData() as Project[];
   const [filter, setFilter] = useState<Category | "All">("All");
   const projects = useMemo(
-    () => (filter === "All" ? PROJECTS : PROJECTS.filter((p) => p.categories.includes(filter))),
-    [filter],
+    () => (filter === "All" ? all : all.filter((p) => p.categories.includes(filter))),
+    [filter, all],
   );
-  const baProject = PROJECTS.find((p) => p.beforeAfter)!;
+  const baProject = all.find((p) => p.beforeAfter) ?? PROJECTS.find((p) => p.beforeAfter)!;
 
   return (
     <>
