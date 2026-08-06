@@ -25,6 +25,7 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedAdminHomepageRouteImport } from './routes/_authenticated/admin.homepage'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as AuthenticatedAdminProjectsIdRouteImport } from './routes/_authenticated/admin.projects.$id'
 
@@ -109,6 +110,12 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminHomepageRoute =
+  AuthenticatedAdminHomepageRouteImport.update({
+    id: '/homepage',
+    path: '/homepage',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const Char91DotmcpChar93InvokeToolToolRoute =
   Char91DotmcpChar93InvokeToolToolRouteImport.update({
     id: '/.mcp/invoke-tool/$tool',
@@ -138,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/portfolio/$projectId': typeof PortfolioProjectIdRoute
   '/portfolio/': typeof PortfolioIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/admin/projects/$id': typeof AuthenticatedAdminProjectsIdRoute
 }
@@ -156,6 +164,7 @@ export interface FileRoutesByTo {
   '/portfolio/$projectId': typeof PortfolioProjectIdRoute
   '/portfolio': typeof PortfolioIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/admin/projects/$id': typeof AuthenticatedAdminProjectsIdRoute
 }
@@ -177,6 +186,7 @@ export interface FileRoutesById {
   '/portfolio/$projectId': typeof PortfolioProjectIdRoute
   '/portfolio/': typeof PortfolioIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/_authenticated/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/admin/projects/$id': typeof AuthenticatedAdminProjectsIdRoute
 }
@@ -198,6 +208,7 @@ export interface FileRouteTypes {
     | '/portfolio/$projectId'
     | '/portfolio/'
     | '/.mcp/invoke-tool/$tool'
+    | '/admin/homepage'
     | '/admin/'
     | '/admin/projects/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -216,6 +227,7 @@ export interface FileRouteTypes {
     | '/portfolio/$projectId'
     | '/portfolio'
     | '/.mcp/invoke-tool/$tool'
+    | '/admin/homepage'
     | '/admin'
     | '/admin/projects/$id'
   id:
@@ -236,6 +248,7 @@ export interface FileRouteTypes {
     | '/portfolio/$projectId'
     | '/portfolio/'
     | '/.mcp/invoke-tool/$tool'
+    | '/_authenticated/admin/homepage'
     | '/_authenticated/admin/'
     | '/_authenticated/admin/projects/$id'
   fileRoutesById: FileRoutesById
@@ -372,6 +385,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/homepage': {
+      id: '/_authenticated/admin/homepage'
+      path: '/homepage'
+      fullPath: '/admin/homepage'
+      preLoaderRoute: typeof AuthenticatedAdminHomepageRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/.mcp/invoke-tool/$tool': {
       id: '/.mcp/invoke-tool/$tool'
       path: '/.mcp/invoke-tool/$tool'
@@ -390,11 +410,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminHomepageRoute: typeof AuthenticatedAdminHomepageRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
   AuthenticatedAdminProjectsIdRoute: typeof AuthenticatedAdminProjectsIdRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminHomepageRoute: AuthenticatedAdminHomepageRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
   AuthenticatedAdminProjectsIdRoute: AuthenticatedAdminProjectsIdRoute,
 }
