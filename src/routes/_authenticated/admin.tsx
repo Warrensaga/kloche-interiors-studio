@@ -42,8 +42,11 @@ function AdminLayout() {
           <div className="flex items-center gap-6">
             <Logo className="h-8" />
             <nav className="hidden gap-5 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground sm:flex">
-              <Link to="/admin" activeProps={{ className: "text-accent" }}>
+              <Link to="/admin" activeOptions={{ exact: true }} activeProps={{ className: "text-accent" }}>
                 Projects
+              </Link>
+              <Link to="/admin/homepage" activeProps={{ className: "text-accent" }}>
+                Homepage
               </Link>
               <Link to="/portfolio" className="hover:text-accent">
                 View site
