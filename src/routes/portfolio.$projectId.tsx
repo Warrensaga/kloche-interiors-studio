@@ -7,10 +7,13 @@ import { BeforeAfter } from "@/components/site/BeforeAfter";
 import { absoluteUrl } from "@/lib/seo";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 import { imageAt, srcSet } from "@/lib/images";
+import { listPublishedProjects } from "@/lib/projects.functions";
 
 export const Route = createFileRoute("/portfolio/$projectId")({
-  loader: ({ params }) => {
-    const project = PROJECTS.find((p) => p.id === params.projectId);
+  loader: async ({ params }) => {
+    const all = await listPublishedProjects();
+    const project = all.find((p) => p.id === params.projectId) ??
+      PROJECTS.find((p) => p.id === params.projectId);
     if (!project) throw notFound();
     return { project };
   },
