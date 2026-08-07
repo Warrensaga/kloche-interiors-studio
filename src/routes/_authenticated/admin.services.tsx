@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ArrowDown, ArrowUp, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import type { TablesUpdate } from "@/integrations/supabase/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -27,7 +28,7 @@ function AdminServices() {
   });
   const refresh = () => queryClient.invalidateQueries({ queryKey: ["admin", "services"] });
 
-  async function update(id: string, patch: Record<string, unknown>) {
+  async function update(id: string, patch: TablesUpdate<"services">) {
     const { error } = await supabase.from("services").update(patch).eq("id", id);
     if (error) toast.error(error.message);
     else refresh();
