@@ -13,6 +13,7 @@ function AdminLayout() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [state, setState] = useState<"checking" | "ok" | "denied">("checking");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -20,8 +21,13 @@ function AdminLayout() {
       const { data: userData } = await supabase.auth.getUser();
       const uid = userData.user?.id;
       if (!uid) return;
-      const { data } = await supabase.rpc("has_role", { _user_id: uid, _role: "admin" });
-      if (active) setState(data ? "ok" : "denied");
+      const [{ data: admin }, { data: editor }] = await Promise.all([
+        supabase.rpc("has_role", { _user_id: uid, _role: "admin" }),
+        supabase.rpc("has_role", { _user_id: uid, _role: "editor" }),
+      ]);
+      if (!active) return;
+      setIsAdmin(Boolean(admin));
+      setState(admin || editor ? "ok" : "denied");
     })();
     return () => {
       active = false;
@@ -35,20 +41,42 @@ function AdminLayout() {
     navigate({ to: "/auth", search: { redirect: undefined }, replace: true });
   }
 
+  const links: Array<{ to: string; label: string; adminOnly?: boolean; exact?: boolean }> = [
+    { to: "/admin", label: "Projects", exact: true },
+    { to: "/admin/homepage", label: "Homepage" },
+    { to: "/admin/pages", label: "Pages" },
+    { to: "/admin/services", label: "Services" },
+    { to: "/admin/testimonials", label: "Testimonials" },
+    { to: "/admin/blog", label: "Journal" },
+    { to: "/admin/media", label: "Media" },
+    { to: "/admin/navigation", label: "Navigation" },
+    { to: "/admin/inbox", label: "Enquiries", adminOnly: true },
+    { to: "/admin/seo", label: "SEO", adminOnly: true },
+    { to: "/admin/settings", label: "Settings", adminOnly: true },
+    { to: "/admin/team", label: "Team", adminOnly: true },
+  ];
+
   return (
     <div className="min-h-[100svh] bg-secondary/30">
       <header className="sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 md:px-8">
-          <div className="flex items-center gap-6">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-4 md:px-8">
+          <div className="flex flex-1 flex-wrap items-center gap-x-5 gap-y-2">
             <Logo className="h-8" />
-            <nav className="hidden gap-5 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground sm:flex">
-              <Link to="/admin" activeOptions={{ exact: true }} activeProps={{ className: "text-accent" }}>
-                Projects
-              </Link>
-              <Link to="/admin/homepage" activeProps={{ className: "text-accent" }}>
-                Homepage
-              </Link>
-              <Link to="/portfolio" className="hover:text-accent">
+            <nav className="flex flex-wrap gap-x-4 gap-y-2 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground">
+              {links
+                .filter((l) => !l.adminOnly || isAdmin)
+                .map((l) => (
+                  <Link
+                    key={l.to}
+                    to={l.to}
+                    activeOptions={l.exact ? { exact: true } : undefined}
+                    activeProps={{ className: "text-accent" }}
+                    className="hover:text-foreground"
+                  >
+                    {l.label}
+                  </Link>
+                ))}
+              <Link to="/" className="hover:text-accent">
                 View site
               </Link>
             </nav>
