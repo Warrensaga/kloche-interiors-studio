@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 import { Logo } from "@/components/site/Logo";
-import { STUDIO, whatsappLink } from "@/data/site";
+import { useNav, useSiteConfig } from "@/hooks/useCms";
+import { waLink } from "@/lib/cms";
 
 function TikTokIcon({ size = 17, className }: { size?: number; className?: string }) {
   return (
@@ -19,21 +20,22 @@ function TikTokIcon({ size = 17, className }: { size?: number; className?: strin
 }
 
 export function Footer() {
+  const config = useSiteConfig();
+  const nav = useNav("footer");
   return (
     <footer className="border-t border-border bg-secondary/60">
       <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:grid-cols-[1.4fr_1fr_1fr] md:px-8 md:py-20">
         <div>
           <Logo className="text-2xl" markClassName="h-9 w-9" />
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
-            A Nairobi interior design studio making warm, considered homes and workplaces
-            across Kenya.
+{config.footerBlurb}
           </p>
           <div className="mt-6 flex flex-wrap items-center gap-3">
             {[
-              { href: STUDIO.instagram, label: "Instagram", icon: Instagram },
-              { href: STUDIO.tiktok, label: "TikTok", icon: TikTokIcon },
-              { href: STUDIO.facebook, label: "Facebook", icon: Facebook },
-              { href: STUDIO.linkedin, label: "LinkedIn", icon: Linkedin },
+              { href: config.socials.instagram, label: "Instagram", icon: Instagram },
+              { href: config.socials.tiktok, label: "TikTok", icon: TikTokIcon },
+              { href: config.socials.facebook, label: "Facebook", icon: Facebook },
+              { href: config.socials.linkedin, label: "LinkedIn", icon: Linkedin },
             ].map(({ href, label, icon: Icon }) => (
               <a
                 key={label}
@@ -52,13 +54,7 @@ export function Footer() {
         <div>
           <p className="eyebrow">Explore</p>
           <ul className="mt-5 space-y-3 text-sm">
-            {[
-              { to: "/portfolio", label: "Portfolio" },
-              { to: "/services", label: "Services" },
-              { to: "/about", label: "About" },
-              { to: "/pricing", label: "Pricing" },
-              { to: "/contact", label: "Contact" },
-            ].map((l) => (
+            {nav.map((n) => ({ to: n.href as "/", label: n.label })).map((l) => (
               <li key={l.to}>
                 <Link
                   to={l.to}
@@ -76,18 +72,18 @@ export function Footer() {
           <ul className="mt-5 space-y-4 text-sm text-muted-foreground">
             <li className="flex gap-3">
               <MapPin size={16} className="mt-0.5 shrink-0 text-accent" />
-              <span>{STUDIO.address}</span>
+              <span>{config.address}</span>
             </li>
             <li className="flex gap-3">
               <Phone size={16} className="mt-0.5 shrink-0 text-accent" />
-              <a href={whatsappLink()} target="_blank" rel="noreferrer" className="hover:text-accent">
-                {STUDIO.phoneDisplay}
+              <a href={waLink(config.whatsapp, "Hello Kloche Interiors, I would like to book a consultation.")} target="_blank" rel="noreferrer" className="hover:text-accent">
+                {config.phoneDisplay}
               </a>
             </li>
             <li className="flex gap-3">
               <Mail size={16} className="mt-0.5 shrink-0 text-accent" />
-              <a href={`mailto:${STUDIO.email}`} className="hover:text-accent">
-                {STUDIO.email}
+              <a href={`mailto:${config.email}`} className="hover:text-accent">
+                {config.email}
               </a>
             </li>
           </ul>
@@ -96,7 +92,7 @@ export function Footer() {
 
       <div className="border-t border-border/70">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-5 py-6 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between md:px-8">
-          <p>© {new Date().getFullYear()} Kloche Interiors. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} {config.copyright}</p>
           <p>Designed & built in Nairobi, Kenya.</p>
         </div>
       </div>

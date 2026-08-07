@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Clock, Instagram, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
@@ -100,7 +101,17 @@ function Contact() {
     const form = e.currentTarget;
     const fd = new FormData(form);
     setSending(true);
+    // Store the enquiry so the studio can read it in the dashboard inbox.
+    void supabase.from("contact_submissions").insert({
+      name: String(fd.get("name") ?? ""),
+      email: String(fd.get("email") ?? ""),
+      phone: String(fd.get("phone") ?? ""),
+      budget: String(fd.get("budget") ?? ""),
+      property_type: String(fd.get("projectType") ?? ""),
+      message: String(fd.get("message") ?? ""),
+    });
     try {
+
       const res = await fetch("/.mcp/invoke-tool/create_consultation_request", {
         method: "POST",
         headers: {
