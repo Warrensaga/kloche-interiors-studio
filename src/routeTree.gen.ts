@@ -20,7 +20,9 @@ import { Route as R404RouteImport } from './routes/404'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PortfolioIndexRouteImport } from './routes/portfolio.index'
+import { Route as JournalIndexRouteImport } from './routes/journal.index'
 import { Route as PortfolioProjectIdRouteImport } from './routes/portfolio.$projectId'
+import { Route as JournalSlugRouteImport } from './routes/journal.$slug'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
@@ -94,9 +96,19 @@ const PortfolioIndexRoute = PortfolioIndexRouteImport.update({
   path: '/portfolio/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JournalIndexRoute = JournalIndexRouteImport.update({
+  id: '/journal/',
+  path: '/journal/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PortfolioProjectIdRoute = PortfolioProjectIdRouteImport.update({
   id: '/portfolio/$projectId',
   path: '/portfolio/$projectId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JournalSlugRoute = JournalSlugRouteImport.update({
+  id: '/journal/$slug',
+  path: '/journal/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
@@ -214,7 +226,9 @@ export interface FileRoutesByFullPath {
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/journal/$slug': typeof JournalSlugRoute
   '/portfolio/$projectId': typeof PortfolioProjectIdRoute
+  '/journal/': typeof JournalIndexRoute
   '/portfolio/': typeof PortfolioIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/homepage': typeof AuthenticatedAdminHomepageRoute
@@ -244,7 +258,9 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/journal/$slug': typeof JournalSlugRoute
   '/portfolio/$projectId': typeof PortfolioProjectIdRoute
+  '/journal': typeof JournalIndexRoute
   '/portfolio': typeof PortfolioIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/homepage': typeof AuthenticatedAdminHomepageRoute
@@ -277,7 +293,9 @@ export interface FileRoutesById {
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/journal/$slug': typeof JournalSlugRoute
   '/portfolio/$projectId': typeof PortfolioProjectIdRoute
+  '/journal/': typeof JournalIndexRoute
   '/portfolio/': typeof PortfolioIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/_authenticated/admin/homepage': typeof AuthenticatedAdminHomepageRoute
@@ -310,7 +328,9 @@ export interface FileRouteTypes {
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/admin'
+    | '/journal/$slug'
     | '/portfolio/$projectId'
+    | '/journal/'
     | '/portfolio/'
     | '/.mcp/invoke-tool/$tool'
     | '/admin/homepage'
@@ -340,7 +360,9 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/journal/$slug'
     | '/portfolio/$projectId'
+    | '/journal'
     | '/portfolio'
     | '/.mcp/invoke-tool/$tool'
     | '/admin/homepage'
@@ -372,7 +394,9 @@ export interface FileRouteTypes {
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/_authenticated/admin'
+    | '/journal/$slug'
     | '/portfolio/$projectId'
+    | '/journal/'
     | '/portfolio/'
     | '/.mcp/invoke-tool/$tool'
     | '/_authenticated/admin/homepage'
@@ -404,7 +428,9 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  JournalSlugRoute: typeof JournalSlugRoute
   PortfolioProjectIdRoute: typeof PortfolioProjectIdRoute
+  JournalIndexRoute: typeof JournalIndexRoute
   PortfolioIndexRoute: typeof PortfolioIndexRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
 }
@@ -488,11 +514,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortfolioIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/journal/': {
+      id: '/journal/'
+      path: '/journal'
+      fullPath: '/journal/'
+      preLoaderRoute: typeof JournalIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/portfolio/$projectId': {
       id: '/portfolio/$projectId'
       path: '/portfolio/$projectId'
       fullPath: '/portfolio/$projectId'
       preLoaderRoute: typeof PortfolioProjectIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/journal/$slug': {
+      id: '/journal/$slug'
+      path: '/journal/$slug'
+      fullPath: '/journal/$slug'
+      preLoaderRoute: typeof JournalSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin': {
@@ -686,7 +726,9 @@ const rootRouteChildren: RootRouteChildren = {
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
+  JournalSlugRoute: JournalSlugRoute,
   PortfolioProjectIdRoute: PortfolioProjectIdRoute,
+  JournalIndexRoute: JournalIndexRoute,
   PortfolioIndexRoute: PortfolioIndexRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
 }
