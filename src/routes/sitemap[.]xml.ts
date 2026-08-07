@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
+import { createClient } from "@supabase/supabase-js";
 import { PROJECTS } from "@/data/site";
+import type { Database } from "@/integrations/supabase/types";
 
 import { BASE_URL } from "@/lib/seo";
 
@@ -10,10 +12,45 @@ interface SitemapEntry {
   priority?: string;
 }
 
+async function dynamicPaths(): Promise<SitemapEntry[]> {
+  try {
+    const key = process.env["SUPABASE_PUBLISHABLE_KEY"]!;
+    const supabase = createClient<Database>(process.env["SUPABASE_URL"]!, key, {
+      auth: { persistSession: false, autoRefreshToken: false },
+      global: {
+        fetch: (input, init) => {
+          const h = new Headers(init?.headers);
+          if (key.startsWith("sb_") && h.get("Authorization") === `Bearer ${key}`)
+            h.delete("Authorization");
+          h.set("apikey", key);
+          return fetch(input, { ...init, headers: h });
+        },
+      },
+    });
+    const [{ data: projects }, { data: posts }] = await Promise.all([
+      supabase.from("projects").select("slug").eq("published", true),
+      supabase.from("blog_posts").select("slug").eq("published", true),
+    ]);
+    const entries: SitemapEntry[] = [];
+    for (const p of projects ?? [])
+      entries.push({ path: `/portfolio/${p.slug}`, changefreq: "monthly", priority: "0.6" });
+    for (const p of posts ?? [])
+      entries.push({ path: `/journal/${p.slug}`, changefreq: "monthly", priority: "0.6" });
+    return entries;
+  } catch {
+    return PROJECTS.map((p) => ({
+      path: `/portfolio/${p.id}`,
+      changefreq: "monthly" as const,
+      priority: "0.6",
+    }));
+  }
+}
+
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
+        const dynamic = await dynamicPaths();
         const entries: SitemapEntry[] = [
           { path: "/", changefreq: "weekly", priority: "1.0" },
           { path: "/portfolio", changefreq: "weekly", priority: "0.9" },
@@ -21,12 +58,10 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/about", changefreq: "monthly", priority: "0.7" },
           { path: "/pricing", changefreq: "monthly", priority: "0.8" },
           { path: "/contact", changefreq: "monthly", priority: "0.8" },
-          ...PROJECTS.map((p) => ({
-            path: `/portfolio/${p.id}`,
-            changefreq: "monthly" as const,
-            priority: "0.6",
-          })),
+          { path: "/journal", changefreq: "weekly", priority: "0.7" },
+          ...dynamic,
         ];
+
 
         const urls = entries.map((e) =>
           [
