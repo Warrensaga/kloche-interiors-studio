@@ -3,7 +3,7 @@ import { Header } from "@/components/site/Header";
 import { Reveal } from "@/components/site/Reveal";
 import { SmartImage } from "@/components/site/SmartImage";
 import { ErrorState } from "@/components/site/ErrorState";
-import { getPublishedPost } from "@/lib/blog.functions";
+import { getPublishedPost, type PostFull } from "@/lib/blog.functions";
 import { absoluteUrl, breadcrumbLd } from "@/lib/seo";
 
 export const Route = createFileRoute("/journal/$slug")({
@@ -75,7 +75,7 @@ function PostNotFound() {
 }
 
 function JournalPost() {
-  const post = Route.useLoaderData();
+  const post = Route.useLoaderData() as PostFull;
   const paragraphs = post.content.split(/\n{2,}/).filter(Boolean);
 
   return (
@@ -102,7 +102,7 @@ function JournalPost() {
           )}
 
           <div className="mt-10 space-y-6">
-            {paragraphs.map((p, i) => (
+            {paragraphs.map((p: string, i: number) => (
               <p key={i} className="text-lg leading-relaxed text-muted-foreground">
                 {p}
               </p>

@@ -2,7 +2,7 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/site/Header";
 import { Reveal } from "@/components/site/Reveal";
 import { SmartImage } from "@/components/site/SmartImage";
-import { listPublishedPosts } from "@/lib/blog.functions";
+import { listPublishedPosts, type PostSummary } from "@/lib/blog.functions";
 import { absoluteUrl, breadcrumbLd } from "@/lib/seo";
 
 export const Route = createFileRoute("/journal/")({
@@ -31,7 +31,7 @@ export const Route = createFileRoute("/journal/")({
 });
 
 function JournalIndex() {
-  const posts = Route.useLoaderData();
+  const posts = Route.useLoaderData() as PostSummary[];
 
   return (
     <>
