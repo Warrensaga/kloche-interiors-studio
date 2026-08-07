@@ -25,6 +25,9 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
+import { Route as AuthenticatedAdminNavigationRouteImport } from './routes/_authenticated/admin.navigation'
+import { Route as AuthenticatedAdminMediaRouteImport } from './routes/_authenticated/admin.media'
 import { Route as AuthenticatedAdminHomepageRouteImport } from './routes/_authenticated/admin.homepage'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as AuthenticatedAdminProjectsIdRouteImport } from './routes/_authenticated/admin.projects.$id'
@@ -110,6 +113,23 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminSettingsRoute =
+  AuthenticatedAdminSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminNavigationRoute =
+  AuthenticatedAdminNavigationRouteImport.update({
+    id: '/navigation',
+    path: '/navigation',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminMediaRoute = AuthenticatedAdminMediaRouteImport.update({
+  id: '/media',
+  path: '/media',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 const AuthenticatedAdminHomepageRoute =
   AuthenticatedAdminHomepageRouteImport.update({
     id: '/homepage',
@@ -146,6 +166,9 @@ export interface FileRoutesByFullPath {
   '/portfolio/': typeof PortfolioIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/homepage': typeof AuthenticatedAdminHomepageRoute
+  '/admin/media': typeof AuthenticatedAdminMediaRoute
+  '/admin/navigation': typeof AuthenticatedAdminNavigationRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/admin/projects/$id': typeof AuthenticatedAdminProjectsIdRoute
 }
@@ -165,6 +188,9 @@ export interface FileRoutesByTo {
   '/portfolio': typeof PortfolioIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/homepage': typeof AuthenticatedAdminHomepageRoute
+  '/admin/media': typeof AuthenticatedAdminMediaRoute
+  '/admin/navigation': typeof AuthenticatedAdminNavigationRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/admin/projects/$id': typeof AuthenticatedAdminProjectsIdRoute
 }
@@ -187,6 +213,9 @@ export interface FileRoutesById {
   '/portfolio/': typeof PortfolioIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/_authenticated/admin/homepage': typeof AuthenticatedAdminHomepageRoute
+  '/_authenticated/admin/media': typeof AuthenticatedAdminMediaRoute
+  '/_authenticated/admin/navigation': typeof AuthenticatedAdminNavigationRoute
+  '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/admin/projects/$id': typeof AuthenticatedAdminProjectsIdRoute
 }
@@ -209,6 +238,9 @@ export interface FileRouteTypes {
     | '/portfolio/'
     | '/.mcp/invoke-tool/$tool'
     | '/admin/homepage'
+    | '/admin/media'
+    | '/admin/navigation'
+    | '/admin/settings'
     | '/admin/'
     | '/admin/projects/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -228,6 +260,9 @@ export interface FileRouteTypes {
     | '/portfolio'
     | '/.mcp/invoke-tool/$tool'
     | '/admin/homepage'
+    | '/admin/media'
+    | '/admin/navigation'
+    | '/admin/settings'
     | '/admin'
     | '/admin/projects/$id'
   id:
@@ -249,6 +284,9 @@ export interface FileRouteTypes {
     | '/portfolio/'
     | '/.mcp/invoke-tool/$tool'
     | '/_authenticated/admin/homepage'
+    | '/_authenticated/admin/media'
+    | '/_authenticated/admin/navigation'
+    | '/_authenticated/admin/settings'
     | '/_authenticated/admin/'
     | '/_authenticated/admin/projects/$id'
   fileRoutesById: FileRoutesById
@@ -385,6 +423,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/settings': {
+      id: '/_authenticated/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/navigation': {
+      id: '/_authenticated/admin/navigation'
+      path: '/navigation'
+      fullPath: '/admin/navigation'
+      preLoaderRoute: typeof AuthenticatedAdminNavigationRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/media': {
+      id: '/_authenticated/admin/media'
+      path: '/media'
+      fullPath: '/admin/media'
+      preLoaderRoute: typeof AuthenticatedAdminMediaRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/homepage': {
       id: '/_authenticated/admin/homepage'
       path: '/homepage'
@@ -411,12 +470,18 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminHomepageRoute: typeof AuthenticatedAdminHomepageRoute
+  AuthenticatedAdminMediaRoute: typeof AuthenticatedAdminMediaRoute
+  AuthenticatedAdminNavigationRoute: typeof AuthenticatedAdminNavigationRoute
+  AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
   AuthenticatedAdminProjectsIdRoute: typeof AuthenticatedAdminProjectsIdRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminHomepageRoute: AuthenticatedAdminHomepageRoute,
+  AuthenticatedAdminMediaRoute: AuthenticatedAdminMediaRoute,
+  AuthenticatedAdminNavigationRoute: AuthenticatedAdminNavigationRoute,
+  AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
   AuthenticatedAdminProjectsIdRoute: AuthenticatedAdminProjectsIdRoute,
 }
