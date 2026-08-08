@@ -382,19 +382,19 @@ export const TESTIMONIALS = [
     quote:
       "Kloche understood our home better than we did. Six months on, we still notice small details they got exactly right.",
     name: "Wanjiru & Kevin M.",
-    detail: "Karen Garden Villa",
+    detail: "Kileleshwa Residency",
   },
   {
     quote:
       "They managed contractors, budget and our indecision with complete calm. The reveal genuinely made my mother cry.",
     name: "Aisha O.",
-    detail: "Westlands Penthouse",
+    detail: "Westlands Airbnb",
   },
   {
     quote:
       "Our office finally feels like the studio we tell clients we are. Staff arrive earlier — that's the review.",
     name: "Daniel Kimani",
-    detail: "Founder, Gigiri Studio Offices",
+    detail: "Founder, Gigiri Executive Offices",
   },
 ];
 
