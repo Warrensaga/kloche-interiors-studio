@@ -79,7 +79,13 @@ export const Route = createFileRoute("/")({
       },
     ],
   }),
-  loader: () => listHomepageSections(),
+  loader: async () => {
+    const [sections, projects] = await Promise.all([
+      listHomepageSections(),
+      listPublishedProjects(),
+    ]);
+    return { sections, projects };
+  },
   errorComponent: ({ error }) => (
     <div className="section-y mx-auto max-w-3xl px-5 text-center" role="alert">
       <h2 className="text-2xl">Something went wrong</h2>
