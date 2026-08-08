@@ -316,7 +316,9 @@ function Contact() {
                 </li>
                 <li className="flex gap-3">
                   <Phone size={16} className="mt-0.5 shrink-0 text-accent" />
-                  {STUDIO.phoneDisplay}
+                  <a href={`tel:${STUDIO.phoneLink}`} className="hover:text-accent">
+                    {STUDIO.phoneDisplay}
+                  </a>
                 </li>
                 <li className="flex gap-3">
                   <Mail size={16} className="mt-0.5 shrink-0 text-accent" />
