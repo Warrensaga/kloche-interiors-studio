@@ -2,7 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 import { Logo } from "@/components/site/Logo";
 import { useNav, useSiteConfig } from "@/hooks/useCms";
-import { waLink } from "@/lib/cms";
 
 function TikTokIcon({ size = 17, className }: { size?: number; className?: string }) {
   return (
@@ -76,7 +75,7 @@ export function Footer() {
             </li>
             <li className="flex gap-3">
               <Phone size={16} className="mt-0.5 shrink-0 text-accent" />
-              <a href={waLink(config.whatsapp, "Hello Kloche Interiors, I would like to book a consultation.")} target="_blank" rel="noreferrer" className="hover:text-accent">
+              <a href={`tel:${config.phoneLink}`} className="hover:text-accent">
                 {config.phoneDisplay}
               </a>
             </li>

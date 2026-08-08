@@ -147,7 +147,9 @@ export function Header({ transparent = false }: { transparent?: boolean }) {
           >
             {config.headerCtaLabel}
           </Link>
-          <p className="py-4 text-xs text-muted-foreground">{config.phoneDisplay}</p>
+          <a href={`tel:${config.phoneLink}`} className="block py-4 text-xs text-muted-foreground hover:text-accent">
+            {config.phoneDisplay}
+          </a>
         </nav>
       </div>
     </header>

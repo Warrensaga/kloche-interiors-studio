@@ -2,7 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useRef, useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
-import { IMAGES, PHILOSOPHY, PILLARS, PROJECTS, SERVICES, STUDIO, TESTIMONIALS, whatsappLink } from "@/data/site";
+import { IMAGES, PHILOSOPHY, PILLARS, SERVICES, STUDIO, TESTIMONIALS, whatsappLink, type Project } from "@/data/site";
+import { listPublishedProjects } from "@/lib/projects.functions";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, SectionHeading } from "@/components/site/Sections";
 import { absoluteUrl, breadcrumbLd } from "@/lib/seo";
@@ -79,7 +80,13 @@ export const Route = createFileRoute("/")({
       },
     ],
   }),
-  loader: () => listHomepageSections(),
+  loader: async () => {
+    const [sections, projects] = await Promise.all([
+      listHomepageSections(),
+      listPublishedProjects(),
+    ]);
+    return { sections, projects };
+  },
   errorComponent: ({ error }) => (
     <div className="section-y mx-auto max-w-3xl px-5 text-center" role="alert">
       <h2 className="text-2xl">Something went wrong</h2>
@@ -93,25 +100,28 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const sections = Route.useLoaderData() as HomepageSection[];
+  const { sections, projects } = Route.useLoaderData() as {
+    sections: HomepageSection[];
+    projects: Project[];
+  };
 
   return (
     <>
       {sections.map((s: HomepageSection) => (
-        <SectionRenderer key={s.id} section={s} />
+        <SectionRenderer key={s.id} section={s} projects={projects} />
       ))}
     </>
   );
 }
 
-function SectionRenderer({ section: s }: { section: HomepageSection }) {
+function SectionRenderer({ section: s, projects }: { section: HomepageSection; projects: Project[] }) {
   switch (s.kind) {
     case "hero":
       return <Hero section={s} />;
     case "richtext":
       return <StudioIntro section={s} />;
     case "projects":
-      return <FeaturedProjects section={s} />;
+      return <FeaturedProjects section={s} projects={projects} />;
     case "services":
       return <ServicesPreview section={s} />;
     case "pillars":
@@ -223,8 +233,14 @@ function StudioIntro({ section }: { section: HomepageSection }) {
   );
 }
 
-function FeaturedProjects({ section }: { section: HomepageSection }) {
-  const limit = section.content.limit ?? 4;
+function FeaturedProjects({
+  section,
+  projects,
+}: {
+  section: HomepageSection;
+  projects: Project[];
+}) {
+  const limit = section.content.limit ?? 6;
   return (
     <section className="section-y bg-secondary/50">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
@@ -241,8 +257,8 @@ function FeaturedProjects({ section }: { section: HomepageSection }) {
           </Reveal>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {PROJECTS.slice(0, limit).map((p, i) => (
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {projects.slice(0, limit).map((p, i) => (
             <Reveal key={p.id} delay={i * 0.08}>
               <Link
                 to="/portfolio/$projectId"
@@ -254,7 +270,7 @@ function FeaturedProjects({ section }: { section: HomepageSection }) {
                     src={p.cover}
                     alt={`${p.name} interior in ${p.location}`}
                     baseWidth={640}
-                    sizes={SIZES.quarter}
+                    sizes={SIZES.third}
                     ratio="4 / 5"
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />

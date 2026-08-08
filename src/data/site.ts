@@ -1,7 +1,8 @@
 export const STUDIO = {
   name: "Kloche Interiors",
   tagline: "Interiors that feel like home",
-  phoneDisplay: "+254 787 068 222",
+  phoneDisplay: "0717 634003",
+  phoneLink: "+254717634003",
   whatsapp: "254787068222",
   email: "klocheinteriors@gmail.com",
   address: "Karuna Road, Nairobi, Kenya",
@@ -53,9 +54,9 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
-    id: "karen-villa",
-    name: "Karen Garden Villa",
-    location: "Karen, Nairobi",
+    id: "kileleshwa-residency",
+    name: "Kileleshwa Residency",
+    location: "Kileleshwa, Nairobi",
     style: "Warm Contemporary",
     projectType: "Full Home Transformation",
     categories: ["Residential", "Living Spaces"],
@@ -83,8 +84,8 @@ export const PROJECTS: Project[] = [
     },
   },
   {
-    id: "westlands-penthouse",
-    name: "Westlands Penthouse",
+    id: "westlands-airbnb",
+    name: "Westlands Airbnb",
     location: "Westlands, Nairobi",
     style: "Quiet Luxury",
     projectType: "Residential Interior Design",
@@ -108,8 +109,8 @@ export const PROJECTS: Project[] = [
     year: "2025",
   },
   {
-    id: "kilimani-kitchen",
-    name: "Kilimani Kitchen Renewal",
+    id: "kilimani-townhouse",
+    name: "Kilimani Townhouse",
     location: "Kilimani, Nairobi",
     style: "Earthy Minimal",
     projectType: "Kitchen Renovation",
@@ -133,8 +134,8 @@ export const PROJECTS: Project[] = [
     year: "2025",
   },
   {
-    id: "gigiri-offices",
-    name: "Gigiri Studio Offices",
+    id: "gigiri-executive-offices",
+    name: "Gigiri Executive Offices",
     location: "Gigiri, Nairobi",
     style: "Soft Modern Workplace",
     projectType: "Commercial Fit-out",
@@ -158,8 +159,8 @@ export const PROJECTS: Project[] = [
     year: "2024",
   },
   {
-    id: "lavington-living",
-    name: "Lavington Living Room",
+    id: "lavington-penthouse",
+    name: "Lavington Penthouse",
     location: "Lavington, Nairobi",
     style: "Layered Neutrals",
     projectType: "Interior Styling & Refresh",
@@ -381,19 +382,19 @@ export const TESTIMONIALS = [
     quote:
       "Kloche understood our home better than we did. Six months on, we still notice small details they got exactly right.",
     name: "Wanjiru & Kevin M.",
-    detail: "Karen Garden Villa",
+    detail: "Kileleshwa Residency",
   },
   {
     quote:
       "They managed contractors, budget and our indecision with complete calm. The reveal genuinely made my mother cry.",
     name: "Aisha O.",
-    detail: "Westlands Penthouse",
+    detail: "Westlands Airbnb",
   },
   {
     quote:
       "Our office finally feels like the studio we tell clients we are. Staff arrive earlier — that's the review.",
     name: "Daniel Kimani",
-    detail: "Founder, Gigiri Studio Offices",
+    detail: "Founder, Gigiri Executive Offices",
   },
 ];
 

@@ -1,5 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ArrowDown, ArrowUp, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
@@ -15,12 +14,18 @@ import { MediaPicker } from "@/components/admin/MediaPicker";
 import { PAGE_KEYS, slugify } from "@/lib/cms";
 
 export const Route = createFileRoute("/_authenticated/admin/pages")({
+  validateSearch: (search: Record<string, unknown>): { page?: string } =>
+    typeof search["page"] === "string" ? { page: search["page"] } : {},
   component: AdminPages,
 });
 
 function AdminPages() {
   const queryClient = useQueryClient();
-  const [page, setPage] = useState<string>(PAGE_KEYS[0].key);
+  const navigate = useNavigate({ from: Route.fullPath });
+  const { page: pageParam } = Route.useSearch();
+  const page =
+    pageParam && PAGE_KEYS.some((p) => p.key === pageParam) ? pageParam : PAGE_KEYS[0].key;
+  const setPage = (value: string) => navigate({ search: { page: value } });
 
   const { data } = useQuery({
     queryKey: ["admin", "page-sections", page],
