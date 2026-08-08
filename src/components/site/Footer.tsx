@@ -76,7 +76,7 @@ export function Footer() {
             </li>
             <li className="flex gap-3">
               <Phone size={16} className="mt-0.5 shrink-0 text-accent" />
-              <a href={waLink(config.whatsapp, "Hello Kloche Interiors, I would like to book a consultation.")} target="_blank" rel="noreferrer" className="hover:text-accent">
+              <a href={`tel:${config.phoneLink}`} className="hover:text-accent">
                 {config.phoneDisplay}
               </a>
             </li>
