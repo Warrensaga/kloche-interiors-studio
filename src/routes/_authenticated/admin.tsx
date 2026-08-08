@@ -9,6 +9,46 @@ export const Route = createFileRoute("/_authenticated/admin")({
   component: AdminLayout,
 });
 
+type AdminLink = {
+  to: string;
+  label: string;
+  search?: Record<string, string>;
+  adminOnly?: boolean;
+  exact?: boolean;
+};
+
+const PAGE_GROUPS: Array<{ heading: string; links: AdminLink[] }> = [
+  {
+    heading: "Pages",
+    links: [
+      { to: "/admin/homepage", label: "Home" },
+      { to: "/admin", label: "Portfolio", exact: true },
+      { to: "/admin/services", label: "Services" },
+      { to: "/admin/pages", label: "About", search: { page: "about" } },
+      { to: "/admin/pages", label: "Pricing", search: { page: "pricing" } },
+      { to: "/admin/pages", label: "Contact", search: { page: "contact" } },
+    ],
+  },
+  {
+    heading: "Content",
+    links: [
+      { to: "/admin/testimonials", label: "Testimonials" },
+      { to: "/admin/blog", label: "Journal" },
+      { to: "/admin/media", label: "Media" },
+      { to: "/admin/navigation", label: "Navigation" },
+    ],
+  },
+  {
+    heading: "Studio",
+    links: [
+      { to: "/admin/inbox", label: "Enquiries", adminOnly: true },
+      { to: "/admin/seo", label: "SEO", adminOnly: true },
+      { to: "/admin/settings", label: "Settings", adminOnly: true },
+      { to: "/admin/team", label: "Team", adminOnly: true },
+    ],
+  },
+];
+
 function AdminLayout() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -41,66 +81,89 @@ function AdminLayout() {
     navigate({ to: "/auth", search: { redirect: undefined }, replace: true });
   }
 
-  const links: Array<{ to: string; label: string; adminOnly?: boolean; exact?: boolean }> = [
-    { to: "/admin", label: "Projects", exact: true },
-    { to: "/admin/homepage", label: "Homepage" },
-    { to: "/admin/pages", label: "Pages" },
-    { to: "/admin/services", label: "Services" },
-    { to: "/admin/testimonials", label: "Testimonials" },
-    { to: "/admin/blog", label: "Journal" },
-    { to: "/admin/media", label: "Media" },
-    { to: "/admin/navigation", label: "Navigation" },
-    { to: "/admin/inbox", label: "Enquiries", adminOnly: true },
-    { to: "/admin/seo", label: "SEO", adminOnly: true },
-    { to: "/admin/settings", label: "Settings", adminOnly: true },
-    { to: "/admin/team", label: "Team", adminOnly: true },
-  ];
+  const navLink = (l: AdminLink) => (
+    <Link
+      key={`${l.to}-${l.label}`}
+      to={l.to}
+      {...(l.search ? { search: l.search } : {})}
+      activeOptions={{
+        exact: Boolean(l.exact),
+        includeSearch: Boolean(l.search),
+      }}
+      activeProps={{
+        className: "bg-accent/12 text-accent",
+        "aria-current": "page",
+      }}
+      className="block whitespace-nowrap rounded-full px-4 py-2 text-[0.72rem] uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+    >
+      {l.label}
+    </Link>
+  );
+
+  const groups = PAGE_GROUPS.map((g) => ({
+    ...g,
+    links: g.links.filter((l) => !l.adminOnly || isAdmin),
+  })).filter((g) => g.links.length > 0);
 
   return (
     <div className="min-h-[100svh] bg-secondary/30">
       <header className="sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-4 md:px-8">
-          <div className="flex flex-1 flex-wrap items-center gap-x-5 gap-y-2">
-            <Logo className="h-8" />
-            <nav className="flex flex-wrap gap-x-4 gap-y-2 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground">
-              {links
-                .filter((l) => !l.adminOnly || isAdmin)
-                .map((l) => (
-                  <Link
-                    key={l.to}
-                    to={l.to}
-                    activeOptions={l.exact ? { exact: true } : undefined}
-                    activeProps={{ className: "text-accent" }}
-                    className="hover:text-foreground"
-                  >
-                    {l.label}
-                  </Link>
-                ))}
-              <Link to="/" className="hover:text-accent">
-                View site
-              </Link>
-            </nav>
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 md:px-8">
+          <Logo className="h-8" />
+          <div className="flex items-center gap-3">
+            <Link
+              to="/"
+              className="text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground hover:text-accent"
+            >
+              View site
+            </Link>
+            <Button variant="outline" size="sm" onClick={signOut}>
+              Sign out
+            </Button>
           </div>
-          <Button variant="outline" size="sm" onClick={signOut}>
-            Sign out
-          </Button>
         </div>
+        {/* Mobile / tablet nav */}
+        <nav
+          aria-label="Dashboard sections"
+          className="flex gap-2 overflow-x-auto border-t border-border px-4 py-2 lg:hidden"
+        >
+          {groups.flatMap((g) => g.links).map(navLink)}
+        </nav>
       </header>
 
-      <main className="mx-auto max-w-6xl px-5 py-10 md:px-8 md:py-14">
-        {state === "checking" && (
-          <p className="text-sm text-muted-foreground">Checking your access…</p>
-        )}
-        {state === "denied" && (
-          <div className="rounded-3xl border border-border bg-card p-8">
-            <h1 className="font-display text-2xl">No studio access</h1>
-            <p className="mt-3 text-sm text-muted-foreground">
-              This account isn't an administrator yet. Ask the studio owner to grant you access.
-            </p>
-          </div>
-        )}
-        {state === "ok" && <Outlet />}
-      </main>
+      <div className="mx-auto flex max-w-7xl gap-8 px-5 py-8 md:px-8 md:py-12">
+        {/* Desktop sidebar */}
+        <aside className="hidden w-56 shrink-0 lg:block">
+          <nav
+            aria-label="Dashboard sections"
+            className="sticky top-28 space-y-6 rounded-3xl border border-border bg-card p-4"
+          >
+            {groups.map((g) => (
+              <div key={g.heading} className="space-y-1">
+                <p className="px-4 pb-1 text-[0.6rem] uppercase tracking-[0.22em] text-muted-foreground/70">
+                  {g.heading}
+                </p>
+                {g.links.map(navLink)}
+              </div>
+            ))}
+          </nav>
+        </aside>
+
+        <main className="min-w-0 flex-1">
+          {state === "checking" && (
+            <p className="text-sm text-muted-foreground">Checking your access…</p>
+          )}
+          {state === "denied" && (
+            <div className="rounded-3xl border border-border bg-card p-8">
+              <h1 className="font-display text-2xl">No studio access</h1>
+              <p className="mt-3 text-sm text-muted-foreground">
+                This account isn't an administrator yet. Ask the studio owner to grant you access.
+              </p>
+            </div>
+          )}
+          {state === "ok" && <Outlet />}
+        </main>
+      </div>
     </div>
   );
 }
