@@ -2,7 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 import { Logo } from "@/components/site/Logo";
 import { useNav, useSiteConfig } from "@/hooks/useCms";
-import { waLink } from "@/lib/cms";
 
 function TikTokIcon({ size = 17, className }: { size?: number; className?: string }) {
   return (
