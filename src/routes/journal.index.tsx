@@ -3,35 +3,35 @@ import { Header } from "@/components/site/Header";
 import { Reveal } from "@/components/site/Reveal";
 import { SmartImage } from "@/components/site/SmartImage";
 import { listPublishedPosts, type PostSummary } from "@/lib/blog.functions";
-import { absoluteUrl, breadcrumbLd } from "@/lib/seo";
+import { absoluteUrl, breadcrumbLd, pageSeo } from "@/lib/seo";
+import { getSeoMeta } from "@/lib/seo.functions";
 
 export const Route = createFileRoute("/journal/")({
-  loader: () => listPublishedPosts(),
-  head: () => ({
-    meta: [
-      { title: "Journal — Kloche Interiors" },
-      {
-        name: "description",
-        content:
-          "Design notes, material stories and project diaries from the Kloche Interiors studio in Nairobi.",
-      },
-      { property: "og:title", content: "Journal — Kloche Interiors" },
-      {
-        property: "og:description",
-        content: "Design notes and project diaries from Kloche Interiors, Nairobi.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: absoluteUrl("/journal") },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [{ rel: "canonical", href: absoluteUrl("/journal") }],
-    scripts: [breadcrumbLd([{ name: "Journal", path: "/journal" }])],
-  }),
+  loader: async () => {
+    const [posts, seo] = await Promise.all([listPublishedPosts(), getSeoMeta({ data: "journal" })]);
+    return { posts, seo };
+  },
+  head: ({ loaderData }) => {
+    const seo = pageSeo({
+      path: "/journal",
+      title: "Journal — Kloche Interiors",
+      description:
+        "Design notes, material stories and project diaries from the Kloche Interiors studio in Nairobi.",
+      ogTitle: "Journal — Kloche Interiors",
+      ogDescription: "Design notes and project diaries from Kloche Interiors, Nairobi.",
+      override: loaderData?.seo,
+    });
+    return {
+      meta: seo.meta,
+      links: seo.links,
+      scripts: [breadcrumbLd([{ name: "Journal", path: "/journal" }]), ...seo.scripts],
+    };
+  },
   component: JournalIndex,
 });
 
 function JournalIndex() {
-  const posts = Route.useLoaderData() as PostSummary[];
+  const { posts } = Route.useLoaderData() as { posts: PostSummary[] };
 
   return (
     <>

@@ -3,62 +3,56 @@ import { Armchair, Building2, HardHat, Home, Ruler, type LucideIcon } from "luci
 import { PILLARS, PROCESS, PROCESS_CLOSING, SERVICES } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, PageHero, SectionHeading } from "@/components/site/Sections";
-import { absoluteUrl, breadcrumbLd } from "@/lib/seo";
+import { absoluteUrl, breadcrumbLd, pageSeo } from "@/lib/seo";
+import { getSeoMeta } from "@/lib/seo.functions";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 
 const ICONS: Record<string, LucideIcon> = { Home, Ruler, Armchair, HardHat, Building2 };
 const HERO = SERVICES[0].image;
 
 export const Route = createFileRoute("/services")({
-  head: () => ({
-    meta: [
-      { title: "Interior Design Services in Nairobi — Kloche Interiors" },
-      {
-        name: "description",
-        content:
-          "Full home design, space planning, furniture sourcing and renovation consulting for homes and workplaces in Nairobi, Kenya.",
-      },
-      { property: "og:title", content: "Services — Kloche Interiors" },
-      {
-        property: "og:description",
-        content: "Full home design, space planning, sourcing and renovation consulting in Nairobi.",
-      },
-      { property: "og:image", content: HERO },
-      { name: "twitter:image", content: HERO },
-      { property: "og:url", content: absoluteUrl("/services") },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Services — Kloche Interiors" },
-      {
-        name: "twitter:description",
-        content: "Full home design, space planning, sourcing and renovation consulting in Nairobi.",
-      },
-    ],
-    links: [{ rel: "canonical", href: absoluteUrl("/services") }],
-    scripts: [
-      breadcrumbLd([{ name: "Services", path: "/services" }]),
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "ItemList",
-          name: "Interior design services — Kloche Interiors",
-          url: absoluteUrl("/services"),
-          itemListElement: SERVICES.map((s, i) => ({
-            "@type": "ListItem",
-            position: i + 1,
-            item: {
-              "@type": "Service",
-              name: s.title,
-              description: s.description,
-              areaServed: "Nairobi, Kenya",
-              provider: { "@type": "HomeAndConstructionBusiness", name: "Kloche Interiors" },
-            },
-          })),
-        }),
-      },
-    ],
-  }),
+  loader: async () => ({ seo: await getSeoMeta({ data: "services" }) }),
+  head: ({ loaderData }) => {
+    const seo = pageSeo({
+      path: "/services",
+      title: "Interior Design Services in Nairobi — Kloche Interiors",
+      description:
+        "Full home design, space planning, furniture sourcing and renovation consulting for homes and workplaces in Nairobi, Kenya.",
+      ogTitle: "Services — Kloche Interiors",
+      ogDescription:
+        "Full home design, space planning, sourcing and renovation consulting in Nairobi.",
+      image: HERO,
+      override: loaderData?.seo,
+    });
+    return {
+      meta: seo.meta,
+      links: seo.links,
+      scripts: [
+        breadcrumbLd([{ name: "Services", path: "/services" }]),
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            name: "Interior design services — Kloche Interiors",
+            url: absoluteUrl("/services"),
+            itemListElement: SERVICES.map((s, i) => ({
+              "@type": "ListItem",
+              position: i + 1,
+              item: {
+                "@type": "Service",
+                name: s.title,
+                description: s.description,
+                areaServed: "Nairobi, Kenya",
+                provider: { "@type": "HomeAndConstructionBusiness", name: "Kloche Interiors" },
+              },
+            })),
+          }),
+        },
+        ...seo.scripts,
+      ],
+    };
+  },
   component: Services,
 });
 
