@@ -2,54 +2,48 @@ import { createFileRoute } from "@tanstack/react-router";
 import { FOUNDER, IMAGES, PHILOSOPHY, STATS } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, PageHero, SectionHeading } from "@/components/site/Sections";
-import { absoluteUrl, breadcrumbLd } from "@/lib/seo";
+import { absoluteUrl, breadcrumbLd, pageSeo } from "@/lib/seo";
+import { getSeoMeta } from "@/lib/seo.functions";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 
 export const Route = createFileRoute("/about")({
-  head: () => ({
-    meta: [
-      { title: "About the Studio — Kloche Interiors Nairobi" },
-      {
-        name: "description",
-        content:
-          "Meet Keith Locho, founder and principal interior designer of Kloche Interiors — the story, philosophy and studio behind every project.",
-      },
-      { property: "og:title", content: "About — Kloche Interiors" },
-      {
-        property: "og:description",
-        content: "The founder story, philosophy and studio behind Kloche Interiors in Nairobi.",
-      },
-      { property: "og:image", content: IMAGES.studio1 },
-      { name: "twitter:image", content: IMAGES.studio1 },
-      { property: "og:url", content: absoluteUrl("/about") },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "About — Kloche Interiors" },
-      {
-        name: "twitter:description",
-        content: "The founder story, philosophy and studio behind Kloche Interiors in Nairobi.",
-      },
-    ],
-    links: [{ rel: "canonical", href: absoluteUrl("/about") }],
-    scripts: [
-      breadcrumbLd([{ name: "About", path: "/about" }]),
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "AboutPage",
-          name: "About Kloche Interiors",
-          url: absoluteUrl("/about"),
-          mainEntity: {
-            "@type": "HomeAndConstructionBusiness",
-            name: "Kloche Interiors",
-            url: absoluteUrl("/"),
-            founder: { "@type": "Person", name: "Keith Locho" },
-          },
-        }),
-      },
-    ],
-  }),
+  loader: async () => ({ seo: await getSeoMeta({ data: "about" }) }),
+  head: ({ loaderData }) => {
+    const seo = pageSeo({
+      path: "/about",
+      title: "About the Studio — Kloche Interiors Nairobi",
+      description:
+        "Meet Keith Locho, founder and principal interior designer of Kloche Interiors — the story, philosophy and studio behind every project.",
+      ogTitle: "About — Kloche Interiors",
+      ogDescription:
+        "The founder story, philosophy and studio behind Kloche Interiors in Nairobi.",
+      image: IMAGES.studio1,
+      override: loaderData?.seo,
+    });
+    return {
+      meta: seo.meta,
+      links: seo.links,
+      scripts: [
+        breadcrumbLd([{ name: "About", path: "/about" }]),
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            name: "About Kloche Interiors",
+            url: absoluteUrl("/about"),
+            mainEntity: {
+              "@type": "HomeAndConstructionBusiness",
+              name: "Kloche Interiors",
+              url: absoluteUrl("/"),
+              founder: { "@type": "Person", name: "Keith Locho" },
+            },
+          }),
+        },
+        ...seo.scripts,
+      ],
+    };
+  },
   component: About,
 });
 
