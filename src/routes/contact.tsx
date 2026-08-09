@@ -7,60 +7,53 @@ import { Toaster } from "@/components/ui/sonner";
 import { IMAGES, PROJECTS, SERVICES, STUDIO, whatsappLink } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { PageHero } from "@/components/site/Sections";
-import { absoluteUrl, breadcrumbLd } from "@/lib/seo";
+import { absoluteUrl, breadcrumbLd, pageSeo } from "@/lib/seo";
+import { getSeoMeta } from "@/lib/seo.functions";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 
 export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      { title: "Contact — Kloche Interiors, Nairobi" },
-      {
-        name: "description",
-        content:
-          "Book a consultation with Kloche Interiors in Westlands, Nairobi. Call, WhatsApp, email or send us your project details.",
-      },
-      { property: "og:title", content: "Contact — Kloche Interiors" },
-      {
-        property: "og:description",
-        content: "Book a consultation with our Nairobi interior design studio.",
-      },
-      { property: "og:image", content: IMAGES.studio3 },
-      { name: "twitter:image", content: IMAGES.studio3 },
-      { property: "og:url", content: absoluteUrl("/contact") },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Contact — Kloche Interiors" },
-      {
-        name: "twitter:description",
-        content: "Book a consultation with our Nairobi interior design studio.",
-      },
-    ],
-    links: [{ rel: "canonical", href: absoluteUrl("/contact") }],
-    scripts: [
-      breadcrumbLd([{ name: "Contact", path: "/contact" }]),
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "ContactPage",
-          name: "Contact Kloche Interiors",
-          url: absoluteUrl("/contact"),
-          mainEntity: {
-            "@type": "HomeAndConstructionBusiness",
-            name: STUDIO.name,
-            telephone: STUDIO.phoneDisplay,
-            email: STUDIO.email,
-            address: {
-              "@type": "PostalAddress",
-              streetAddress: "Karuna Road",
-              addressLocality: "Nairobi",
-              addressCountry: "KE",
+  loader: async () => ({ seo: await getSeoMeta({ data: "contact" }) }),
+  head: ({ loaderData }) => {
+    const seo = pageSeo({
+      path: "/contact",
+      title: "Contact — Kloche Interiors, Nairobi",
+      description:
+        "Book a consultation with Kloche Interiors in Westlands, Nairobi. Call, WhatsApp, email or send us your project details.",
+      ogTitle: "Contact — Kloche Interiors",
+      ogDescription: "Book a consultation with our Nairobi interior design studio.",
+      image: IMAGES.studio3,
+      override: loaderData?.seo,
+    });
+    return {
+      meta: seo.meta,
+      links: seo.links,
+      scripts: [
+        breadcrumbLd([{ name: "Contact", path: "/contact" }]),
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            name: "Contact Kloche Interiors",
+            url: absoluteUrl("/contact"),
+            mainEntity: {
+              "@type": "HomeAndConstructionBusiness",
+              name: STUDIO.name,
+              telephone: STUDIO.phoneDisplay,
+              email: STUDIO.email,
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "Karuna Road",
+                addressLocality: "Nairobi",
+                addressCountry: "KE",
+              },
             },
-          },
-        }),
-      },
-    ],
-  }),
+          }),
+        },
+        ...seo.scripts,
+      ],
+    };
+  },
   validateSearch: (
     search: Record<string, unknown>,
   ): { budget?: string; service?: string } => {

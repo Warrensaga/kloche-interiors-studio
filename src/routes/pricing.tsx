@@ -5,28 +5,28 @@ import { IMAGES, PROJECTS } from "@/data/site";
 import { Reveal, Stagger, StaggerItem } from "@/components/site/Reveal";
 import { PageHero } from "@/components/site/Sections";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
-import { absoluteUrl, breadcrumbLd } from "@/lib/seo";
+import { absoluteUrl, breadcrumbLd, pageSeo } from "@/lib/seo";
+import { getSeoMeta } from "@/lib/seo.functions";
 
 const PAGE_TITLE = "Investment Guide — Kloche Interiors Nairobi";
 const PAGE_DESC =
   "How Kloche Interiors & Construction prices interior design, renovations, 3D visualisation and commercial fit-outs in Nairobi — plus what every project includes.";
 
 export const Route = createFileRoute("/pricing")({
-  head: () => ({
-    meta: [
-      { title: PAGE_TITLE },
-      { name: "description", content: PAGE_DESC },
-      { property: "og:title", content: "Investment Guide — Kloche Interiors" },
-      { property: "og:description", content: PAGE_DESC },
-      { property: "og:image", content: IMAGES.studio4 },
-      { name: "twitter:image", content: IMAGES.studio4 },
-      { property: "og:url", content: absoluteUrl("/pricing") },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Investment Guide — Kloche Interiors" },
-      { name: "twitter:description", content: PAGE_DESC },
-    ],
-    links: [{ rel: "canonical", href: absoluteUrl("/pricing") }],
+  loader: async () => ({ seo: await getSeoMeta({ data: "pricing" }) }),
+  head: ({ loaderData }) => {
+    const seo = pageSeo({
+      path: "/pricing",
+      title: PAGE_TITLE,
+      description: PAGE_DESC,
+      ogTitle: "Investment Guide — Kloche Interiors",
+      ogDescription: PAGE_DESC,
+      image: IMAGES.studio4,
+      override: loaderData?.seo,
+    });
+    return {
+    meta: seo.meta,
+    links: seo.links,
     scripts: [
       breadcrumbLd([{ name: "Investment Guide", path: "/pricing" }]),
       {
@@ -74,9 +74,10 @@ export const Route = createFileRoute("/pricing")({
           })),
         }),
       },
+      ...seo.scripts,
     ],
-
-  }),
+    };
+  },
   component: Pricing,
 });
 

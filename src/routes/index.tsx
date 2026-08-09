@@ -6,7 +6,8 @@ import { IMAGES, PHILOSOPHY, PILLARS, SERVICES, STUDIO, TESTIMONIALS, whatsappLi
 import { listPublishedProjects } from "@/lib/projects.functions";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, SectionHeading } from "@/components/site/Sections";
-import { absoluteUrl, breadcrumbLd } from "@/lib/seo";
+import { absoluteUrl, breadcrumbLd, pageSeo } from "@/lib/seo";
+import { getSeoMeta } from "@/lib/seo.functions";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 import { imageAt, srcSet } from "@/lib/images";
 import {
@@ -18,74 +19,65 @@ import {
 
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Kloche Interiors | Luxury Interior Design Studio, Nairobi" },
-      {
-        name: "description",
-        content:
-          "Bespoke interior design and renovation for Nairobi's most discerning homeowners. Residential, commercial and renovation design across Kenya.",
-      },
-      { property: "og:title", content: "Kloche Interiors — Interiors that feel like home" },
-      {
-        property: "og:description",
-        content:
-          "A Nairobi interior design studio creating warm, considered homes and workplaces across Kenya.",
-      },
-      { property: "og:image", content: IMAGES.hero },
-      { name: "twitter:image", content: IMAGES.hero },
-      { property: "og:url", content: absoluteUrl("/") },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Kloche Interiors — Interiors that feel like home" },
-      {
-        name: "twitter:description",
-        content:
-          "Interior design, renovations and construction finishes for homes and workplaces in Nairobi, Kenya.",
-      },
-    ],
-    links: [
-      { rel: "canonical", href: absoluteUrl("/") },
-      {
-        rel: "preload",
-        as: "image",
-        href: imageAt(IMAGES.hero, 1920),
-        imageSrcSet: srcSet(IMAGES.hero),
-        imageSizes: "100vw",
-        fetchPriority: "high",
-      },
-    ],
-    scripts: [
-      breadcrumbLd([]),
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "HomeAndConstructionBusiness",
-          name: "Kloche Interiors",
-          url: absoluteUrl("/"),
-          image: IMAGES.hero,
-          telephone: STUDIO.phoneDisplay,
-          email: STUDIO.email,
-          address: {
-            "@type": "PostalAddress",
-            streetAddress: "Karuna Road",
-            addressLocality: "Nairobi",
-            addressCountry: "KE",
-          },
-          openingHours: ["Mo-Fr 09:00-18:00", "Sa 10:00-15:00"],
-          sameAs: [STUDIO.instagram],
-          priceRange: "$$$",
-        }),
-      },
-    ],
-  }),
+  head: ({ loaderData }) => {
+    const seo = pageSeo({
+      path: "/",
+      title: "Kloche Interiors | Luxury Interior Design Studio, Nairobi",
+      description:
+        "Bespoke interior design and renovation for Nairobi's most discerning homeowners. Residential, commercial and renovation design across Kenya.",
+      ogTitle: "Kloche Interiors — Interiors that feel like home",
+      ogDescription:
+        "A Nairobi interior design studio creating warm, considered homes and workplaces across Kenya.",
+      image: IMAGES.hero,
+      override: loaderData?.seo,
+    });
+    return {
+      meta: seo.meta,
+      links: [
+        ...seo.links,
+        {
+          rel: "preload",
+          as: "image",
+          href: imageAt(IMAGES.hero, 1920),
+          imageSrcSet: srcSet(IMAGES.hero),
+          imageSizes: "100vw",
+          fetchPriority: "high",
+        },
+      ],
+      scripts: [
+        breadcrumbLd([]),
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "HomeAndConstructionBusiness",
+            name: "Kloche Interiors",
+            url: absoluteUrl("/"),
+            image: IMAGES.hero,
+            telephone: STUDIO.phoneDisplay,
+            email: STUDIO.email,
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "Karuna Road",
+              addressLocality: "Nairobi",
+              addressCountry: "KE",
+            },
+            openingHours: ["Mo-Fr 09:00-18:00", "Sa 10:00-15:00"],
+            sameAs: [STUDIO.instagram],
+            priceRange: "$$$",
+          }),
+        },
+        ...seo.scripts,
+      ],
+    };
+  },
   loader: async () => {
-    const [sections, projects] = await Promise.all([
+    const [sections, projects, seo] = await Promise.all([
       listHomepageSections(),
       listPublishedProjects(),
+      getSeoMeta({ data: "home" }),
     ]);
-    return { sections, projects };
+    return { sections, projects, seo };
   },
   errorComponent: ({ error }) => (
     <div className="section-y mx-auto max-w-3xl px-5 text-center" role="alert">
