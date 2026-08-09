@@ -5,41 +5,37 @@ import { CATEGORIES, PROJECTS, type Category, type Project } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { PageHero, CtaBanner, SectionHeading } from "@/components/site/Sections";
 import { BeforeAfter } from "@/components/site/BeforeAfter";
-import { absoluteUrl, breadcrumbLd } from "@/lib/seo";
+import { absoluteUrl, breadcrumbLd, pageSeo } from "@/lib/seo";
+import { getSeoMeta } from "@/lib/seo.functions";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 import { listPublishedProjects } from "@/lib/projects.functions";
 
 const HERO = PROJECTS[1].cover;
 
 export const Route = createFileRoute("/portfolio/")({
-  loader: () => listPublishedProjects(),
-  head: () => ({
-    meta: [
-      { title: "Portfolio — Kloche Interiors Nairobi" },
-      {
-        name: "description",
-        content:
-          "Residential, commercial, kitchen and living space projects designed by Kloche Interiors across Nairobi and Kenya.",
-      },
-      { property: "og:title", content: "Portfolio — Kloche Interiors" },
-      {
-        property: "og:description",
-        content: "Selected interior design projects across Nairobi and Kenya.",
-      },
-      { property: "og:image", content: HERO },
-      { name: "twitter:image", content: HERO },
-      { property: "og:url", content: absoluteUrl("/portfolio") },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Portfolio — Kloche Interiors" },
-      {
-        name: "twitter:description",
-        content: "Selected interior design projects across Nairobi and Kenya.",
-      },
-    ],
-    links: [{ rel: "canonical", href: absoluteUrl("/portfolio") }],
-    scripts: [
-      breadcrumbLd([{ name: "Portfolio", path: "/portfolio" }]),
+  loader: async () => {
+    const [projects, seo] = await Promise.all([
+      listPublishedProjects(),
+      getSeoMeta({ data: "portfolio" }),
+    ]);
+    return { projects, seo };
+  },
+  head: ({ loaderData }) => {
+    const seo = pageSeo({
+      path: "/portfolio",
+      title: "Portfolio — Kloche Interiors Nairobi",
+      description:
+        "Residential, commercial, kitchen and living space projects designed by Kloche Interiors across Nairobi and Kenya.",
+      ogTitle: "Portfolio — Kloche Interiors",
+      ogDescription: "Selected interior design projects across Nairobi and Kenya.",
+      image: HERO,
+      override: loaderData?.seo,
+    });
+    return {
+      meta: seo.meta,
+      links: seo.links,
+      scripts: [
+        breadcrumbLd([{ name: "Portfolio", path: "/portfolio" }]),
       {
         type: "application/ld+json",
         children: JSON.stringify({
