@@ -6,7 +6,8 @@ import { IMAGES, PHILOSOPHY, PILLARS, SERVICES, STUDIO, TESTIMONIALS, whatsappLi
 import { listPublishedProjects } from "@/lib/projects.functions";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, SectionHeading } from "@/components/site/Sections";
-import { absoluteUrl, breadcrumbLd } from "@/lib/seo";
+import { absoluteUrl, breadcrumbLd, pageSeo } from "@/lib/seo";
+import { getSeoMeta } from "@/lib/seo.functions";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 import { imageAt, srcSet } from "@/lib/images";
 import {
