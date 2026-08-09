@@ -74,9 +74,10 @@ export const Route = createFileRoute("/pricing")({
           })),
         }),
       },
+      ...seo.scripts,
     ],
-
-  }),
+    };
+  },
   component: Pricing,
 });
 
