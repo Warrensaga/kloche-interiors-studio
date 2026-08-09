@@ -53,14 +53,16 @@ export const Route = createFileRoute("/portfolio/")({
             })),
           },
         }),
-      },
-    ],
-  }),
+        },
+        ...seo.scripts,
+      ],
+    };
+  },
   component: Portfolio,
 });
 
 function Portfolio() {
-  const all = Route.useLoaderData() as Project[];
+  const { projects: all } = Route.useLoaderData() as { projects: Project[] };
   const [filter, setFilter] = useState<Category | "All">("All");
   const projects = useMemo(
     () => (filter === "All" ? all : all.filter((p) => p.categories.includes(filter))),
