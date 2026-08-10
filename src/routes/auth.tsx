@@ -61,9 +61,8 @@ function AuthPage() {
         setError("Check your email to confirm your account, then sign in.");
         return;
       }
-      // Grants admin only if no administrator exists yet.
-      await supabase.rpc("claim_first_admin");
       navigate({ to: target, replace: true });
+
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
     } finally {
