@@ -21,7 +21,7 @@ function publicClient() {
 
 /** Admin-managed SEO overrides for one page key. Returns null when unset. */
 export const getSeoMeta = createServerFn({ method: "GET" })
-  .inputValidator((data: string) => data)
+  .validator((data: string) => data)
   .handler(async ({ data: pageKey }): Promise<SeoOverride> => {
     try {
       const supabase = publicClient();

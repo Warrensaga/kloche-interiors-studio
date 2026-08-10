@@ -51,7 +51,7 @@ export const listPublishedPosts = createServerFn({ method: "GET" }).handler(
 );
 
 export const getPublishedPost = createServerFn({ method: "GET" })
-  .inputValidator((data: { slug: string }) => data)
+  .validator((data: { slug: string }) => data)
   .handler(async ({ data }): Promise<PostFull | null> => {
     try {
       const { data: row } = await publicClient()
