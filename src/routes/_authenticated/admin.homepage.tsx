@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { MediaPicker } from "@/components/admin/MediaPicker";
 import type { HomepageSection, SectionContent } from "@/lib/homepage.functions";
 
 export const Route = createFileRoute("/_authenticated/admin/homepage")({
@@ -290,11 +291,18 @@ function HomepageEditor() {
                   )}
 
                   {s.kind === "hero" && (
-                    <div className="grid gap-1.5 sm:max-w-sm">
-                      <Label>Primary button label</Label>
-                      <Input
-                        value={s.content.ctaLabel ?? ""}
-                        onChange={(e) => updateContent(s.id, { ctaLabel: e.target.value })}
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <div className="grid gap-1.5">
+                        <Label>Primary button label</Label>
+                        <Input
+                          value={s.content.ctaLabel ?? ""}
+                          onChange={(e) => updateContent(s.id, { ctaLabel: e.target.value })}
+                        />
+                      </div>
+                      <MediaPicker
+                        label="Background image"
+                        value={s.content.imageUrl ?? ""}
+                        onChange={(v) => updateContent(s.id, { imageUrl: v })}
                       />
                     </div>
                   )}

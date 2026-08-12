@@ -140,12 +140,14 @@ function Hero({ section }: { section: HomepageSection }) {
   const y = reduced ? undefined : yRaw;
   const fade = reduced ? undefined : fadeRaw;
 
+  const heroSrc = section.content.imageUrl || IMAGES.hero;
+
   return (
     <section ref={heroRef} className="relative flex min-h-[100svh] flex-col overflow-hidden">
       <motion.img
         style={{ y }}
-        src={imageAt(IMAGES.hero, 1920)}
-        srcSet={srcSet(IMAGES.hero)}
+        src={imageAt(heroSrc, 1920)}
+        srcSet={srcSet(heroSrc)}
         sizes={SIZES.full}
         fetchPriority="high"
         decoding="sync"
