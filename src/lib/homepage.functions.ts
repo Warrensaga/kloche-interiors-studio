@@ -23,6 +23,7 @@ export type SectionContent = {
   ctaLabel?: string;
   showWhatsapp?: boolean;
   limit?: number;
+  imageUrl?: string;
 };
 
 export type HomepageSection = {
