@@ -69,6 +69,7 @@ function ProjectEditor() {
   const [gallery, setGallery] = useState<{ id?: string; url: string; alt: string }[]>([]);
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
