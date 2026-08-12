@@ -282,20 +282,53 @@ function ProjectEditor() {
       <section className="rounded-3xl border border-border bg-card p-6 md:p-8">
         <h2 className="font-display text-xl">Imagery</h2>
         <div className="mt-5 grid gap-5 md:grid-cols-3">
-          <Field label="Cover image URL">
-            <Input value={form.cover_url} onChange={(e) => set("cover_url", e.target.value)} />
-          </Field>
-          <Field label="Before image URL (optional)">
-            <Input value={form.before_url} onChange={(e) => set("before_url", e.target.value)} />
-          </Field>
-          <Field label="After image URL (optional)">
-            <Input value={form.after_url} onChange={(e) => set("after_url", e.target.value)} />
-          </Field>
+          <MediaPicker
+            label="Cover image"
+            value={form.cover_url}
+            onChange={(v) => set("cover_url", v)}
+          />
+          <MediaPicker
+            label="Before image (optional)"
+            value={form.before_url}
+            onChange={(v) => set("before_url", v)}
+          />
+          <MediaPicker
+            label="After image (optional)"
+            value={form.after_url}
+            onChange={(v) => set("after_url", v)}
+          />
         </div>
 
-        <h3 className="mt-10 text-xs uppercase tracking-[0.16em] text-muted-foreground">
-          Gallery
-        </h3>
+        <div className="mt-10 flex flex-wrap items-center gap-3">
+          <h3 className="text-xs uppercase tracking-[0.16em] text-muted-foreground">Gallery</h3>
+          <label className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-border px-4 py-2 text-xs uppercase tracking-[0.14em] hover:border-accent">
+            {uploading ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
+            Upload images
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              className="hidden"
+              disabled={uploading}
+              onChange={async (e) => {
+                const files = Array.from(e.target.files ?? []);
+                e.target.value = "";
+                if (!files.length) return;
+                setUploading(true);
+                try {
+                  for (const file of files) {
+                    const asset = await uploadMedia(file, "projects");
+                    setGallery((list) => [...list, { url: asset.url, alt: "" }]);
+                  }
+                } catch (err) {
+                  setError(err instanceof Error ? err.message : "Upload failed");
+                } finally {
+                  setUploading(false);
+                }
+              }}
+            />
+          </label>
+        </div>
         <div className="mt-4 space-y-3">
           {gallery.map((g, i) => (
             <div key={i} className="flex flex-wrap items-center gap-3">
@@ -305,16 +338,17 @@ function ProjectEditor() {
                 className="h-12 w-16 shrink-0 rounded-lg bg-muted object-cover"
                 loading="lazy"
               />
-              <Input
-                className="min-w-[16rem] flex-1"
-                placeholder="Image URL"
-                value={g.url}
-                onChange={(e) =>
-                  setGallery((list) =>
-                    list.map((item, idx) => (idx === i ? { ...item, url: e.target.value } : item)),
-                  )
-                }
-              />
+              <div className="min-w-[16rem] flex-1">
+                <MediaPicker
+                  label="Image"
+                  value={g.url}
+                  onChange={(v) =>
+                    setGallery((list) =>
+                      list.map((item, idx) => (idx === i ? { ...item, url: v } : item)),
+                    )
+                  }
+                />
+              </div>
               <Input
                 className="min-w-[12rem] flex-1"
                 placeholder="Alt text"
@@ -345,6 +379,7 @@ function ProjectEditor() {
           </Button>
         </div>
       </section>
+
     </form>
   );
 }
