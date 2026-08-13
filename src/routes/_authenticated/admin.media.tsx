@@ -7,7 +7,15 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AdminHeading } from "@/components/admin/fields";
-import { deleteMedia, uploadMedia } from "@/lib/media";
+import { Progress } from "@/components/ui/progress";
+import {
+  deleteMedia,
+  formatBytes,
+  MAX_FILE_BYTES,
+  uploadMedia,
+  validateImage,
+} from "@/lib/media";
+
 
 export const Route = createFileRoute("/_authenticated/admin/media")({
   component: AdminMedia,
