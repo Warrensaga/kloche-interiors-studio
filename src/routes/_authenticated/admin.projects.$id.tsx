@@ -10,7 +10,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { MediaPicker } from "@/components/admin/MediaPicker";
-import { uploadMedia } from "@/lib/media";
+import { formatBytes, MAX_FILE_BYTES, uploadMedia, validateImage } from "@/lib/media";
+import { Progress } from "@/components/ui/progress";
+
 import { CATEGORIES } from "@/data/site";
 
 export const Route = createFileRoute("/_authenticated/admin/projects/$id")({
@@ -70,6 +72,9 @@ function ProjectEditor() {
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadPct, setUploadPct] = useState(0);
+  const [uploadStatus, setUploadStatus] = useState<string | null>(null);
+
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
