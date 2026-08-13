@@ -309,7 +309,7 @@ function ProjectEditor() {
             Upload images
             <input
               type="file"
-              accept="image/*"
+              accept="image/jpeg,image/png,image/webp"
               multiple
               className="hidden"
               disabled={uploading}
@@ -318,20 +318,40 @@ function ProjectEditor() {
                 e.target.value = "";
                 if (!files.length) return;
                 setUploading(true);
+                setError(null);
                 try {
-                  for (const file of files) {
-                    const asset = await uploadMedia(file, "projects");
+                  for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const invalid = validateImage(file);
+                    if (invalid) throw new Error(invalid);
+                    setUploadStatus(`${file.name} (${i + 1}/${files.length})`);
+                    setUploadPct(0);
+                    const asset = await uploadMedia(file, "projects", setUploadPct);
                     setGallery((list) => [...list, { url: asset.url, alt: "" }]);
                   }
                 } catch (err) {
                   setError(err instanceof Error ? err.message : "Upload failed");
                 } finally {
                   setUploading(false);
+                  setUploadStatus(null);
+                  setUploadPct(0);
                 }
               }}
             />
           </label>
+          <span className="text-[0.65rem] text-muted-foreground">
+            JPG, PNG or WEBP · max {formatBytes(MAX_FILE_BYTES)}
+          </span>
         </div>
+        {uploading && (
+          <div className="mt-3 max-w-sm space-y-1">
+            <Progress value={uploadPct} />
+            <p className="text-[0.7rem] text-muted-foreground">
+              Uploading {uploadStatus} — {uploadPct}%
+            </p>
+          </div>
+        )}
+
         <div className="mt-4 space-y-3">
           {gallery.map((g, i) => (
             <div key={i} className="flex flex-wrap items-center gap-3">
