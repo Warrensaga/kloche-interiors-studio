@@ -7,7 +7,15 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AdminHeading } from "@/components/admin/fields";
-import { deleteMedia, uploadMedia } from "@/lib/media";
+import { Progress } from "@/components/ui/progress";
+import {
+  deleteMedia,
+  formatBytes,
+  MAX_FILE_BYTES,
+  uploadMedia,
+  validateImage,
+} from "@/lib/media";
+
 
 export const Route = createFileRoute("/_authenticated/admin/media")({
   component: AdminMedia,
@@ -16,6 +24,8 @@ export const Route = createFileRoute("/_authenticated/admin/media")({
 function AdminMedia() {
   const queryClient = useQueryClient();
   const [busy, setBusy] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [status, setStatus] = useState<string | null>(null);
   const [search, setSearch] = useState("");
 
   const { data } = useQuery({
@@ -33,16 +43,26 @@ function AdminMedia() {
   const refresh = () => queryClient.invalidateQueries({ queryKey: ["admin", "media"] });
 
   async function onFiles(files: FileList | null) {
-    if (!files?.length) return;
+    const list = Array.from(files ?? []);
+    if (!list.length) return;
     setBusy(true);
     try {
-      for (const file of Array.from(files)) await uploadMedia(file);
-      toast.success("Uploaded");
+      for (let i = 0; i < list.length; i++) {
+        const file = list[i];
+        const invalid = validateImage(file);
+        if (invalid) throw new Error(invalid);
+        setStatus(`${file.name} (${i + 1}/${list.length})`);
+        setProgress(0);
+        await uploadMedia(file, "uploads", setProgress);
+      }
+      toast.success(list.length > 1 ? `${list.length} images uploaded` : "Uploaded");
       refresh();
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Upload failed");
     } finally {
       setBusy(false);
+      setStatus(null);
+      setProgress(0);
     }
   }
 
@@ -59,7 +79,17 @@ function AdminMedia() {
       />
 
       <div className="mt-8 flex flex-wrap items-center gap-3">
-        <Input type="file" accept="image/*" multiple onChange={(e) => onFiles(e.target.files)} className="max-w-sm" />
+        <Input
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          multiple
+          onChange={(e) => {
+            onFiles(e.target.files);
+            e.target.value = "";
+          }}
+          className="max-w-sm"
+          disabled={busy}
+        />
         {busy && <Loader2 size={16} className="animate-spin" />}
         <Input
           placeholder="Search files…"
@@ -68,6 +98,18 @@ function AdminMedia() {
           className="max-w-xs"
         />
       </div>
+      <p className="mt-2 text-[0.7rem] text-muted-foreground">
+        JPG, PNG or WEBP · max {formatBytes(MAX_FILE_BYTES)} per file
+      </p>
+      {busy && (
+        <div className="mt-3 max-w-sm space-y-1">
+          <Progress value={progress} />
+          <p className="text-[0.7rem] text-muted-foreground">
+            Uploading {status} — {progress}%
+          </p>
+        </div>
+      )}
+
 
       <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
         {list.map((a) => (
