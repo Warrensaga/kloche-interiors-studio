@@ -118,6 +118,7 @@ function ProjectEditor() {
     setSaving(true);
     setError(null);
     try {
+      const firstGallery = gallery.find((g) => g.url.trim())?.url.trim() ?? "";
       const payload = {
         slug: form.slug || slugify(form.name),
         name: form.name,
