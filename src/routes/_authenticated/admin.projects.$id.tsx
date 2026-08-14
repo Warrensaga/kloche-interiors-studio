@@ -118,6 +118,7 @@ function ProjectEditor() {
     setSaving(true);
     setError(null);
     try {
+      const firstGallery = gallery.find((g) => g.url.trim())?.url.trim() ?? "";
       const payload = {
         slug: form.slug || slugify(form.name),
         name: form.name,
@@ -132,7 +133,7 @@ function ProjectEditor() {
           .filter(Boolean),
         duration: form.duration,
         year: form.year,
-        cover_url: form.cover_url,
+        cover_url: form.cover_url || firstGallery,
         before_url: form.before_url || null,
         after_url: form.after_url || null,
         sort_order: Number(form.sort_order) || 0,
@@ -289,6 +290,10 @@ function ProjectEditor() {
 
       <section className="rounded-3xl border border-border bg-card p-6 md:p-8">
         <h2 className="font-display text-xl">Imagery</h2>
+        <p className="mt-1 text-xs text-muted-foreground">
+          The cover image is what shows on the portfolio grid. Leave it empty and the first gallery
+          image is used automatically. Only published projects appear on the website.
+        </p>
         <div className="mt-5 grid gap-5 md:grid-cols-3">
           <MediaPicker
             label="Cover image"
@@ -387,6 +392,15 @@ function ProjectEditor() {
                   )
                 }
               />
+              <Button
+                type="button"
+                variant={form.cover_url === g.url && g.url ? "default" : "outline"}
+                size="sm"
+                disabled={!g.url}
+                onClick={() => set("cover_url", g.url)}
+              >
+                {form.cover_url === g.url && g.url ? "Cover" : "Use as cover"}
+              </Button>
               <Button
                 type="button"
                 variant="outline"
