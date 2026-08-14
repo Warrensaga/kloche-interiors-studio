@@ -394,6 +394,15 @@ function ProjectEditor() {
               />
               <Button
                 type="button"
+                variant={form.cover_url === g.url && g.url ? "default" : "outline"}
+                size="sm"
+                disabled={!g.url}
+                onClick={() => set("cover_url", g.url)}
+              >
+                {form.cover_url === g.url && g.url ? "Cover" : "Use as cover"}
+              </Button>
+              <Button
+                type="button"
                 variant="outline"
                 size="sm"
                 onClick={() => setGallery((list) => list.filter((_, idx) => idx !== i))}
