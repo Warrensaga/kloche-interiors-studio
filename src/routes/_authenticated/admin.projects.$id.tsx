@@ -133,7 +133,7 @@ function ProjectEditor() {
           .filter(Boolean),
         duration: form.duration,
         year: form.year,
-        cover_url: form.cover_url,
+        cover_url: form.cover_url || firstGallery,
         before_url: form.before_url || null,
         after_url: form.after_url || null,
         sort_order: Number(form.sort_order) || 0,
