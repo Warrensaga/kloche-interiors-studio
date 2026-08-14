@@ -105,16 +105,22 @@ function Portfolio() {
                   params={{ projectId: p.id }}
                   className="group block overflow-hidden rounded-3xl bg-card shadow-soft hover-lift"
                 >
-                  <div className="aspect-4/3 overflow-hidden">
-                    <SmartImage
-                      src={p.cover}
-                      alt={`${p.name}, ${p.location}`}
-                      baseWidth={800}
-                      sizes={SIZES.third}
-                      ratio="4 / 3"
-                      priority={i < 3}
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
+                  <div className="aspect-4/3 overflow-hidden bg-secondary">
+                    {p.cover || p.gallery[0] ? (
+                      <SmartImage
+                        src={p.cover || p.gallery[0]}
+                        alt={`${p.name}, ${p.location}`}
+                        baseWidth={800}
+                        sizes={SIZES.third}
+                        ratio="4 / 3"
+                        priority={i < 3}
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center text-[0.65rem] uppercase tracking-[0.16em] text-muted-foreground">
+                        Image coming soon
+                      </div>
+                    )}
                   </div>
                   <div className="flex items-start justify-between gap-4 p-6">
                     <div className="min-w-0">
