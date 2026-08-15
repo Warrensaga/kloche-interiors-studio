@@ -2,6 +2,21 @@ import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
+import { missingServerSupabaseEnv } from "./lib/supabase-env";
+
+// One-time boot diagnostic: names only, never values.
+let bootEnvChecked = false;
+function reportEnvOnBoot() {
+  if (bootEnvChecked) return;
+  bootEnvChecked = true;
+  const missing = missingServerSupabaseEnv();
+  if (missing.length) {
+    console.error(
+      `[env] Server started without required environment variables: ${missing.join(", ")}. ` +
+        "The site will render bundled fallback content until they are configured.",
+    );
+  }
+}
 
 type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
