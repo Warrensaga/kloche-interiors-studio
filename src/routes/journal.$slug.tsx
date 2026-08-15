@@ -5,10 +5,11 @@ import { SmartImage } from "@/components/site/SmartImage";
 import { ErrorState } from "@/components/site/ErrorState";
 import { getPublishedPost, type PostFull } from "@/lib/blog.functions";
 import { absoluteUrl, breadcrumbLd } from "@/lib/seo";
+import { safeLoad } from "@/lib/supabase-env";
 
 export const Route = createFileRoute("/journal/$slug")({
   loader: async ({ params }) => {
-    const post = await getPublishedPost({ data: { slug: params.slug } });
+    const post = await safeLoad(() => getPublishedPost({ data: { slug: params.slug } }), null as PostFull | null);
     if (!post) throw notFound();
     return post;
   },

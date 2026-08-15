@@ -8,10 +8,11 @@ import { absoluteUrl } from "@/lib/seo";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 import { imageAt, srcSet } from "@/lib/images";
 import { listPublishedProjects } from "@/lib/projects.functions";
+import { safeLoad } from "@/lib/supabase-env";
 
 export const Route = createFileRoute("/portfolio/$projectId")({
   loader: async ({ params }) => {
-    const all = await listPublishedProjects();
+    const all = await safeLoad(() => listPublishedProjects(), PROJECTS);
     const project = all.find((p) => p.id === params.projectId) ??
       PROJECTS.find((p) => p.id === params.projectId);
     if (!project) throw notFound();

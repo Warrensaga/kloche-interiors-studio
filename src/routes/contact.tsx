@@ -9,10 +9,11 @@ import { Reveal } from "@/components/site/Reveal";
 import { PageHero } from "@/components/site/Sections";
 import { absoluteUrl, breadcrumbLd, pageSeo } from "@/lib/seo";
 import { getSeoMeta } from "@/lib/seo.functions";
+import { safeLoad } from "@/lib/supabase-env";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 
 export const Route = createFileRoute("/contact")({
-  loader: async () => ({ seo: await getSeoMeta({ data: "contact" }) }),
+  loader: async () => ({ seo: await safeLoad(() => getSeoMeta({ data: "contact" }), null) }),
   head: ({ loaderData }) => {
     const seo = pageSeo({
       path: "/contact",

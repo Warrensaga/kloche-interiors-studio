@@ -5,10 +5,14 @@ import { SmartImage } from "@/components/site/SmartImage";
 import { listPublishedPosts, type PostSummary } from "@/lib/blog.functions";
 import { absoluteUrl, breadcrumbLd, pageSeo } from "@/lib/seo";
 import { getSeoMeta } from "@/lib/seo.functions";
+import { safeLoad } from "@/lib/supabase-env";
 
 export const Route = createFileRoute("/journal/")({
   loader: async () => {
-    const [posts, seo] = await Promise.all([listPublishedPosts(), getSeoMeta({ data: "journal" })]);
+    const [posts, seo] = await Promise.all([
+      safeLoad(() => listPublishedPosts(), [] as PostSummary[]),
+      safeLoad(() => getSeoMeta({ data: "journal" }), null),
+    ]);
     return { posts, seo };
   },
   head: ({ loaderData }) => {

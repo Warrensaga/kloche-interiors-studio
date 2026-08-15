@@ -8,6 +8,7 @@ import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, SectionHeading } from "@/components/site/Sections";
 import { absoluteUrl, breadcrumbLd, pageSeo } from "@/lib/seo";
 import { getSeoMeta } from "@/lib/seo.functions";
+import { safeLoad } from "@/lib/supabase-env";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 import { imageAt, srcSet } from "@/lib/images";
 import {
@@ -73,9 +74,9 @@ export const Route = createFileRoute("/")({
   },
   loader: async () => {
     const [sections, projects, seo] = await Promise.all([
-      listHomepageSections(),
-      listPublishedProjects(),
-      getSeoMeta({ data: "home" }),
+      safeLoad(() => listHomepageSections(), [] as HomepageSection[]),
+      safeLoad(() => listPublishedProjects(), PROJECTS),
+      safeLoad(() => getSeoMeta({ data: "home" }), null),
     ]);
     return { sections, projects, seo };
   },

@@ -5,13 +5,14 @@ import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, PageHero, SectionHeading } from "@/components/site/Sections";
 import { absoluteUrl, breadcrumbLd, pageSeo } from "@/lib/seo";
 import { getSeoMeta } from "@/lib/seo.functions";
+import { safeLoad } from "@/lib/supabase-env";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 
 const ICONS: Record<string, LucideIcon> = { Home, Ruler, Armchair, HardHat, Building2 };
 const HERO = SERVICES[0].image;
 
 export const Route = createFileRoute("/services")({
-  loader: async () => ({ seo: await getSeoMeta({ data: "services" }) }),
+  loader: async () => ({ seo: await safeLoad(() => getSeoMeta({ data: "services" }), null) }),
   head: ({ loaderData }) => {
     const seo = pageSeo({
       path: "/services",
