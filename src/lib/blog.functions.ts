@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
+import { hasServerSupabaseEnv } from "@/lib/supabase-env";
 
 export type PostSummary = {
   slug: string;
@@ -37,6 +38,7 @@ function publicClient() {
 
 export const listPublishedPosts = createServerFn({ method: "GET" }).handler(
   async (): Promise<PostSummary[]> => {
+    if (!hasServerSupabaseEnv()) return [];
     try {
       const { data } = await publicClient()
         .from("blog_posts")
@@ -53,6 +55,7 @@ export const listPublishedPosts = createServerFn({ method: "GET" }).handler(
 export const getPublishedPost = createServerFn({ method: "GET" })
   .validator((data: { slug: string }) => data)
   .handler(async ({ data }): Promise<PostFull | null> => {
+    if (!hasServerSupabaseEnv()) return null;
     try {
       const { data: row } = await publicClient()
         .from("blog_posts")

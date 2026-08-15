@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
+import { hasServerSupabaseEnv } from "@/lib/supabase-env";
 import { PROJECTS, type Category, type Project } from "@/data/site";
 
 type Row = Database["public"]["Tables"]["projects"]["Row"];
@@ -50,6 +51,7 @@ export function toProject(row: Row, images: ImageRow[]): Project {
 /** Published projects, newest ordering by sort_order. Falls back to bundled data. */
 export const listPublishedProjects = createServerFn({ method: "GET" }).handler(
   async (): Promise<Project[]> => {
+    if (!hasServerSupabaseEnv()) return PROJECTS;
     try {
       const supabase = publicClient();
       const [{ data: rows }, { data: images }] = await Promise.all([
