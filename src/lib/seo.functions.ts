@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
 import type { SeoOverride } from "@/lib/seo";
+import { hasServerSupabaseEnv } from "@/lib/supabase-env";
 
 function publicClient() {
   const key = process.env["SUPABASE_PUBLISHABLE_KEY"]!;
@@ -23,6 +24,7 @@ function publicClient() {
 export const getSeoMeta = createServerFn({ method: "GET" })
   .validator((data: string) => data)
   .handler(async ({ data: pageKey }): Promise<SeoOverride> => {
+    if (!hasServerSupabaseEnv()) return null;
     try {
       const supabase = publicClient();
       const { data } = await supabase

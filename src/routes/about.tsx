@@ -4,10 +4,11 @@ import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, PageHero, SectionHeading } from "@/components/site/Sections";
 import { absoluteUrl, breadcrumbLd, pageSeo } from "@/lib/seo";
 import { getSeoMeta } from "@/lib/seo.functions";
+import { safeLoad } from "@/lib/supabase-env";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 
 export const Route = createFileRoute("/about")({
-  loader: async () => ({ seo: await getSeoMeta({ data: "about" }) }),
+  loader: async () => ({ seo: await safeLoad(() => getSeoMeta({ data: "about" }), null) }),
   head: ({ loaderData }) => {
     const seo = pageSeo({
       path: "/about",

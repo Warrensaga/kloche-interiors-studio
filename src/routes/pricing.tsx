@@ -7,13 +7,14 @@ import { PageHero } from "@/components/site/Sections";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 import { absoluteUrl, breadcrumbLd, pageSeo } from "@/lib/seo";
 import { getSeoMeta } from "@/lib/seo.functions";
+import { safeLoad } from "@/lib/supabase-env";
 
 const PAGE_TITLE = "Investment Guide — Kloche Interiors Nairobi";
 const PAGE_DESC =
   "How Kloche Interiors & Construction prices interior design, renovations, 3D visualisation and commercial fit-outs in Nairobi — plus what every project includes.";
 
 export const Route = createFileRoute("/pricing")({
-  loader: async () => ({ seo: await getSeoMeta({ data: "pricing" }) }),
+  loader: async () => ({ seo: await safeLoad(() => getSeoMeta({ data: "pricing" }), null) }),
   head: ({ loaderData }) => {
     const seo = pageSeo({
       path: "/pricing",

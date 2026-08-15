@@ -7,6 +7,7 @@ import { PageHero, CtaBanner, SectionHeading } from "@/components/site/Sections"
 import { BeforeAfter } from "@/components/site/BeforeAfter";
 import { absoluteUrl, breadcrumbLd, pageSeo } from "@/lib/seo";
 import { getSeoMeta } from "@/lib/seo.functions";
+import { safeLoad } from "@/lib/supabase-env";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 import { listPublishedProjects } from "@/lib/projects.functions";
 
@@ -15,8 +16,8 @@ const HERO = PROJECTS[1].cover;
 export const Route = createFileRoute("/portfolio/")({
   loader: async () => {
     const [projects, seo] = await Promise.all([
-      listPublishedProjects(),
-      getSeoMeta({ data: "portfolio" }),
+      safeLoad(() => listPublishedProjects(), PROJECTS),
+      safeLoad(() => getSeoMeta({ data: "portfolio" }), null),
     ]);
     return { projects, seo };
   },

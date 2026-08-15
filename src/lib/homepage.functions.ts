@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
+import { hasServerSupabaseEnv } from "@/lib/supabase-env";
 
 export type SectionKind =
   | "hero"
@@ -71,6 +72,7 @@ function publicClient() {
 /** Visible homepage sections in display order. Falls back to bundled defaults. */
 export const listHomepageSections = createServerFn({ method: "GET" }).handler(
   async (): Promise<HomepageSection[]> => {
+    if (!hasServerSupabaseEnv()) return DEFAULT_SECTIONS;
     try {
       const supabase = publicClient();
       const { data } = await supabase
