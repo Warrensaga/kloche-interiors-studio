@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { hasBrowserSupabaseEnv } from "@/lib/supabase-env";
 import {
   FALLBACK_CONFIG,
   FALLBACK_FOOTER_NAV,
@@ -18,6 +19,8 @@ export function useSiteConfig(): SiteConfig {
       return data;
     },
     staleTime: 5 * 60 * 1000,
+    enabled: hasBrowserSupabaseEnv(),
+    retry: false,
   });
   return toConfig(data ?? null) ?? FALLBACK_CONFIG;
 }
@@ -36,6 +39,8 @@ export function useNav(location: "header" | "footer") {
       return data;
     },
     staleTime: 5 * 60 * 1000,
+    enabled: hasBrowserSupabaseEnv(),
+    retry: false,
   });
   const fallback = location === "header" ? FALLBACK_NAV : FALLBACK_FOOTER_NAV;
   if (!data?.length) return fallback;
@@ -57,6 +62,8 @@ export function usePageSections(pageKey: string) {
       return data;
     },
     staleTime: 5 * 60 * 1000,
+    enabled: hasBrowserSupabaseEnv(),
+    retry: false,
   });
   const map = new Map((data ?? []).map((s) => [s.section_key, s]));
   return {

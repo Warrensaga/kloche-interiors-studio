@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useRef, useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
-import { IMAGES, PHILOSOPHY, PILLARS, SERVICES, STUDIO, TESTIMONIALS, whatsappLink, type Project } from "@/data/site";
+import { IMAGES, PHILOSOPHY, PILLARS, PROJECTS, SERVICES, STUDIO, TESTIMONIALS, whatsappLink, type Project } from "@/data/site";
 import { listPublishedProjects } from "@/lib/projects.functions";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, SectionHeading } from "@/components/site/Sections";
@@ -12,6 +12,7 @@ import { safeLoad } from "@/lib/supabase-env";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 import { imageAt, srcSet } from "@/lib/images";
 import {
+  DEFAULT_SECTIONS,
   listHomepageSections,
   type HomepageSection,
   type StatItem,
@@ -74,7 +75,7 @@ export const Route = createFileRoute("/")({
   },
   loader: async () => {
     const [sections, projects, seo] = await Promise.all([
-      safeLoad(() => listHomepageSections(), [] as HomepageSection[]),
+      safeLoad(() => listHomepageSections(), DEFAULT_SECTIONS),
       safeLoad(() => listPublishedProjects(), PROJECTS),
       safeLoad(() => getSeoMeta({ data: "home" }), null),
     ]);
