@@ -72,6 +72,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "Kloche Interiors" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "Kloche Interiors — Interior Design Studio in Nairobi" },
+      { name: "twitter:title", content: "Kloche Interiors — Interior Design Studio in Nairobi" },
+      { property: "og:description", content: "Kloche Interiors is a premium interior design studio in Nairobi, Kenya, creating warm, considered homes and workplaces." },
+      { name: "twitter:description", content: "Kloche Interiors is a premium interior design studio in Nairobi, Kenya, creating warm, considered homes and workplaces." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/5346b0d8ee67152fb687527afd250b34/id-preview-2af0535e--bed178b8-a391-436c-9862-1ab66ccd7d04.lovable.app-1786784941954.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/5346b0d8ee67152fb687527afd250b34/id-preview-2af0535e--bed178b8-a391-436c-9862-1ab66ccd7d04.lovable.app-1786784941954.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -86,9 +92,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       // Google prefers a large, square favicon (multiple of 48px). Keep the list
       // short so crawlers don't settle on a tiny 16px variant.
       { rel: "icon", href: "/favicon.ico", sizes: "48x48" },
-      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml", sizes: "any" },
-      { rel: "icon", href: "/favicon-96.png", type: "image/png", sizes: "96x96" },
-      { rel: "icon", href: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { rel: "icon", href: "/favicon.ico", type: "image/x-icon", sizes: "any" },
+      { rel: "icon", href: "/favicon.ico", type: "image/x-icon", sizes: "96x96" },
+      { rel: "icon", href: "/favicon.ico", type: "image/x-icon", sizes: "192x192" },
       { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
       { rel: "manifest", href: "/site.webmanifest" },
     ],
