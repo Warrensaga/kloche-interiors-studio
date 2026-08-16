@@ -60,19 +60,32 @@ function AdminLayout() {
     (async () => {
       const { data: userData } = await supabase.auth.getUser();
       const uid = userData.user?.id;
-      if (!uid) return;
-      const [{ data: admin }, { data: editor }] = await Promise.all([
-        supabase.rpc("has_role", { _user_id: uid, _role: "admin" }),
-        supabase.rpc("has_role", { _user_id: uid, _role: "editor" }),
-      ]);
       if (!active) return;
-      setIsAdmin(Boolean(admin));
-      setState(admin || editor ? "ok" : "denied");
+      if (!uid) {
+        setState("denied");
+        return;
+      }
+      // Primary check: read the caller's own role rows (RLS-scoped to auth.uid()).
+      const { data: rows, error } = await supabase.from("user_roles").select("role");
+      if (!active) return;
+      let roles = (rows ?? []).map((r) => r.role as string);
+      if (error || !roles.length) {
+        // Fallback for environments where the direct table read is unavailable.
+        const [{ data: admin }, { data: editor }] = await Promise.all([
+          supabase.rpc("has_role", { _user_id: uid, _role: "admin" }),
+          supabase.rpc("has_role", { _user_id: uid, _role: "editor" }),
+        ]);
+        if (!active) return;
+        roles = [...(admin ? ["admin"] : []), ...(editor ? ["editor"] : [])];
+      }
+      setIsAdmin(roles.includes("admin"));
+      setState(roles.includes("admin") || roles.includes("editor") ? "ok" : "denied");
     })();
     return () => {
       active = false;
     };
   }, []);
+
 
   async function signOut() {
     await queryClient.cancelQueries();
