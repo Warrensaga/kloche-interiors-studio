@@ -190,7 +190,7 @@ function HomepageEditor() {
                 <span className="cursor-grab text-muted-foreground active:cursor-grabbing">
                   <GripVertical size={18} />
                 </span>
-                <div className="min-w-0 flex-1">
+                <div className="min-w-0 flex-1 basis-40">
                   <p className="truncate font-display text-lg">
                     {s.title || KIND_LABEL[s.kind] || s.section_key}
                   </p>
@@ -198,7 +198,7 @@ function HomepageEditor() {
                     {KIND_LABEL[s.kind] ?? s.kind} · position {i + 1}
                   </p>
                 </div>
-                <div className="flex gap-1">
+                <div className="flex flex-wrap gap-1">
                   <Button
                     variant="outline"
                     size="sm"

@@ -79,8 +79,8 @@ export function MediaPicker({
   return (
     <div className="space-y-2">
       <label className="text-xs uppercase tracking-[0.16em] text-muted-foreground">{label}</label>
-      <div className="flex gap-2">
-        <Input value={value} onChange={(e) => onChange(e.target.value)} placeholder="https://…" />
+      <div className="flex min-w-0 gap-2">
+        <Input className="min-w-0" value={value} onChange={(e) => onChange(e.target.value)} placeholder="https://…" />
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button type="button" variant="outline" size="icon" aria-label="Choose image">
