@@ -76,7 +76,7 @@ function AdminSettings() {
       />
 
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
-        <section className="space-y-4 rounded-3xl border border-border bg-card p-6">
+        <section className="min-w-0 space-y-4 rounded-3xl border border-border bg-card p-6">
           <h2 className="font-display text-xl">Business</h2>
           <TextField label="Business name" value={form["business_name"] ?? ""} onChange={set("business_name")} />
           <TextField label="Tagline" value={form["tagline"] ?? ""} onChange={set("tagline")} />
@@ -102,7 +102,7 @@ function AdminSettings() {
           <TextField label="Google Maps link" value={form["maps_url"] ?? ""} onChange={set("maps_url")} />
         </section>
 
-        <section className="space-y-4 rounded-3xl border border-border bg-card p-6">
+        <section className="min-w-0 space-y-4 rounded-3xl border border-border bg-card p-6">
           <h2 className="font-display text-xl">Branding & footer</h2>
           <MediaPicker label="Logo" value={form["logo_url"] ?? ""} onChange={set("logo_url")} />
           <MediaPicker label="Favicon" value={form["favicon_url"] ?? ""} onChange={set("favicon_url")} />
@@ -115,7 +115,7 @@ function AdminSettings() {
           <TextField label="Copyright line" value={form["copyright"] ?? ""} onChange={set("copyright")} />
         </section>
 
-        <section className="space-y-4 rounded-3xl border border-border bg-card p-6">
+        <section className="min-w-0 space-y-4 rounded-3xl border border-border bg-card p-6">
           <h2 className="font-display text-xl">Opening hours</h2>
           {hours.map((h, i) => (
             <div key={i} className="flex gap-2">
@@ -147,7 +147,7 @@ function AdminSettings() {
           </Button>
         </section>
 
-        <section className="space-y-4 rounded-3xl border border-border bg-card p-6">
+        <section className="min-w-0 space-y-4 rounded-3xl border border-border bg-card p-6">
           <h2 className="font-display text-xl">Social links</h2>
           {(["instagram", "tiktok", "facebook", "linkedin"] as const).map((k) => (
             <TextField
