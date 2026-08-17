@@ -43,6 +43,9 @@ export function SmartImage({
   const pending = hydrated && !loaded;
   const optimizable = isOptimizable(src);
 
+  if (!src) return null;
+
+
   const img = (
     <img
       {...rest}
