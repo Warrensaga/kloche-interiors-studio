@@ -96,7 +96,7 @@ function Contact() {
     const fd = new FormData(form);
     setSending(true);
     // Store the enquiry so the studio can read it in the dashboard inbox.
-    void supabase.from("contact_submissions").insert({
+    const { error: saveError } = await supabase.from("contact_submissions").insert({
       name: String(fd.get("name") ?? ""),
       email: String(fd.get("email") ?? ""),
       phone: String(fd.get("phone") ?? ""),
@@ -104,6 +104,7 @@ function Contact() {
       property_type: String(fd.get("projectType") ?? ""),
       message: String(fd.get("message") ?? ""),
     });
+    if (saveError) console.error("Enquiry save failed:", saveError.message);
     try {
 
       const res = await fetch("/.mcp/invoke-tool/create_consultation_request", {
