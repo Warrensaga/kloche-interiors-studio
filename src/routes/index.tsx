@@ -336,7 +336,7 @@ function ServicesPreview({
         </div>
 
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {SERVICES.map((s, i) => (
+          {list.map((s, i) => (
             <Reveal key={s.id} delay={i * 0.07}>
               <div className="h-full rounded-3xl border border-border/70 bg-card p-7 shadow-soft hover-lift">
                 <span className="font-display text-2xl text-accent">0{i + 1}</span>
@@ -422,10 +422,18 @@ function Philosophy({ section }: { section: HomepageSection }) {
   );
 }
 
-function Testimonials({ section }: { section: HomepageSection }) {
+function Testimonials({
+  section,
+  testimonials,
+}: {
+  section: HomepageSection;
+  testimonials: TestimonialItem[];
+}) {
   const items = ((section.content.items ?? []) as TestimonialItem[]).length
     ? (section.content.items as TestimonialItem[])
-    : TESTIMONIALS;
+    : testimonials.length
+      ? testimonials
+      : TESTIMONIALS;
   const [i, setI] = useState(0);
   const t = items[i % items.length]!;
   const go = (d: number) => setI((v) => (v + d + items.length) % items.length);
