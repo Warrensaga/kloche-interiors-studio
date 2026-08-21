@@ -310,7 +310,15 @@ function FeaturedProjects({
   );
 }
 
-function ServicesPreview({ section }: { section: HomepageSection }) {
+function ServicesPreview({
+  section,
+  services,
+}: {
+  section: HomepageSection;
+  services: Service[];
+}) {
+  const list = services.length ? services : SERVICES;
+
   return (
     <section className="section-y">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
