@@ -10,6 +10,8 @@ import { getSeoMeta } from "@/lib/seo.functions";
 import { safeLoad } from "@/lib/supabase-env";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 import { listPublishedProjects } from "@/lib/projects.functions";
+import { listPageCopy } from "@/lib/content.functions";
+import { copyOf, type PageCopy } from "@/lib/content-map";
 
 const HERO = PROJECTS[1].cover;
 
@@ -65,7 +67,10 @@ export const Route = createFileRoute("/portfolio/")({
 });
 
 function Portfolio() {
-  const { projects: all } = Route.useLoaderData() as { projects: Project[] };
+  const { projects: all, copy } = Route.useLoaderData() as {
+    projects: Project[];
+    copy: PageCopy[];
+  };
   const [filter, setFilter] = useState<Category | "All">("All");
   const projects = useMemo(
     () => (filter === "All" ? all : all.filter((p) => p.categories.includes(filter))),
@@ -76,11 +81,17 @@ function Portfolio() {
   return (
     <>
       <PageHero
-        eyebrow="Portfolio"
-        title="Spaces We've Transformed."
-        subtitle="Every project begins with a vision and ends with a space that tells its own story. Explore a selection of our residential, commercial and hospitality projects, each shaped by thoughtful design, careful planning and considered execution."
-        image={HERO}
+        eyebrow={copyOf(copy, "hero", "eyebrow", "Portfolio")}
+        title={copyOf(copy, "hero", "title", "Spaces We've Transformed.")}
+        subtitle={copyOf(
+          copy,
+          "hero",
+          "body",
+          "Every project begins with a vision and ends with a space that tells its own story. Explore a selection of our residential, commercial and hospitality projects, each shaped by thoughtful design, careful planning and considered execution.",
+        )}
+        image={copyOf(copy, "hero", "image_url", HERO)}
       />
+
 
       <section className="section-y">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
