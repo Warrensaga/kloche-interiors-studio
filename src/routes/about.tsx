@@ -6,9 +6,18 @@ import { absoluteUrl, breadcrumbLd, pageSeo } from "@/lib/seo";
 import { getSeoMeta } from "@/lib/seo.functions";
 import { safeLoad } from "@/lib/supabase-env";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
+import { listPageCopy } from "@/lib/content.functions";
+import { copyOf, type PageCopy } from "@/lib/content-map";
 
 export const Route = createFileRoute("/about")({
-  loader: async () => ({ seo: await safeLoad(() => getSeoMeta({ data: "about" }), null) }),
+  loader: async () => {
+    const [seo, copy] = await Promise.all([
+      safeLoad(() => getSeoMeta({ data: "about" }), null),
+      safeLoad(() => listPageCopy({ data: "about" }), [] as PageCopy[]),
+    ]);
+    return { seo, copy };
+  },
+
   head: ({ loaderData }) => {
     const seo = pageSeo({
       path: "/about",
