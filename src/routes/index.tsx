@@ -74,12 +74,14 @@ export const Route = createFileRoute("/")({
     };
   },
   loader: async () => {
-    const [sections, projects, seo] = await Promise.all([
+    const [sections, projects, services, testimonials, seo] = await Promise.all([
       safeLoad(() => listHomepageSections(), DEFAULT_SECTIONS),
       safeLoad(() => listPublishedProjects(), PROJECTS),
+      safeLoad(() => listServices(), SERVICES),
+      safeLoad(() => listTestimonials(), TESTIMONIALS),
       safeLoad(() => getSeoMeta({ data: "home" }), null),
     ]);
-    return { sections, projects, seo };
+    return { sections, projects, services, testimonials, seo };
   },
   errorComponent: ({ error }) => (
     <div className="section-y mx-auto max-w-3xl px-5 text-center" role="alert">
@@ -94,21 +96,39 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const { sections, projects } = Route.useLoaderData() as {
+  const { sections, projects, services, testimonials } = Route.useLoaderData() as {
     sections: HomepageSection[];
     projects: Project[];
+    services: Service[];
+    testimonials: TestimonialItem[];
   };
 
   return (
     <>
       {sections.map((s: HomepageSection) => (
-        <SectionRenderer key={s.id} section={s} projects={projects} />
+        <SectionRenderer
+          key={s.id}
+          section={s}
+          projects={projects}
+          services={services}
+          testimonials={testimonials}
+        />
       ))}
     </>
   );
 }
 
-function SectionRenderer({ section: s, projects }: { section: HomepageSection; projects: Project[] }) {
+function SectionRenderer({
+  section: s,
+  projects,
+  services,
+  testimonials,
+}: {
+  section: HomepageSection;
+  projects: Project[];
+  services: Service[];
+  testimonials: TestimonialItem[];
+}) {
   switch (s.kind) {
     case "hero":
       return <Hero section={s} />;
@@ -117,7 +137,7 @@ function SectionRenderer({ section: s, projects }: { section: HomepageSection; p
     case "projects":
       return <FeaturedProjects section={s} projects={projects} />;
     case "services":
-      return <ServicesPreview section={s} />;
+      return <ServicesPreview section={s} services={services} />;
     case "pillars":
       return <Pillars section={s} />;
     case "stats":
@@ -125,13 +145,14 @@ function SectionRenderer({ section: s, projects }: { section: HomepageSection; p
     case "philosophy":
       return <Philosophy section={s} />;
     case "testimonials":
-      return <Testimonials section={s} />;
+      return <Testimonials section={s} testimonials={testimonials} />;
     case "cta":
       return <CtaBanner title={s.title || undefined} body={s.body || undefined} />;
     default:
       return null;
   }
 }
+
 
 function Hero({ section }: { section: HomepageSection }) {
   const heroRef = useRef<HTMLDivElement>(null);
