@@ -47,7 +47,7 @@ export const Route = createFileRoute("/services")({
             "@type": "ItemList",
             name: "Interior design services — Kloche Interiors",
             url: absoluteUrl("/services"),
-            itemListElement: SERVICES.map((s, i) => ({
+            itemListElement: (loaderData?.services ?? SERVICES).map((s, i) => ({
               "@type": "ListItem",
               position: i + 1,
               item: {
@@ -68,18 +68,26 @@ export const Route = createFileRoute("/services")({
 });
 
 function Services() {
+  const { services, copy } = Route.useLoaderData();
+  const list = services.length ? services : SERVICES;
   return (
     <>
       <PageHero
-        eyebrow="Services"
-        title="Our key services"
-        subtitle="Interior design, renovation and construction, custom interiors and commercial spaces — one studio, from first idea to final finish."
-        image={HERO}
+        eyebrow={copyOf(copy, "hero", "eyebrow", "Services")}
+        title={copyOf(copy, "hero", "title", "Our key services")}
+        subtitle={copyOf(
+          copy,
+          "hero",
+          "body",
+          "Interior design, renovation and construction, custom interiors and commercial spaces — one studio, from first idea to final finish.",
+        )}
+        image={copyOf(copy, "hero", "image_url", HERO)}
       />
 
       <section className="section-y">
         <div className="mx-auto max-w-7xl space-y-24 px-5 md:px-8 md:space-y-32">
-          {SERVICES.map((s, i) => {
+          {list.map((s, i) => {
+
             const Icon = ICONS[s.icon] ?? Home;
             const flip = i % 2 === 1;
             return (
