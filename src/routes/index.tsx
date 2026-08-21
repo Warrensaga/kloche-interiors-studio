@@ -2,8 +2,10 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useRef, useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
-import { IMAGES, PHILOSOPHY, PILLARS, PROJECTS, SERVICES, STUDIO, TESTIMONIALS, whatsappLink, type Project } from "@/data/site";
+import { IMAGES, PHILOSOPHY, PILLARS, PROJECTS, SERVICES, STUDIO, TESTIMONIALS, whatsappLink, type Project, type Service } from "@/data/site";
 import { listPublishedProjects } from "@/lib/projects.functions";
+import { listServices, listTestimonials } from "@/lib/content.functions";
+
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, SectionHeading } from "@/components/site/Sections";
 import { absoluteUrl, breadcrumbLd, pageSeo } from "@/lib/seo";
@@ -74,12 +76,14 @@ export const Route = createFileRoute("/")({
     };
   },
   loader: async () => {
-    const [sections, projects, seo] = await Promise.all([
+    const [sections, projects, services, testimonials, seo] = await Promise.all([
       safeLoad(() => listHomepageSections(), DEFAULT_SECTIONS),
       safeLoad(() => listPublishedProjects(), PROJECTS),
+      safeLoad(() => listServices(), SERVICES),
+      safeLoad(() => listTestimonials(), TESTIMONIALS),
       safeLoad(() => getSeoMeta({ data: "home" }), null),
     ]);
-    return { sections, projects, seo };
+    return { sections, projects, services, testimonials, seo };
   },
   errorComponent: ({ error }) => (
     <div className="section-y mx-auto max-w-3xl px-5 text-center" role="alert">
@@ -94,21 +98,39 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const { sections, projects } = Route.useLoaderData() as {
+  const { sections, projects, services, testimonials } = Route.useLoaderData() as {
     sections: HomepageSection[];
     projects: Project[];
+    services: Service[];
+    testimonials: TestimonialItem[];
   };
 
   return (
     <>
       {sections.map((s: HomepageSection) => (
-        <SectionRenderer key={s.id} section={s} projects={projects} />
+        <SectionRenderer
+          key={s.id}
+          section={s}
+          projects={projects}
+          services={services}
+          testimonials={testimonials}
+        />
       ))}
     </>
   );
 }
 
-function SectionRenderer({ section: s, projects }: { section: HomepageSection; projects: Project[] }) {
+function SectionRenderer({
+  section: s,
+  projects,
+  services,
+  testimonials,
+}: {
+  section: HomepageSection;
+  projects: Project[];
+  services: Service[];
+  testimonials: TestimonialItem[];
+}) {
   switch (s.kind) {
     case "hero":
       return <Hero section={s} />;
@@ -117,7 +139,7 @@ function SectionRenderer({ section: s, projects }: { section: HomepageSection; p
     case "projects":
       return <FeaturedProjects section={s} projects={projects} />;
     case "services":
-      return <ServicesPreview section={s} />;
+      return <ServicesPreview section={s} services={services} />;
     case "pillars":
       return <Pillars section={s} />;
     case "stats":
@@ -125,13 +147,14 @@ function SectionRenderer({ section: s, projects }: { section: HomepageSection; p
     case "philosophy":
       return <Philosophy section={s} />;
     case "testimonials":
-      return <Testimonials section={s} />;
+      return <Testimonials section={s} testimonials={testimonials} />;
     case "cta":
       return <CtaBanner title={s.title || undefined} body={s.body || undefined} />;
     default:
       return null;
   }
 }
+
 
 function Hero({ section }: { section: HomepageSection }) {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -287,7 +310,15 @@ function FeaturedProjects({
   );
 }
 
-function ServicesPreview({ section }: { section: HomepageSection }) {
+function ServicesPreview({
+  section,
+  services,
+}: {
+  section: HomepageSection;
+  services: Service[];
+}) {
+  const list = services.length ? services : SERVICES;
+
   return (
     <section className="section-y">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
@@ -305,7 +336,7 @@ function ServicesPreview({ section }: { section: HomepageSection }) {
         </div>
 
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {SERVICES.map((s, i) => (
+          {list.map((s, i) => (
             <Reveal key={s.id} delay={i * 0.07}>
               <div className="h-full rounded-3xl border border-border/70 bg-card p-7 shadow-soft hover-lift">
                 <span className="font-display text-2xl text-accent">0{i + 1}</span>
@@ -391,10 +422,18 @@ function Philosophy({ section }: { section: HomepageSection }) {
   );
 }
 
-function Testimonials({ section }: { section: HomepageSection }) {
+function Testimonials({
+  section,
+  testimonials,
+}: {
+  section: HomepageSection;
+  testimonials: TestimonialItem[];
+}) {
   const items = ((section.content.items ?? []) as TestimonialItem[]).length
     ? (section.content.items as TestimonialItem[])
-    : TESTIMONIALS;
+    : testimonials.length
+      ? testimonials
+      : TESTIMONIALS;
   const [i, setI] = useState(0);
   const t = items[i % items.length]!;
   const go = (d: number) => setI((v) => (v + d + items.length) % items.length);
