@@ -7,12 +7,22 @@ import { absoluteUrl, breadcrumbLd, pageSeo } from "@/lib/seo";
 import { getSeoMeta } from "@/lib/seo.functions";
 import { safeLoad } from "@/lib/supabase-env";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
+import { listPageCopy, listServices } from "@/lib/content.functions";
+import { copyOf, type PageCopy } from "@/lib/content-map";
 
 const ICONS: Record<string, LucideIcon> = { Home, Ruler, Armchair, HardHat, Building2 };
 const HERO = SERVICES[0].image;
 
 export const Route = createFileRoute("/services")({
-  loader: async () => ({ seo: await safeLoad(() => getSeoMeta({ data: "services" }), null) }),
+  loader: async () => {
+    const [seo, services, copy] = await Promise.all([
+      safeLoad(() => getSeoMeta({ data: "services" }), null),
+      safeLoad(() => listServices(), SERVICES),
+      safeLoad(() => listPageCopy({ data: "services" }), [] as PageCopy[]),
+    ]);
+    return { seo, services, copy };
+  },
+
   head: ({ loaderData }) => {
     const seo = pageSeo({
       path: "/services",
