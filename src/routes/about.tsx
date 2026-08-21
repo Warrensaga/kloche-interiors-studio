@@ -58,14 +58,21 @@ export const Route = createFileRoute("/about")({
 });
 
 function About() {
+  const { copy } = Route.useLoaderData();
   return (
     <>
       <PageHero
-        eyebrow="About"
-        title="Meet the Founder"
-        subtitle="Keith Locho — Founder & Creative Director, Kloche Interiors & Construction."
-        image={IMAGES.studio2}
+        eyebrow={copyOf(copy, "hero", "eyebrow", "About")}
+        title={copyOf(copy, "hero", "title", "Meet the Founder")}
+        subtitle={copyOf(
+          copy,
+          "hero",
+          "body",
+          "Keith Locho — Founder & Creative Director, Kloche Interiors & Construction.",
+        )}
+        image={copyOf(copy, "hero", "image_url", IMAGES.studio2)}
       />
+
 
       <section className="section-y">
         <div className="mx-auto grid max-w-7xl items-start gap-12 px-5 md:px-8 lg:grid-cols-[1fr_0.85fr] lg:gap-16">

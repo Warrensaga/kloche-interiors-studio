@@ -15,12 +15,14 @@ const HERO = PROJECTS[1].cover;
 
 export const Route = createFileRoute("/portfolio/")({
   loader: async () => {
-    const [projects, seo] = await Promise.all([
+    const [projects, seo, copy] = await Promise.all([
       safeLoad(() => listPublishedProjects(), PROJECTS),
       safeLoad(() => getSeoMeta({ data: "portfolio" }), null),
+      safeLoad(() => listPageCopy({ data: "portfolio" }), [] as PageCopy[]),
     ]);
-    return { projects, seo };
+    return { projects, seo, copy };
   },
+
   head: ({ loaderData }) => {
     const seo = pageSeo({
       path: "/portfolio",
