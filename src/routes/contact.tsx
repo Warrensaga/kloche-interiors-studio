@@ -1,7 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Clock, Instagram, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { ArrowRight, Clock, Instagram, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 import { IMAGES, PROJECTS, SERVICES, STUDIO, whatsappLink } from "@/data/site";
@@ -11,9 +11,16 @@ import { absoluteUrl, breadcrumbLd, pageSeo } from "@/lib/seo";
 import { getSeoMeta } from "@/lib/seo.functions";
 import { safeLoad } from "@/lib/supabase-env";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
+import { listPublishedPosts, type PostSummary } from "@/lib/blog.functions";
 
 export const Route = createFileRoute("/contact")({
-  loader: async () => ({ seo: await safeLoad(() => getSeoMeta({ data: "contact" }), null) }),
+  loader: async () => {
+    const [seo, posts] = await Promise.all([
+      safeLoad(() => getSeoMeta({ data: "contact" }), null),
+      safeLoad(() => listPublishedPosts(), [] as PostSummary[]),
+    ]);
+    return { seo, posts };
+  },
   head: ({ loaderData }) => {
     const seo = pageSeo({
       path: "/contact",
@@ -83,6 +90,7 @@ interface BookingResult {
 }
 
 function Contact() {
+  const { posts } = Route.useLoaderData() as { posts: PostSummary[] };
   const { budget, service } = Route.useSearch();
   const [sending, setSending] = useState(false);
   const [booking, setBooking] = useState<BookingResult | null>(null);
@@ -354,30 +362,53 @@ function Contact() {
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <h2 className="eyebrow">Latest on Instagram</h2>
-            <a
-              href={STUDIO.instagram}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex max-w-full flex-wrap items-center gap-2 break-all text-[0.72rem] uppercase tracking-[0.2em] text-accent"
-            >
-              <Instagram size={14} /> @klocheinteriors_construction
-            </a>
-          </div>
-          <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
-            {PROJECTS.slice(0, 4).map((p) => (
-              <SmartImage
-                key={p.id}
-                src={p.cover}
-                alt={`Instagram post featuring ${p.name}`}
-                baseWidth={600}
-                sizes={SIZES.quarter}
-                ratio="1 / 1"
-                className="aspect-square w-full rounded-2xl object-cover shadow-soft"
-              />
-            ))}
+...
           </div>
         </div>
       </section>
+
+      {posts.length > 0 && (
+        <section className="section-y bg-secondary/50">
+          <div className="mx-auto max-w-7xl px-5 md:px-8">
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <h2 className="eyebrow">Journal</h2>
+                <p className="mt-3 font-display text-3xl md:text-4xl">Notes from the studio</p>
+              </div>
+              <Link
+                to="/journal"
+                className="group inline-flex items-center gap-2 text-[0.72rem] uppercase tracking-[0.2em] text-accent"
+              >
+                Read the journal
+                <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
+            <div className="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {posts.slice(0, 3).map((p, i) => (
+                <Reveal key={p.slug} delay={i * 0.08}>
+                  <Link to="/journal/$slug" params={{ slug: p.slug }} className="group block">
+                    {p.cover_url && (
+                      <div className="overflow-hidden rounded-2xl shadow-soft">
+                        <SmartImage
+                          src={p.cover_url}
+                          alt={p.title}
+                          baseWidth={640}
+                          sizes={SIZES.third}
+                          ratio="4/3"
+                          className="transition-transform duration-700 group-hover:scale-105"
+                        />
+                      </div>
+                    )}
+                    <p className="eyebrow mt-5">{p.category || "Journal"}</p>
+                    <h3 className="mt-2 font-display text-2xl">{p.title}</h3>
+                    <p className="mt-2 text-sm text-muted-foreground">{p.excerpt}</p>
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </>
   );
 }
