@@ -1,7 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Clock, Instagram, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { ArrowRight, Clock, Instagram, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 import { IMAGES, PROJECTS, SERVICES, STUDIO, whatsappLink } from "@/data/site";
@@ -11,9 +11,16 @@ import { absoluteUrl, breadcrumbLd, pageSeo } from "@/lib/seo";
 import { getSeoMeta } from "@/lib/seo.functions";
 import { safeLoad } from "@/lib/supabase-env";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
+import { listPublishedPosts, type PostSummary } from "@/lib/blog.functions";
 
 export const Route = createFileRoute("/contact")({
-  loader: async () => ({ seo: await safeLoad(() => getSeoMeta({ data: "contact" }), null) }),
+  loader: async () => {
+    const [seo, posts] = await Promise.all([
+      safeLoad(() => getSeoMeta({ data: "contact" }), null),
+      safeLoad(() => listPublishedPosts(), [] as PostSummary[]),
+    ]);
+    return { seo, posts };
+  },
   head: ({ loaderData }) => {
     const seo = pageSeo({
       path: "/contact",
@@ -83,6 +90,7 @@ interface BookingResult {
 }
 
 function Contact() {
+  const { posts } = Route.useLoaderData() as { posts: PostSummary[] };
   const { budget, service } = Route.useSearch();
   const [sending, setSending] = useState(false);
   const [booking, setBooking] = useState<BookingResult | null>(null);
