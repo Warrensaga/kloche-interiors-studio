@@ -8,13 +8,21 @@ import { SIZES, SmartImage } from "@/components/site/SmartImage";
 import { absoluteUrl, breadcrumbLd, pageSeo } from "@/lib/seo";
 import { getSeoMeta } from "@/lib/seo.functions";
 import { safeLoad } from "@/lib/supabase-env";
+import { listPageCopy } from "@/lib/content.functions";
+import { copyOf, type PageCopy } from "@/lib/content-map";
 
 const PAGE_TITLE = "Investment Guide — Kloche Interiors Nairobi";
 const PAGE_DESC =
   "How Kloche Interiors & Construction prices interior design, renovations, 3D visualisation and commercial fit-outs in Nairobi — plus what every project includes.";
 
 export const Route = createFileRoute("/pricing")({
-  loader: async () => ({ seo: await safeLoad(() => getSeoMeta({ data: "pricing" }), null) }),
+  loader: async () => {
+    const [seo, copy] = await Promise.all([
+      safeLoad(() => getSeoMeta({ data: "pricing" }), null),
+      safeLoad(() => listPageCopy({ data: "pricing" }), [] as PageCopy[]),
+    ]);
+    return { seo, copy };
+  },
   head: ({ loaderData }) => {
     const seo = pageSeo({
       path: "/pricing",
@@ -307,6 +315,7 @@ const ctaClass =
 function Pricing() {
   const [budget, setBudget] = useState<string>("");
 
+  const { copy } = Route.useLoaderData() as { copy: PageCopy[] };
   const quoteLink = (service?: string) => ({
     to: "/contact" as const,
     search: {
@@ -318,10 +327,15 @@ function Pricing() {
   return (
     <>
       <PageHero
-        eyebrow="Investment Guide"
-        title="Investing in Spaces That Last"
-        subtitle="Every project is unique, and so is the investment behind it."
-        image={IMAGES.studio4}
+        eyebrow={copyOf(copy, "hero", "eyebrow", "Investment Guide")}
+        title={copyOf(copy, "hero", "title", "Investing in Spaces That Last")}
+        subtitle={copyOf(
+          copy,
+          "hero",
+          "body",
+          "Every project is unique, and so is the investment behind it.",
+        )}
+        image={copyOf(copy, "hero", "image_url", IMAGES.studio4)}
       />
 
       {/* Intro */}
