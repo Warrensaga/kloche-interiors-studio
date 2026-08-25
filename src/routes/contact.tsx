@@ -12,14 +12,19 @@ import { getSeoMeta } from "@/lib/seo.functions";
 import { safeLoad } from "@/lib/supabase-env";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 import { listPublishedPosts, type PostSummary } from "@/lib/blog.functions";
+import { listPageCopy, listServices } from "@/lib/content.functions";
+import { copyOf, type PageCopy } from "@/lib/content-map";
+import type { Service } from "@/data/site";
 
 export const Route = createFileRoute("/contact")({
   loader: async () => {
-    const [seo, posts] = await Promise.all([
+    const [seo, posts, copy, services] = await Promise.all([
       safeLoad(() => getSeoMeta({ data: "contact" }), null),
       safeLoad(() => listPublishedPosts(), [] as PostSummary[]),
+      safeLoad(() => listPageCopy({ data: "contact" }), [] as PageCopy[]),
+      safeLoad(() => listServices(), SERVICES),
     ]);
-    return { seo, posts };
+    return { seo, posts, copy, services };
   },
   head: ({ loaderData }) => {
     const seo = pageSeo({
@@ -150,10 +155,15 @@ function Contact() {
     <>
       <Toaster />
       <PageHero
-        eyebrow="Contact"
-        title="Let's talk about your space"
-        subtitle="Tell us a little about the project. We reply to every enquiry within two working days."
-        image={IMAGES.studio3}
+        eyebrow={copyOf(copy, "hero", "eyebrow", "Contact")}
+        title={copyOf(copy, "hero", "title", "Let's talk about your space")}
+        subtitle={copyOf(
+          copy,
+          "hero",
+          "body",
+          "Tell us a little about the project. We reply to every enquiry within two working days.",
+        )}
+        image={copyOf(copy, "hero", "image_url", IMAGES.studio3)}
       />
 
       <section className="section-y">
@@ -197,10 +207,10 @@ function Contact() {
                     <option value="" disabled>
                       Select one
                     </option>
-                    {service && !SERVICES.some((s) => s.title === service) ? (
+                    {service && !services.some((s) => s.title === service) ? (
                       <option value={service}>{service}</option>
                     ) : null}
-                    {SERVICES.map((s) => (
+                    {services.map((s) => (
                       <option key={s.id} value={s.title}>
                         {s.title}
                       </option>
