@@ -315,6 +315,7 @@ const ctaClass =
 function Pricing() {
   const [budget, setBudget] = useState<string>("");
 
+  const { copy } = Route.useLoaderData() as { copy: PageCopy[] };
   const quoteLink = (service?: string) => ({
     to: "/contact" as const,
     search: {

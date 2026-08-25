@@ -95,7 +95,11 @@ interface BookingResult {
 }
 
 function Contact() {
-  const { posts } = Route.useLoaderData() as { posts: PostSummary[] };
+  const { posts, copy, services } = Route.useLoaderData() as {
+    posts: PostSummary[];
+    copy: PageCopy[];
+    services: Service[];
+  };
   const { budget, service } = Route.useSearch();
   const [sending, setSending] = useState(false);
   const [booking, setBooking] = useState<BookingResult | null>(null);
