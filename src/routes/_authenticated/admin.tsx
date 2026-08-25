@@ -4,6 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Logo } from "@/components/site/Logo";
 import { Button } from "@/components/ui/button";
+import { LivePreview } from "@/components/admin/LivePreview";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   component: AdminLayout,
@@ -177,6 +178,8 @@ function AdminLayout() {
           {state === "ok" && <Outlet />}
         </main>
       </div>
+
+      {state === "ok" && <LivePreview />}
     </div>
   );
 }
