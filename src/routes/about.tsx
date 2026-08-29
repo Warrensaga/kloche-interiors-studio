@@ -99,7 +99,7 @@ function About() {
           <Reveal delay={0.12}>
             <figure className="overflow-hidden rounded-3xl shadow-soft lg:sticky lg:top-28">
               <SmartImage
-                src={IMAGES.furniture}
+                src={copyOf(copy, "founder", "image_url", IMAGES.furniture)}
                 alt="Handcrafted walnut furniture and linen textures in a Kloche Interiors room"
                 baseWidth={900}
                 sizes={SIZES.half}
@@ -128,13 +128,14 @@ function About() {
       <section className="section-y">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <SectionHeading
-            eyebrow={PHILOSOPHY.eyebrow}
-            title={PHILOSOPHY.title}
-            body={PHILOSOPHY.body}
+            eyebrow={copyOf(copy, "philosophy", "eyebrow", PHILOSOPHY.eyebrow)}
+            title={copyOf(copy, "philosophy", "title", PHILOSOPHY.title)}
+            body={copyOf(copy, "philosophy", "body", PHILOSOPHY.body)}
             align="center"
           />
         </div>
       </section>
+
 
       <section className="pb-24">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
