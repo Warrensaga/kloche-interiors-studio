@@ -372,15 +372,6 @@ function Contact() {
         </div>
       </section>
 
-      <section className="pb-24">
-        <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="eyebrow">Latest on Instagram</h2>
-...
-          </div>
-        </div>
-      </section>
-
       {posts.length > 0 && (
         <section className="section-y bg-secondary/50">
           <div className="mx-auto max-w-7xl px-5 md:px-8">
