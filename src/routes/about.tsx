@@ -77,10 +77,12 @@ function About() {
       <section className="section-y">
         <div className="mx-auto grid max-w-7xl items-start gap-12 px-5 md:px-8 lg:grid-cols-[1fr_0.85fr] lg:gap-16">
           <Reveal>
-            <p className="eyebrow">Meet the Founder</p>
-            <h2 className="mt-4 text-3xl md:text-5xl">{FOUNDER.name}</h2>
+            <p className="eyebrow">{copyOf(copy, "founder", "eyebrow", "Meet the Founder")}</p>
+            <h2 className="mt-4 text-3xl md:text-5xl">
+              {copyOf(copy, "founder", "title", FOUNDER.name)}
+            </h2>
             <p className="mt-3 text-sm uppercase tracking-[0.18em] text-muted-foreground">
-              {FOUNDER.role}
+              {copyOf(copy, "founder", "body", FOUNDER.role)}
             </p>
 
             <div className="mt-8 space-y-6 text-base leading-relaxed text-muted-foreground md:text-lg md:leading-[1.85]">
@@ -93,10 +95,11 @@ function About() {
             </blockquote>
           </Reveal>
 
+
           <Reveal delay={0.12}>
             <figure className="overflow-hidden rounded-3xl shadow-soft lg:sticky lg:top-28">
               <SmartImage
-                src={IMAGES.furniture}
+                src={copyOf(copy, "founder", "image_url", IMAGES.furniture)}
                 alt="Handcrafted walnut furniture and linen textures in a Kloche Interiors room"
                 baseWidth={900}
                 sizes={SIZES.half}
@@ -125,13 +128,14 @@ function About() {
       <section className="section-y">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <SectionHeading
-            eyebrow={PHILOSOPHY.eyebrow}
-            title={PHILOSOPHY.title}
-            body={PHILOSOPHY.body}
+            eyebrow={copyOf(copy, "philosophy", "eyebrow", PHILOSOPHY.eyebrow)}
+            title={copyOf(copy, "philosophy", "title", PHILOSOPHY.title)}
+            body={copyOf(copy, "philosophy", "body", PHILOSOPHY.body)}
             align="center"
           />
         </div>
       </section>
+
 
       <section className="pb-24">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
