@@ -52,12 +52,12 @@ export function Footer() {
 
         <div>
           <p className="eyebrow">Explore</p>
-          <ul className="mt-5 space-y-3 text-sm">
+          <ul className="mt-1 text-sm md:mt-5 md:space-y-3">
             {nav.map((n) => ({ to: n.href as "/", label: n.label })).map((l) => (
               <li key={l.to}>
                 <Link
                   to={l.to}
-                  className="text-muted-foreground transition-colors hover:text-accent"
+                  className="inline-flex min-h-11 items-center text-muted-foreground transition-colors hover:text-accent md:min-h-0"
                 >
                   {l.label}
                 </Link>
@@ -75,13 +75,13 @@ export function Footer() {
             </li>
             <li className="flex gap-3">
               <Phone size={16} className="mt-0.5 shrink-0 text-accent" />
-              <a href={`tel:${config.phoneLink}`} className="hover:text-accent">
+              <a href={`tel:${config.phoneLink}`} className="inline-flex min-h-11 items-center hover:text-accent md:min-h-0">
                 {config.phoneDisplay}
               </a>
             </li>
             <li className="flex gap-3">
               <Mail size={16} className="mt-0.5 shrink-0 text-accent" />
-              <a href={`mailto:${config.email}`} className="hover:text-accent">
+              <a href={`mailto:${config.email}`} className="inline-flex min-h-11 items-center break-all hover:text-accent md:min-h-0">
                 {config.email}
               </a>
             </li>
@@ -90,7 +90,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-border/70">
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-5 py-6 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between md:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-5 pb-24 pt-6 text-xs md:pb-6 text-muted-foreground md:flex-row md:items-center md:justify-between md:px-8">
           <p>© {new Date().getFullYear()} {config.copyright}</p>
           <p>Designed & built in Nairobi, Kenya.</p>
         </div>
