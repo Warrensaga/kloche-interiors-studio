@@ -2,9 +2,54 @@ import { supabase } from "@/integrations/supabase/client";
 
 const TEN_YEARS = 60 * 60 * 24 * 365 * 10;
 
-export const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"] as const;
-export const ALLOWED_EXTENSIONS = ["jpg", "jpeg", "png", "webp"] as const;
-export const MAX_FILE_BYTES = 8 * 1024 * 1024; // 8 MB
+/** Formats browsers can render directly — uploaded untouched. */
+export const WEB_SAFE_TYPES = [
+  "image/jpeg",
+  "image/pjpeg",
+  "image/png",
+  "image/webp",
+  "image/avif",
+  "image/gif",
+  "image/svg+xml",
+] as const;
+
+/** Formats we accept but convert to WEBP in the browser before upload. */
+export const CONVERTIBLE_TYPES = [
+  "image/heic",
+  "image/heif",
+  "image/tiff",
+  "image/bmp",
+  "image/x-icon",
+  "image/vnd.microsoft.icon",
+  "image/jp2",
+] as const;
+
+export const ALLOWED_IMAGE_TYPES = [...WEB_SAFE_TYPES, ...CONVERTIBLE_TYPES] as const;
+
+export const ALLOWED_EXTENSIONS = [
+  "jpg",
+  "jpeg",
+  "jpe",
+  "png",
+  "webp",
+  "avif",
+  "gif",
+  "svg",
+  "heic",
+  "heif",
+  "tif",
+  "tiff",
+  "bmp",
+  "ico",
+  "jp2",
+] as const;
+
+/** `accept` attribute shared by every admin file input. */
+export const IMAGE_ACCEPT = `${ALLOWED_IMAGE_TYPES.join(",")},${ALLOWED_EXTENSIONS.map((e) => `.${e}`).join(",")}`;
+
+export const ALLOWED_LABEL = "JPG, PNG, WEBP, AVIF, GIF, SVG, HEIC, TIFF, BMP or ICO";
+
+export const MAX_FILE_BYTES = 25 * 1024 * 1024; // 25 MB
 
 export function formatBytes(bytes: number) {
   if (bytes < 1024) return `${bytes} B`;
@@ -12,17 +57,59 @@ export function formatBytes(bytes: number) {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
+function extOf(name: string) {
+  return (name.split(".").pop() ?? "").toLowerCase();
+}
+
+function needsConversion(file: File) {
+  const ext = extOf(file.name);
+  if ((CONVERTIBLE_TYPES as readonly string[]).includes(file.type)) return true;
+  if ((WEB_SAFE_TYPES as readonly string[]).includes(file.type)) return false;
+  return ["heic", "heif", "tif", "tiff", "bmp", "ico", "jp2"].includes(ext);
+}
+
 /** Returns an error message when the file is not an acceptable image. */
 export function validateImage(file: File): string | null {
-  const ext = (file.name.split(".").pop() ?? "").toLowerCase();
+  const ext = extOf(file.name);
   const typeOk = (ALLOWED_IMAGE_TYPES as readonly string[]).includes(file.type);
   const extOk = (ALLOWED_EXTENSIONS as readonly string[]).includes(ext);
-  if (!typeOk && !extOk) return `${file.name}: only JPG, PNG or WEBP images are allowed.`;
+  const genericImage = file.type.startsWith("image/");
+  if (!typeOk && !extOk && !genericImage)
+    return `${file.name}: unsupported file. Use ${ALLOWED_LABEL}.`;
   if (file.size > MAX_FILE_BYTES)
     return `${file.name}: ${formatBytes(file.size)} exceeds the ${formatBytes(MAX_FILE_BYTES)} limit.`;
   if (file.size === 0) return `${file.name}: file is empty.`;
   return null;
 }
+
+/**
+ * Normalise exotic formats (HEIC/TIFF/BMP/ICO) to WEBP so every uploaded
+ * image renders in all browsers. Web-safe formats pass through untouched.
+ */
+export async function prepareImage(file: File): Promise<File> {
+  if (typeof window === "undefined" || !needsConversion(file)) return file;
+  try {
+    const bitmap = await createImageBitmap(file);
+    const canvas = document.createElement("canvas");
+    canvas.width = bitmap.width;
+    canvas.height = bitmap.height;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) throw new Error("no canvas context");
+    ctx.drawImage(bitmap, 0, 0);
+    bitmap.close?.();
+    const blob = await new Promise<Blob | null>((resolve) =>
+      canvas.toBlob(resolve, "image/webp", 0.92),
+    );
+    if (!blob) throw new Error("conversion failed");
+    const name = `${file.name.replace(/\.[^.]+$/, "")}.webp`;
+    return new File([blob], name, { type: "image/webp" });
+  } catch {
+    throw new Error(
+      `${file.name}: this format can't be read by your browser. Please convert it to JPG, PNG or WEBP first.`,
+    );
+  }
+}
+
 
 /** Build a clean, collision-free storage filename. */
 export function buildStoragePath(fileName: string, folder: string) {
@@ -78,14 +165,16 @@ function uploadWithProgress(
 
 /** Upload a file to the private media bucket and record it in the library. */
 export async function uploadMedia(
-  file: File,
+  original: File,
   folder = "uploads",
   onProgress?: (pct: number) => void,
 ) {
-  const invalid = validateImage(file);
+  const invalid = validateImage(original);
   if (invalid) throw new Error(invalid);
 
+  const file = await prepareImage(original);
   const path = buildStoragePath(file.name, folder);
+
 
   const { data: sessionData } = await supabase.auth.getSession();
   const token = sessionData.session?.access_token;

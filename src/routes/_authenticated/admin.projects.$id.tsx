@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { MediaPicker } from "@/components/admin/MediaPicker";
-import { formatBytes, MAX_FILE_BYTES, uploadMedia, validateImage } from "@/lib/media";
+import { formatBytes, MAX_FILE_BYTES, uploadMedia, validateImage, IMAGE_ACCEPT, ALLOWED_LABEL } from "@/lib/media";
 import { Progress } from "@/components/ui/progress";
 
 import { CATEGORIES } from "@/data/site";
@@ -319,7 +319,7 @@ function ProjectEditor() {
             Upload images
             <input
               type="file"
-              accept="image/jpeg,image/png,image/webp"
+              accept={IMAGE_ACCEPT}
               multiple
               className="hidden"
               disabled={uploading}
@@ -350,7 +350,7 @@ function ProjectEditor() {
             />
           </label>
           <span className="text-[0.65rem] text-muted-foreground">
-            JPG, PNG or WEBP · max {formatBytes(MAX_FILE_BYTES)}
+            {ALLOWED_LABEL} · max {formatBytes(MAX_FILE_BYTES)}
           </span>
         </div>
         {uploading && (
