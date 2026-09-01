@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { MediaPicker } from "@/components/admin/MediaPicker";
-import { formatBytes, MAX_FILE_BYTES, uploadMedia, validateImage } from "@/lib/media";
+import { formatBytes, MAX_FILE_BYTES, uploadMedia, validateImage, IMAGE_ACCEPT, ALLOWED_LABEL } from "@/lib/media";
 import { Progress } from "@/components/ui/progress";
 
 import { CATEGORIES } from "@/data/site";

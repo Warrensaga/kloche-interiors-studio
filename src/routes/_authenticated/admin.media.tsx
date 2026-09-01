@@ -14,6 +14,8 @@ import {
   MAX_FILE_BYTES,
   uploadMedia,
   validateImage,
+  IMAGE_ACCEPT,
+  ALLOWED_LABEL,
 } from "@/lib/media";
 
 

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ImagePlus, Loader2, Trash2, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { deleteMedia, formatBytes, MAX_FILE_BYTES, uploadMedia, validateImage } from "@/lib/media";
+import { deleteMedia, formatBytes, MAX_FILE_BYTES, uploadMedia, validateImage, IMAGE_ACCEPT, ALLOWED_LABEL } from "@/lib/media";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
