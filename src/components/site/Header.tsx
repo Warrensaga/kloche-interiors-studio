@@ -70,16 +70,18 @@ export function Header({ transparent = false }: { transparent?: boolean }) {
             <Link
               key={item.to}
               to={item.to}
+              preload="intent"
               activeOptions={{ exact: item.to === "/" }}
               className={cn(
-                "relative text-[0.8rem] uppercase tracking-[0.18em] transition-colors",
+                "relative py-2 text-[0.8rem] uppercase tracking-[0.18em] transition-colors",
+                "after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-full after:origin-right after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 after:ease-out hover:after:origin-left hover:after:scale-x-100",
                 solid
                   ? "text-muted-foreground hover:text-foreground"
                   : "text-primary-foreground/80 hover:text-primary-foreground",
               )}
               activeProps={{
                 className: cn(
-                  "after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-full after:bg-accent",
+                  "after:scale-x-100",
                   solid ? "text-foreground" : "text-primary-foreground",
                 ),
               }}
