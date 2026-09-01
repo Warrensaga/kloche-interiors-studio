@@ -124,12 +124,13 @@ export function Header({ transparent = false }: { transparent?: boolean }) {
 
       <div
         className={cn(
-          "overflow-y-auto overscroll-contain border-t border-border bg-background transition-[max-height,opacity] duration-500 lg:hidden",
-          open ? "max-h-[calc(100svh-4.5rem)] opacity-100" : "max-h-0 opacity-0",
-
-
+          "grid overflow-hidden overscroll-contain border-border bg-background transition-[grid-template-rows,border-color,opacity] duration-400 ease-out lg:hidden",
+          open
+            ? "grid-rows-[1fr] border-t opacity-100"
+            : "grid-rows-[0fr] border-t-0 opacity-0 pointer-events-none",
         )}
       >
+        <div className="max-h-[calc(100svh-4.5rem)] min-h-0 overflow-y-auto">
         <nav className="flex flex-col px-5 py-4">
           {NAV.map((item) => (
             <Link
