@@ -45,11 +45,12 @@ export function Header({ transparent = false }: { transparent?: boolean }) {
 
   return (
     <header
+      style={{ willChange: "background-color, box-shadow" }}
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-500",
+        "fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300 ease-out",
         solid
-          ? "bg-background/85 backdrop-blur-xl shadow-[0_1px_0_0_var(--color-border)]"
-          : "bg-transparent",
+          ? "bg-background/85 shadow-[0_1px_0_0_var(--color-border)] backdrop-blur-xl"
+          : "bg-transparent shadow-none",
       )}
     >
       <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-4 px-5 py-4 md:px-8">
