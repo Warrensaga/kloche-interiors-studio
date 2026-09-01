@@ -45,11 +45,12 @@ export function Header({ transparent = false }: { transparent?: boolean }) {
 
   return (
     <header
+      style={{ willChange: "background-color, box-shadow" }}
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-500",
+        "fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300 ease-out",
         solid
-          ? "bg-background/85 backdrop-blur-xl shadow-[0_1px_0_0_var(--color-border)]"
-          : "bg-transparent",
+          ? "bg-background/85 shadow-[0_1px_0_0_var(--color-border)] backdrop-blur-xl"
+          : "bg-transparent shadow-none",
       )}
     >
       <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-4 px-5 py-4 md:px-8">
@@ -69,16 +70,18 @@ export function Header({ transparent = false }: { transparent?: boolean }) {
             <Link
               key={item.to}
               to={item.to}
+              preload="intent"
               activeOptions={{ exact: item.to === "/" }}
               className={cn(
-                "relative text-[0.8rem] uppercase tracking-[0.18em] transition-colors",
+                "relative py-2 text-[0.8rem] uppercase tracking-[0.18em] transition-colors",
+                "after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-full after:origin-right after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 after:ease-out hover:after:origin-left hover:after:scale-x-100",
                 solid
                   ? "text-muted-foreground hover:text-foreground"
                   : "text-primary-foreground/80 hover:text-primary-foreground",
               )}
               activeProps={{
                 className: cn(
-                  "after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-full after:bg-accent",
+                  "after:scale-x-100",
                   solid ? "text-foreground" : "text-primary-foreground",
                 ),
               }}
@@ -121,12 +124,13 @@ export function Header({ transparent = false }: { transparent?: boolean }) {
 
       <div
         className={cn(
-          "overflow-y-auto overscroll-contain border-t border-border bg-background transition-[max-height,opacity] duration-500 lg:hidden",
-          open ? "max-h-[calc(100svh-4.5rem)] opacity-100" : "max-h-0 opacity-0",
-
-
+          "grid overflow-hidden overscroll-contain border-border bg-background transition-[grid-template-rows,border-color,opacity] duration-400 ease-out lg:hidden",
+          open
+            ? "grid-rows-[1fr] border-t opacity-100"
+            : "grid-rows-[0fr] border-t-0 opacity-0 pointer-events-none",
         )}
       >
+        <div className="max-h-[calc(100svh-4.5rem)] min-h-0 overflow-y-auto">
         <nav className="flex flex-col px-5 py-4">
           {NAV.map((item) => (
             <Link
@@ -151,6 +155,7 @@ export function Header({ transparent = false }: { transparent?: boolean }) {
             {config.phoneDisplay}
           </a>
         </nav>
+        </div>
       </div>
     </header>
   );
