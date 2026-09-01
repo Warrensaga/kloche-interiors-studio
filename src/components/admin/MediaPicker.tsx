@@ -95,7 +95,7 @@ export function MediaPicker({
               <div className="flex items-center gap-3">
                 <Input
                   type="file"
-                  accept="image/jpeg,image/png,image/webp"
+                  accept={IMAGE_ACCEPT}
                   multiple
                   onChange={(e) => {
                     handleFiles(e.target.files);
@@ -106,7 +106,7 @@ export function MediaPicker({
                 {busy && <Loader2 className="animate-spin" size={16} />}
               </div>
               <p className="text-[0.65rem] text-muted-foreground">
-                JPG, PNG or WEBP · max {formatBytes(MAX_FILE_BYTES)} per file
+                {ALLOWED_LABEL} · max {formatBytes(MAX_FILE_BYTES)} per file
               </p>
               {busy && (
                 <div className="space-y-1">

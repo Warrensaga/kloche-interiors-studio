@@ -319,7 +319,7 @@ function ProjectEditor() {
             Upload images
             <input
               type="file"
-              accept="image/jpeg,image/png,image/webp"
+              accept={IMAGE_ACCEPT}
               multiple
               className="hidden"
               disabled={uploading}
@@ -350,7 +350,7 @@ function ProjectEditor() {
             />
           </label>
           <span className="text-[0.65rem] text-muted-foreground">
-            JPG, PNG or WEBP · max {formatBytes(MAX_FILE_BYTES)}
+            {ALLOWED_LABEL} · max {formatBytes(MAX_FILE_BYTES)}
           </span>
         </div>
         {uploading && (

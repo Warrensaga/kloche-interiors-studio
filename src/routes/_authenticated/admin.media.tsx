@@ -81,7 +81,7 @@ function AdminMedia() {
       <div className="mt-8 flex flex-wrap items-center gap-3">
         <Input
           type="file"
-          accept="image/jpeg,image/png,image/webp"
+          accept={IMAGE_ACCEPT}
           multiple
           onChange={(e) => {
             onFiles(e.target.files);
@@ -99,7 +99,7 @@ function AdminMedia() {
         />
       </div>
       <p className="mt-2 text-[0.7rem] text-muted-foreground">
-        JPG, PNG or WEBP · max {formatBytes(MAX_FILE_BYTES)} per file
+        {ALLOWED_LABEL} · max {formatBytes(MAX_FILE_BYTES)} per file
       </p>
       {busy && (
         <div className="mt-3 max-w-sm space-y-1">
