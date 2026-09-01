@@ -165,14 +165,16 @@ function uploadWithProgress(
 
 /** Upload a file to the private media bucket and record it in the library. */
 export async function uploadMedia(
-  file: File,
+  original: File,
   folder = "uploads",
   onProgress?: (pct: number) => void,
 ) {
-  const invalid = validateImage(file);
+  const invalid = validateImage(original);
   if (invalid) throw new Error(invalid);
 
+  const file = await prepareImage(original);
   const path = buildStoragePath(file.name, folder);
+
 
   const { data: sessionData } = await supabase.auth.getSession();
   const token = sessionData.session?.access_token;
