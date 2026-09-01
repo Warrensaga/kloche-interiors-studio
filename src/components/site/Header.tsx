@@ -155,6 +155,7 @@ export function Header({ transparent = false }: { transparent?: boolean }) {
             {config.phoneDisplay}
           </a>
         </nav>
+        </div>
       </div>
     </header>
   );
