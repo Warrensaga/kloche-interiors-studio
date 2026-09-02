@@ -86,9 +86,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "preconnect", href: "https://images.unsplash.com", crossOrigin: "anonymous" },
       { rel: "dns-prefetch", href: "https://images.unsplash.com" },
+      // Loaded non-render-blocking: fetched as a low-priority stylesheet and
+      // promoted to a real stylesheet once it arrives.
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap",
+        media: "print",
+        onLoad: "this.media='all'",
       },
       // Google prefers a large, square favicon (multiple of 48px). Keep the list
       // short so crawlers don't settle on a tiny 16px variant.
