@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
-import { PROJECTS } from "@/data/site";
 import type { Database } from "@/integrations/supabase/types";
 
 import { BASE_URL } from "@/lib/seo";
@@ -38,11 +37,7 @@ async function dynamicPaths(): Promise<SitemapEntry[]> {
       entries.push({ path: `/journal/${p.slug}`, changefreq: "monthly", priority: "0.6" });
     return entries;
   } catch {
-    return PROJECTS.map((p) => ({
-      path: `/portfolio/${p.id}`,
-      changefreq: "monthly" as const,
-      priority: "0.6",
-    }));
+    return [];
   }
 }
 
