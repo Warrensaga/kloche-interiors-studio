@@ -99,7 +99,7 @@ export const Route = createFileRoute("/portfolio/$projectId")({
 });
 
 function ProjectDetail() {
-  const { project } = Route.useLoaderData() as { project: Project };
+  const { project, related } = Route.useLoaderData() as { project: Project; related: Project[] };
 
   return (
     <>
