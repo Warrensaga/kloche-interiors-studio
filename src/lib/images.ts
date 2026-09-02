@@ -7,6 +7,11 @@ function isUnsplash(url: string) {
   return url.startsWith("https://images.unsplash.com/");
 }
 
+/** Signed object URLs from the project's own storage bucket. */
+function isStorage(url: string) {
+  return url.includes("/storage/v1/object/sign/");
+}
+
 export function isOptimizable(url: string) {
   return isUnsplash(url);
 }
