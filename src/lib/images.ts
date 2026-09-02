@@ -21,19 +21,9 @@ export function isOptimizable(url: string) {
  * explicit modern format. `auto` lets the CDN content-negotiate.
  */
 export function imageAt(url: string, width: number, format: ImageFormat = "auto"): string {
-  if (isStorage(url)) {
-    // Storage's render endpoint content-negotiates WebP/AVIF and resizes.
-    try {
-      const u = new URL(url.replace("/object/sign/", "/render/image/sign/"));
-      u.searchParams.set("width", String(Math.min(Math.round(width), 2000)));
-      u.searchParams.set("resize", "contain");
-      u.searchParams.set("quality", "75");
-      return u.toString();
-    } catch {
-      return url;
-    }
-  }
-  if (!isUnsplash(url)) return url;
+  // Storage originals are already downscaled and compressed at upload time;
+  // the render endpoint ignores sizing here and would only inflate them.
+  if (isStorage(url) || !isUnsplash(url)) return url;
   try {
     const u = new URL(url);
     u.searchParams.set("auto", "format");
