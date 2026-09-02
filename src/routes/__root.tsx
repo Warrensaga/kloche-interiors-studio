@@ -17,6 +17,7 @@ import { Footer } from "@/components/site/Footer";
 import { WhatsAppButton } from "@/components/site/WhatsAppButton";
 import { PageTransition, ScrollProgress } from "@/components/site/Reveal";
 import { ErrorState } from "@/components/site/ErrorState";
+import { RouteProgress } from "@/components/site/RouteProgress";
 import { themeInitScript } from "@/components/site/ThemeToggle";
 
 
@@ -130,6 +131,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <div className="flex min-h-screen flex-col">
         <ScrollProgress />
+        <RouteProgress />
         <Header transparent={transparent} />
         <main className="flex-1">
           <PageTransition key={pathname}>

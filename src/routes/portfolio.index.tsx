@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { CATEGORIES, PROJECTS, type Category, type Project } from "@/data/site";
+import { CATEGORIES, IMAGES, type Category, type Project } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { PageHero, CtaBanner, SectionHeading } from "@/components/site/Sections";
 import { BeforeAfter } from "@/components/site/BeforeAfter";
@@ -13,12 +13,12 @@ import { listPublishedProjects } from "@/lib/projects.functions";
 import { listPageCopy } from "@/lib/content.functions";
 import { copyOf, type PageCopy } from "@/lib/content-map";
 
-const HERO = PROJECTS[1].cover;
+const HERO = IMAGES.studio4;
 
 export const Route = createFileRoute("/portfolio/")({
   loader: async () => {
     const [projects, seo, copy] = await Promise.all([
-      safeLoad(() => listPublishedProjects(), PROJECTS),
+      safeLoad(() => listPublishedProjects(), [] as Project[]),
       safeLoad(() => getSeoMeta({ data: "portfolio" }), null),
       safeLoad(() => listPageCopy({ data: "portfolio" }), [] as PageCopy[]),
     ]);
@@ -50,7 +50,7 @@ export const Route = createFileRoute("/portfolio/")({
           url: absoluteUrl("/portfolio"),
           mainEntity: {
             "@type": "ItemList",
-            itemListElement: PROJECTS.map((p, i) => ({
+            itemListElement: (loaderData?.projects ?? []).map((p, i) => ({
               "@type": "ListItem",
               position: i + 1,
               name: p.name,
@@ -76,7 +76,7 @@ function Portfolio() {
     () => (filter === "All" ? all : all.filter((p) => p.categories.includes(filter))),
     [filter, all],
   );
-  const baProject = all.find((p) => p.beforeAfter) ?? PROJECTS.find((p) => p.beforeAfter)!;
+  const baProject = all.find((p) => p.beforeAfter);
 
   return (
     <>
@@ -169,6 +169,7 @@ function Portfolio() {
         </div>
       </section>
 
+      {baProject && (
       <section className="section-y bg-secondary/50">
         <div className="mx-auto max-w-6xl px-5 md:px-8">
           <SectionHeading
@@ -194,6 +195,7 @@ function Portfolio() {
           </Reveal>
         </div>
       </section>
+      )}
 
       <CtaBanner title="See something you like?" />
     </>

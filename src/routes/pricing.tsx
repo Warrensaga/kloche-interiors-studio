@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Check } from "lucide-react";
-import { IMAGES, PROJECTS } from "@/data/site";
+import { IMAGES, type Project } from "@/data/site";
+import { listPublishedProjects } from "@/lib/projects.functions";
 import { Reveal, Stagger, StaggerItem } from "@/components/site/Reveal";
 import { PageHero } from "@/components/site/Sections";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
@@ -17,11 +18,12 @@ const PAGE_DESC =
 
 export const Route = createFileRoute("/pricing")({
   loader: async () => {
-    const [seo, copy] = await Promise.all([
+    const [seo, copy, projects] = await Promise.all([
       safeLoad(() => getSeoMeta({ data: "pricing" }), null),
       safeLoad(() => listPageCopy({ data: "pricing" }), [] as PageCopy[]),
+      safeLoad(() => listPublishedProjects(), [] as Project[]),
     ]);
-    return { seo, copy };
+    return { seo, copy, projects };
   },
   head: ({ loaderData }) => {
     const seo = pageSeo({
@@ -315,7 +317,7 @@ const ctaClass =
 function Pricing() {
   const [budget, setBudget] = useState<string>("");
 
-  const { copy } = Route.useLoaderData() as { copy: PageCopy[] };
+  const { copy, projects } = Route.useLoaderData() as { copy: PageCopy[]; projects: Project[] };
   const quoteLink = (service?: string) => ({
     to: "/contact" as const,
     search: {
@@ -556,6 +558,7 @@ function Pricing() {
       </section>
 
       {/* Recent projects strip */}
+      {projects.length > 0 && (
       <section className="section-y bg-secondary/50">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <Reveal>
@@ -563,7 +566,7 @@ function Pricing() {
             <h2 className="mt-4 text-3xl md:text-4xl">See what different investments achieve</h2>
           </Reveal>
           <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {PROJECTS.slice(0, 4).map((p) => (
+            {projects.slice(0, 4).map((p) => (
               <StaggerItem key={p.id}>
                 <Link
                   to="/portfolio/$projectId"
@@ -592,6 +595,7 @@ function Pricing() {
           </Stagger>
         </div>
       </section>
+      )}
 
       {/* Final CTA */}
       <section className="section-y bg-charcoal text-cream">

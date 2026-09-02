@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useRef, useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
-import { IMAGES, PHILOSOPHY, PILLARS, PROJECTS, SERVICES, STUDIO, TESTIMONIALS, whatsappLink, type Project, type Service } from "@/data/site";
+import { IMAGES, PHILOSOPHY, PILLARS, SERVICES, STUDIO, TESTIMONIALS, whatsappLink, type Project, type Service } from "@/data/site";
 import { listPublishedProjects } from "@/lib/projects.functions";
 import { listServices, listTestimonials } from "@/lib/content.functions";
 
@@ -78,7 +78,7 @@ export const Route = createFileRoute("/")({
   loader: async () => {
     const [sections, projects, services, testimonials, seo] = await Promise.all([
       safeLoad(() => listHomepageSections(), DEFAULT_SECTIONS),
-      safeLoad(() => listPublishedProjects(), PROJECTS),
+      safeLoad(() => listPublishedProjects(), [] as Project[]),
       safeLoad(() => listServices(), SERVICES),
       safeLoad(() => listTestimonials(), TESTIMONIALS),
       safeLoad(() => getSeoMeta({ data: "home" }), null),

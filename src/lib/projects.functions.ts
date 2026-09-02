@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
 import { hasServerSupabaseEnv } from "@/lib/supabase-env";
-import { PROJECTS, type Category, type Project } from "@/data/site";
+import { type Category, type Project } from "@/data/site";
 
 type Row = Database["public"]["Tables"]["projects"]["Row"];
 type ImageRow = Database["public"]["Tables"]["project_images"]["Row"];
@@ -48,20 +48,20 @@ export function toProject(row: Row, images: ImageRow[]): Project {
   };
 }
 
-/** Published projects, newest ordering by sort_order. Falls back to bundled data. */
+/** Published projects from the CMS, ordered by sort_order. */
 export const listPublishedProjects = createServerFn({ method: "GET" }).handler(
   async (): Promise<Project[]> => {
-    if (!hasServerSupabaseEnv()) return PROJECTS;
+    if (!hasServerSupabaseEnv()) return [];
     try {
       const supabase = publicClient();
       const [{ data: rows }, { data: images }] = await Promise.all([
         supabase.from("projects").select("*").eq("published", true).order("sort_order"),
         supabase.from("project_images").select("*"),
       ]);
-      if (!rows?.length) return PROJECTS;
+      if (!rows?.length) return [];
       return rows.map((r) => toProject(r, images ?? []));
     } catch {
-      return PROJECTS;
+      return [];
     }
   },
 );
