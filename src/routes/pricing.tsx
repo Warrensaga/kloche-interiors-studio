@@ -317,7 +317,7 @@ const ctaClass =
 function Pricing() {
   const [budget, setBudget] = useState<string>("");
 
-  const { copy } = Route.useLoaderData() as { copy: PageCopy[] };
+  const { copy, projects } = Route.useLoaderData() as { copy: PageCopy[]; projects: Project[] };
   const quoteLink = (service?: string) => ({
     to: "/contact" as const,
     search: {
@@ -558,6 +558,7 @@ function Pricing() {
       </section>
 
       {/* Recent projects strip */}
+      {projects.length > 0 && (
       <section className="section-y bg-secondary/50">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <Reveal>
@@ -594,6 +595,7 @@ function Pricing() {
           </Stagger>
         </div>
       </section>
+      )}
 
       {/* Final CTA */}
       <section className="section-y bg-charcoal text-cream">

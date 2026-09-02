@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
-import { PROJECTS, type Project } from "@/data/site";
+import { type Project } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner } from "@/components/site/Sections";
 import { BeforeAfter } from "@/components/site/BeforeAfter";
@@ -12,11 +12,10 @@ import { safeLoad } from "@/lib/supabase-env";
 
 export const Route = createFileRoute("/portfolio/$projectId")({
   loader: async ({ params }) => {
-    const all = await safeLoad(() => listPublishedProjects(), PROJECTS);
-    const project = all.find((p) => p.id === params.projectId) ??
-      PROJECTS.find((p) => p.id === params.projectId);
+    const all = await safeLoad(() => listPublishedProjects(), [] as Project[]);
+    const project = all.find((p) => p.id === params.projectId);
     if (!project) throw notFound();
-    return { project };
+    return { project, related: all.filter((p) => p.id !== project.id).slice(0, 3) };
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
@@ -207,9 +206,7 @@ function ProjectDetail() {
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <h2 className="eyebrow">Next projects</h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {PROJECTS.filter((p) => p.id !== project.id)
-              .slice(0, 3)
-              .map((p, i) => (
+            {related.map((p, i) => (
                 <Reveal key={p.id} delay={i * 0.08}>
                   <Link
                     to="/portfolio/$projectId"
