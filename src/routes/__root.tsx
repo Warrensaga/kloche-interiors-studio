@@ -21,6 +21,14 @@ import { RouteProgress } from "@/components/site/RouteProgress";
 import { themeInitScript } from "@/components/site/ThemeToggle";
 
 
+const FONTS_HREF =
+  "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap";
+
+/** Attaches the web-font stylesheet without blocking first paint. */
+const fontLoaderScript = `(function(){var l=document.createElement('link');l.rel='stylesheet';l.href=${JSON.stringify(
+  FONTS_HREF,
+)};l.media='print';l.onload=function(){this.media='all'};document.head.appendChild(l)})()`;
+
 function NotFoundComponent() {
   return (
     <ErrorState
