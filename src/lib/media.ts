@@ -82,28 +82,43 @@ export function validateImage(file: File): string | null {
   return null;
 }
 
+/** Largest dimension we ever need on the site — bigger is wasted bandwidth. */
+const MAX_DIMENSION = 2000;
+/** Files under this size are already light enough to upload untouched. */
+const COMPRESS_ABOVE_BYTES = 350 * 1024;
+
 /**
- * Normalise exotic formats (HEIC/TIFF/BMP/ICO) to WEBP so every uploaded
- * image renders in all browsers. Web-safe formats pass through untouched.
+ * Normalise exotic formats (HEIC/TIFF/BMP/ICO) to WEBP and downscale/recompress
+ * oversized photos so pages stay fast. Small web-safe files pass through.
  */
 export async function prepareImage(file: File): Promise<File> {
-  if (typeof window === "undefined" || !needsConversion(file)) return file;
+  if (typeof window === "undefined") return file;
+  const convert = needsConversion(file);
+  const oversized = file.size > COMPRESS_ABOVE_BYTES;
+  // Vector and animated formats must never be rasterised.
+  if (file.type === "image/svg+xml" || file.type === "image/gif") return file;
+  if (!convert && !oversized) return file;
+
   try {
     const bitmap = await createImageBitmap(file);
+    const scale = Math.min(1, MAX_DIMENSION / Math.max(bitmap.width, bitmap.height));
     const canvas = document.createElement("canvas");
-    canvas.width = bitmap.width;
-    canvas.height = bitmap.height;
+    canvas.width = Math.round(bitmap.width * scale);
+    canvas.height = Math.round(bitmap.height * scale);
     const ctx = canvas.getContext("2d");
     if (!ctx) throw new Error("no canvas context");
-    ctx.drawImage(bitmap, 0, 0);
+    ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
     bitmap.close?.();
     const blob = await new Promise<Blob | null>((resolve) =>
-      canvas.toBlob(resolve, "image/webp", 0.92),
+      canvas.toBlob(resolve, "image/webp", 0.82),
     );
     if (!blob) throw new Error("conversion failed");
+    // Never make a file bigger than it already was.
+    if (!convert && blob.size >= file.size) return file;
     const name = `${file.name.replace(/\.[^.]+$/, "")}.webp`;
     return new File([blob], name, { type: "image/webp" });
   } catch {
+    if (!convert) return file;
     throw new Error(
       `${file.name}: this format can't be read by your browser. Please convert it to JPG, PNG or WEBP first.`,
     );

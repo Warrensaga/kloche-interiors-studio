@@ -21,6 +21,14 @@ import { RouteProgress } from "@/components/site/RouteProgress";
 import { themeInitScript } from "@/components/site/ThemeToggle";
 
 
+const FONTS_HREF =
+  "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap";
+
+/** Attaches the web-font stylesheet without blocking first paint. */
+const fontLoaderScript = `(function(){var l=document.createElement('link');l.rel='stylesheet';l.href=${JSON.stringify(
+  FONTS_HREF,
+)};l.media='print';l.onload=function(){this.media='all'};document.head.appendChild(l)})()`;
+
 function NotFoundComponent() {
   return (
     <ErrorState
@@ -86,10 +94,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "preconnect", href: "https://images.unsplash.com", crossOrigin: "anonymous" },
       { rel: "dns-prefetch", href: "https://images.unsplash.com" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap",
-      },
+      // Preloaded, then attached as a stylesheet by fontLoaderScript so it
+      // never blocks the first render.
+      { rel: "preload", as: "style", href: FONTS_HREF },
       // Google prefers a large, square favicon (multiple of 48px). Keep the list
       // short so crawlers don't settle on a tiny 16px variant.
       { rel: "icon", href: "/favicon.ico", sizes: "48x48" },
@@ -112,6 +119,7 @@ function RootShell({ children }: { children: ReactNode }) {
       <head>
         <HeadContent />
         <ScriptOnce>{themeInitScript}</ScriptOnce>
+        <ScriptOnce>{fontLoaderScript}</ScriptOnce>
       </head>
       <body>
         {children}

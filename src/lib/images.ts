@@ -7,6 +7,11 @@ function isUnsplash(url: string) {
   return url.startsWith("https://images.unsplash.com/");
 }
 
+/** Signed object URLs from the project's own storage bucket. */
+function isStorage(url: string) {
+  return url.includes("/storage/v1/object/sign/");
+}
+
 export function isOptimizable(url: string) {
   return isUnsplash(url);
 }
@@ -16,7 +21,9 @@ export function isOptimizable(url: string) {
  * explicit modern format. `auto` lets the CDN content-negotiate.
  */
 export function imageAt(url: string, width: number, format: ImageFormat = "auto"): string {
-  if (!isUnsplash(url)) return url;
+  // Storage originals are already downscaled and compressed at upload time;
+  // the render endpoint ignores sizing here and would only inflate them.
+  if (isStorage(url) || !isUnsplash(url)) return url;
   try {
     const u = new URL(url);
     u.searchParams.set("auto", "format");
