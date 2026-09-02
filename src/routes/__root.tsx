@@ -119,6 +119,7 @@ function RootShell({ children }: { children: ReactNode }) {
       <head>
         <HeadContent />
         <ScriptOnce>{themeInitScript}</ScriptOnce>
+        <ScriptOnce>{fontLoaderScript}</ScriptOnce>
       </head>
       <body>
         {children}
