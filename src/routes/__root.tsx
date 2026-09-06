@@ -136,6 +136,7 @@ function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <GoogleAnalytics />
         <HeadContent />
         <ScriptOnce>{themeInitScript}</ScriptOnce>
         <ScriptOnce>{fontLoaderScript}</ScriptOnce>
