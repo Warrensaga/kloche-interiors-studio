@@ -136,6 +136,14 @@ function ProjectDetail() {
             <p className="mt-5 text-lg leading-relaxed text-foreground/85 md:text-xl">
               {project.description}
             </p>
+            <div className="mt-10 space-y-8">
+              {projectNarrative(project).map((s) => (
+                <div key={s.heading}>
+                  <h3 className="font-display text-xl md:text-2xl">{s.heading}</h3>
+                  <p className="mt-3 leading-relaxed text-muted-foreground">{s.body}</p>
+                </div>
+              ))}
+            </div>
           </Reveal>
           <Reveal delay={0.1} className="rounded-3xl bg-secondary/70 p-8">
             <h2 className="eyebrow">Scope of Work</h2>
