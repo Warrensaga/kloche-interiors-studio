@@ -205,7 +205,12 @@ function ProjectDetail() {
               <h2 className="mt-4 text-3xl md:text-4xl">The same room, twelve weeks apart</h2>
             </Reveal>
             <Reveal delay={0.1}>
-              <BeforeAfter before={project.beforeAfter.before} after={project.beforeAfter.after} />
+              <BeforeAfter
+                before={project.beforeAfter.before}
+                after={project.beforeAfter.after}
+                beforeAlt={`${project.name} in ${project.location} before renovation by Kloche Interiors`}
+                afterAlt={`${project.name} in ${project.location} after renovation by Kloche Interiors`}
+              />
             </Reveal>
           </div>
         </section>

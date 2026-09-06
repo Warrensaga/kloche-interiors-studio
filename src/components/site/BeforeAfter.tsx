@@ -5,10 +5,14 @@ export function BeforeAfter({
   before,
   after,
   label = "Drag to compare",
+  beforeAlt,
+  afterAlt,
 }: {
   before: string;
   after: string;
   label?: string;
+  beforeAlt?: string;
+  afterAlt?: string;
 }) {
   const [pos, setPos] = useState(52);
   const ref = useRef<HTMLDivElement>(null);
