@@ -37,7 +37,7 @@ export function BeforeAfter({
     >
       <SmartImage
         src={after}
-        alt="After renovation"
+        alt={afterAlt ?? "Room after renovation by Kloche Interiors"}
         baseWidth={1400}
         sizes={SIZES.content}
         className="absolute inset-0 h-full w-full object-cover"
@@ -45,7 +45,7 @@ export function BeforeAfter({
       <div className="absolute inset-0 overflow-hidden" style={{ width: `${pos}%` }}>
         <SmartImage
           src={before}
-          alt="Before renovation"
+          alt={beforeAlt ?? "Room before renovation by Kloche Interiors"}
           baseWidth={1400}
           sizes={SIZES.content}
           className="absolute inset-0 h-full w-full object-cover"

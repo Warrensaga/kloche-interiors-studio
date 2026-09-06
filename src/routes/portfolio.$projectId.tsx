@@ -5,6 +5,7 @@ import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner } from "@/components/site/Sections";
 import { BeforeAfter } from "@/components/site/BeforeAfter";
 import { absoluteUrl } from "@/lib/seo";
+import { galleryAlt, projectNarrative } from "@/lib/project-copy";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 import { imageAt, srcSet } from "@/lib/images";
 import { listPublishedProjects } from "@/lib/projects.functions";
@@ -106,7 +107,7 @@ function ProjectDetail() {
       <section className="relative flex min-h-[70svh] items-end overflow-hidden">
         <SmartImage
           src={project.cover}
-          alt={project.name}
+          alt={`${project.name} — ${project.projectType} by Kloche Interiors in ${project.location}`}
           priority
           baseWidth={1920}
           sizes={SIZES.full}
@@ -183,7 +184,7 @@ function ProjectDetail() {
             >
               <SmartImage
                 src={src}
-                alt={`${project.name} — photograph ${i + 1}`}
+                alt={galleryAlt(project, i)}
                 baseWidth={i % 3 === 0 ? 1400 : 900}
                 sizes={i % 3 === 0 ? SIZES.full : SIZES.half}
                 ratio={i % 3 === 0 ? "16 / 9" : "4 / 3"}
@@ -224,7 +225,7 @@ function ProjectDetail() {
                     <div className="aspect-4/3 overflow-hidden">
                       <SmartImage
                         src={p.cover}
-                        alt={p.name}
+                        alt={`${p.name} — interior design project in ${p.location}`}
                         baseWidth={700}
                         sizes={SIZES.third}
                         ratio="4 / 3"
