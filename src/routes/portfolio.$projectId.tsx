@@ -5,6 +5,7 @@ import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner } from "@/components/site/Sections";
 import { BeforeAfter } from "@/components/site/BeforeAfter";
 import { absoluteUrl } from "@/lib/seo";
+import { galleryAlt, projectNarrative } from "@/lib/project-copy";
 import { SIZES, SmartImage } from "@/components/site/SmartImage";
 import { imageAt, srcSet } from "@/lib/images";
 import { listPublishedProjects } from "@/lib/projects.functions";
@@ -106,7 +107,7 @@ function ProjectDetail() {
       <section className="relative flex min-h-[70svh] items-end overflow-hidden">
         <SmartImage
           src={project.cover}
-          alt={project.name}
+          alt={`${project.name} — ${project.projectType} by Kloche Interiors in ${project.location}`}
           priority
           baseWidth={1920}
           sizes={SIZES.full}
@@ -136,6 +137,14 @@ function ProjectDetail() {
             <p className="mt-5 text-lg leading-relaxed text-foreground/85 md:text-xl">
               {project.description}
             </p>
+            <div className="mt-10 space-y-8">
+              {projectNarrative(project).map((s) => (
+                <div key={s.heading}>
+                  <h3 className="font-display text-xl md:text-2xl">{s.heading}</h3>
+                  <p className="mt-3 leading-relaxed text-muted-foreground">{s.body}</p>
+                </div>
+              ))}
+            </div>
           </Reveal>
           <Reveal delay={0.1} className="rounded-3xl bg-secondary/70 p-8">
             <h2 className="eyebrow">Scope of Work</h2>
@@ -175,7 +184,7 @@ function ProjectDetail() {
             >
               <SmartImage
                 src={src}
-                alt={`${project.name} — photograph ${i + 1}`}
+                alt={galleryAlt(project, i)}
                 baseWidth={i % 3 === 0 ? 1400 : 900}
                 sizes={i % 3 === 0 ? SIZES.full : SIZES.half}
                 ratio={i % 3 === 0 ? "16 / 9" : "4 / 3"}
@@ -196,7 +205,12 @@ function ProjectDetail() {
               <h2 className="mt-4 text-3xl md:text-4xl">The same room, twelve weeks apart</h2>
             </Reveal>
             <Reveal delay={0.1}>
-              <BeforeAfter before={project.beforeAfter.before} after={project.beforeAfter.after} />
+              <BeforeAfter
+                before={project.beforeAfter.before}
+                after={project.beforeAfter.after}
+                beforeAlt={`${project.name} in ${project.location} before renovation by Kloche Interiors`}
+                afterAlt={`${project.name} in ${project.location} after renovation by Kloche Interiors`}
+              />
             </Reveal>
           </div>
         </section>
@@ -216,7 +230,7 @@ function ProjectDetail() {
                     <div className="aspect-4/3 overflow-hidden">
                       <SmartImage
                         src={p.cover}
-                        alt={p.name}
+                        alt={`${p.name} — interior design project in ${p.location}`}
                         baseWidth={700}
                         sizes={SIZES.third}
                         ratio="4 / 3"
