@@ -509,7 +509,7 @@ export const TEAM = [
 ];
 
 export const STATS = [
-  { value: "60+", label: "Projects delivered" },
+  { value: "20+", label: "Projects delivered" },
   { value: "8", label: "Years in practice" },
   { value: "40+", label: "Kenyan artisans engaged" },
   { value: "Nairobi", label: "& beyond" },
