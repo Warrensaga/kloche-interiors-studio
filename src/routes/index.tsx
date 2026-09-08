@@ -224,6 +224,7 @@ function Hero({ section }: { section: HomepageSection }) {
 
 function StudioIntro({ section }: { section: HomepageSection }) {
   const paragraphs = section.content.paragraphs ?? (section.body ? [section.body] : []);
+  const imageSrc = section.content.imageUrl || IMAGES.studio1;
   return (
     <section className="section-y">
       <div className="mx-auto grid max-w-7xl gap-10 px-5 md:grid-cols-[0.9fr_1.1fr] md:px-8">
@@ -246,6 +247,20 @@ function StudioIntro({ section }: { section: HomepageSection }) {
               <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
             </Link>
           )}
+        </Reveal>
+      </div>
+      <div className="mx-auto mt-14 max-w-7xl px-5 md:px-8">
+        <Reveal delay={0.2}>
+          <div className="overflow-hidden rounded-3xl shadow-soft">
+            <SmartImage
+              src={imageSrc}
+              alt="A warm, inviting interior designed by Kloche Interiors in Nairobi"
+              baseWidth={1400}
+              sizes={SIZES.content}
+              ratio="16 / 9"
+              className="w-full object-cover"
+            />
+          </div>
         </Reveal>
       </div>
     </section>
