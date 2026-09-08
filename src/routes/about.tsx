@@ -133,6 +133,18 @@ function About() {
             body={copyOf(copy, "philosophy", "body", PHILOSOPHY.body)}
             align="center"
           />
+          <Reveal delay={0.12}>
+            <figure className="mx-auto mt-12 max-w-5xl overflow-hidden rounded-3xl shadow-soft">
+              <SmartImage
+                src={copyOf(copy, "philosophy", "image_url", IMAGES.studio1)}
+                alt="A warm, layered living space designed by Kloche Interiors"
+                baseWidth={1400}
+                sizes={SIZES.half}
+                ratio="16 / 9"
+                className="aspect-video w-full object-cover"
+              />
+            </figure>
+          </Reveal>
         </div>
       </section>
 
