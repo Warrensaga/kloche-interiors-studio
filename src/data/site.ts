@@ -358,8 +358,8 @@ export const PILLARS = [
 ];
 
 export const PHILOSOPHY = {
-  eyebrow: "Our Philosophy",
-  title: "Where Style Meets Lifestyle.",
+  eyebrow: "The Studio",
+  title: "We transform spaces into places you love to live in.",
   body: "We believe the best spaces are not simply beautiful. They are intentional, functional and personal. At Kloche, we design around the way you live, work and experience your space — bringing together style, comfort and purpose to create interiors that feel uniquely yours.",
 };
 
