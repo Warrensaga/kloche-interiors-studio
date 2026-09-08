@@ -407,7 +407,6 @@ function Stats({ section }: { section: HomepageSection }) {
 }
 
 function Philosophy({ section }: { section: HomepageSection }) {
-  const imageSrc = section.content.imageUrl || IMAGES.studio1;
   return (
     <section className="section-y">
       <div className="mx-auto max-w-3xl px-5 text-center md:px-8">
@@ -417,20 +416,6 @@ function Philosophy({ section }: { section: HomepageSection }) {
           <p className="mt-5 text-base leading-relaxed text-muted-foreground">
             {section.body || PHILOSOPHY.body}
           </p>
-        </Reveal>
-      </div>
-      <div className="mx-auto mt-12 max-w-5xl px-5 md:px-8">
-        <Reveal delay={0.1}>
-          <div className="overflow-hidden rounded-3xl shadow-soft">
-            <SmartImage
-              src={imageSrc}
-              alt="A warm, inviting living space designed by Kloche Interiors in Nairobi"
-              baseWidth={1400}
-              sizes={SIZES.content}
-              ratio="16 / 9"
-              className="w-full object-cover"
-            />
-          </div>
         </Reveal>
       </div>
     </section>
