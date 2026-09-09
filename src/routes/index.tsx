@@ -227,12 +227,28 @@ function StudioIntro({ section }: { section: HomepageSection }) {
   const imageSrc = section.content.imageUrl || IMAGES.studio1;
   return (
     <section className="section-y">
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 md:grid-cols-[0.9fr_1.1fr] md:px-8">
-        <Reveal>
-          <p className="eyebrow">{section.eyebrow}</p>
-          <h2 className="mt-4 text-3xl md:text-4xl">{section.title}</h2>
-        </Reveal>
-        <Reveal delay={0.1} className="flex flex-col justify-center gap-5">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 items-start gap-8 px-5 md:grid-cols-2 md:px-8">
+        {/* LEFT COLUMN: label, header, image */}
+        <div className="flex flex-col space-y-6">
+          <Reveal>
+            <p className="eyebrow">{section.eyebrow}</p>
+            <h2 className="mt-4 text-3xl md:text-4xl">{section.title}</h2>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="overflow-hidden rounded-lg bg-charcoal">
+              <SmartImage
+                src={imageSrc}
+                alt="A warm, inviting interior designed by Kloche Interiors in Nairobi"
+                baseWidth={1400}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="h-64 w-full object-cover md:h-80 lg:h-[350px]"
+              />
+            </div>
+          </Reveal>
+        </div>
+
+        {/* RIGHT COLUMN: body text + CTA */}
+        <Reveal delay={0.15} className="flex flex-col justify-center gap-5">
           {paragraphs.map((p, i) => (
             <p key={i} className="text-base leading-relaxed text-muted-foreground">
               {p}
@@ -247,20 +263,6 @@ function StudioIntro({ section }: { section: HomepageSection }) {
               <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
             </Link>
           )}
-        </Reveal>
-      </div>
-      <div className="mx-auto mt-14 max-w-7xl px-5 md:px-8">
-        <Reveal delay={0.2}>
-          <div className="overflow-hidden rounded-3xl shadow-soft">
-            <SmartImage
-              src={imageSrc}
-              alt="A warm, inviting interior designed by Kloche Interiors in Nairobi"
-              baseWidth={1400}
-              sizes={SIZES.content}
-              ratio="16 / 9"
-              className="w-full object-cover"
-            />
-          </div>
         </Reveal>
       </div>
     </section>
