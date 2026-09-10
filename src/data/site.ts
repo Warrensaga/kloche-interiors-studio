@@ -380,21 +380,33 @@ export const FOUNDER = {
 export const TESTIMONIALS = [
   {
     quote:
-      "Kloche understood our home better than we did. Six months on, we still notice small details they got exactly right.",
-    name: "Wanjiru & Kevin M.",
-    detail: "Kileleshwa Residency",
+      "Kloche did a superb job. Timely delivery and quality is what will make me get glued to this company! If it's good, the cost is beatable!",
+    name: "Oliver Adeka",
+    detail: "Google Review",
   },
   {
     quote:
-      "They managed contractors, budget and our indecision with complete calm. The reveal genuinely made my mother cry.",
-    name: "Aisha O.",
-    detail: "Westlands Airbnb",
+      "Working with Kloche Interiors was such a smooth and enjoyable process. They have a unique eye for design and really bring spaces to life in a way that feels both stylish and functional. I especially appreciated how they kept me updated every step of the way and made the whole experience stress-free. The end result exceeded my expectations, and I'd definitely work with them again.",
+    name: "Givence Awuor",
+    detail: "Google Review",
   },
   {
     quote:
-      "Our office finally feels like the studio we tell clients we are. Staff arrive earlier — that's the review.",
-    name: "Daniel Kimani",
-    detail: "Founder, Gigiri Executive Offices",
+      "I had a great experience with their attention to detail and personalization. The representative was friendly, patient, and knowledgeable. They went above and beyond to help me resolve my issue quickly. I was very impressed with how much they cared.",
+    name: "Ogare Ted",
+    detail: "Google Review",
+  },
+  {
+    quote:
+      "As a short-let business owner seeking to revamp my living space, I couldn't have stumbled upon a more remarkable interior design company than Kloche Interiors. Their unparalleled expertise in both renovation and interior decoration is nothing short of impressive.",
+    name: "Amanda Kimani",
+    detail: "Google Review",
+  },
+  {
+    quote:
+      "I would highly recommend Kloche Interiors. They did some renovations for me back at home and the outcome was exceptional.",
+    name: "Linda Sawo",
+    detail: "Google Review",
   },
 ];
 
