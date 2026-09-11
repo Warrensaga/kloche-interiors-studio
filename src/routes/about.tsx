@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { FOUNDER, IMAGES, PHILOSOPHY, STATS } from "@/data/site";
+import { FOUNDER, IMAGES, STATS } from "@/data/site";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaBanner, PageHero, SectionHeading } from "@/components/site/Sections";
 import { absoluteUrl, breadcrumbLd, pageSeo } from "@/lib/seo";
@@ -132,28 +132,7 @@ function About() {
         </div>
       </section>
 
-      <section className="section-y">
-        <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <SectionHeading
-            eyebrow={copyOf(copy, "philosophy", "eyebrow", PHILOSOPHY.eyebrow)}
-            title={copyOf(copy, "philosophy", "title", PHILOSOPHY.title)}
-            body={copyOf(copy, "philosophy", "body", PHILOSOPHY.body)}
-            align="center"
-          />
-          <Reveal delay={0.12}>
-            <figure className="mx-auto mt-12 max-w-5xl overflow-hidden rounded-3xl shadow-soft">
-              <SmartImage
-                src={copyOf(copy, "philosophy", "image_url", IMAGES.studio1)}
-                alt="A warm, layered living space designed by Kloche Interiors"
-                baseWidth={1400}
-                sizes={SIZES.half}
-                ratio="16 / 9"
-                className="aspect-video w-full object-cover"
-              />
-            </figure>
-          </Reveal>
-        </div>
-      </section>
+
 
 
       <section className="pb-24">
