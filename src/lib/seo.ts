@@ -49,6 +49,7 @@ export function pageSeo(opts: {
   ogDescription?: string;
   image?: string;
   type?: string;
+  keywords?: string[];
   override?: SeoOverride;
 }) {
   const o = opts.override ?? null;
