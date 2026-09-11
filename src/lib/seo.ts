@@ -49,6 +49,7 @@ export function pageSeo(opts: {
   ogDescription?: string;
   image?: string;
   type?: string;
+  keywords?: string[];
   override?: SeoOverride;
 }) {
   const o = opts.override ?? null;
@@ -70,6 +71,8 @@ export function pageSeo(opts: {
     { name: "twitter:title", content: ogTitle },
     { name: "twitter:description", content: ogDescription },
   ];
+  if (opts.keywords?.length)
+    meta.push({ name: "keywords", content: opts.keywords.join(", ") });
   if (image) {
     meta.push({ property: "og:image", content: image });
     meta.push({ name: "twitter:image", content: image });

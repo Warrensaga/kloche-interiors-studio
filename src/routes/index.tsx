@@ -26,12 +26,22 @@ export const Route = createFileRoute("/")({
   head: ({ loaderData }) => {
     const seo = pageSeo({
       path: "/",
-      title: "Kloche Interiors | Luxury Interior Design Studio, Nairobi",
+      title: "Interior Design Nairobi & Westlands | Kloche Interiors",
       description:
-        "Bespoke interior design and renovation for Nairobi's most discerning homeowners. Residential, commercial and renovation design across Kenya.",
-      ogTitle: "Kloche Interiors — Interiors that feel like home",
+        "Kloche Interiors is a luxury interior design and construction studio in Westlands, Nairobi — homes, offices and renovations across Kenya.",
+      ogTitle: "Interior Design in Westlands, Nairobi — Kloche Interiors",
       ogDescription:
-        "A Nairobi interior design studio creating warm, considered homes and workplaces across Kenya.",
+        "Luxury interior design, renovation and construction from our studio in Westlands, Nairobi.",
+      keywords: [
+        "interior design Nairobi",
+        "interior designers Westlands",
+        "interior design Westlands Nairobi",
+        "interior designer Kenya",
+        "luxury interior design Nairobi",
+        "interior design and construction company Kenya",
+        "best interior designers in Nairobi",
+        "interior design company near me Nairobi",
+      ],
       image: IMAGES.hero,
       override: loaderData?.seo,
     });
@@ -55,17 +65,26 @@ export const Route = createFileRoute("/")({
           children: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "HomeAndConstructionBusiness",
-            name: "Kloche Interiors",
+            name: "Kloche Interiors & Construction",
             url: absoluteUrl("/"),
             image: IMAGES.hero,
             telephone: STUDIO.phoneDisplay,
             email: STUDIO.email,
             address: {
               "@type": "PostalAddress",
-              streetAddress: "Karuna Road",
+              streetAddress: "Karuna Road, Westlands",
               addressLocality: "Nairobi",
+              addressRegion: "Nairobi",
               addressCountry: "KE",
             },
+            areaServed: [
+              "Nairobi, Kenya",
+              "Westlands",
+              "Karen",
+              "Lavington",
+              "Kilimani",
+              "Gigiri",
+            ].map((name) => ({ "@type": "Place", name })),
             openingHours: ["Mo-Fr 09:00-18:00", "Sa 10:00-15:00"],
             sameAs: [STUDIO.instagram],
             priceRange: "$$$",
