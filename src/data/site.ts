@@ -5,7 +5,7 @@ export const STUDIO = {
   phoneLink: "+254717634003",
   whatsapp: "254787068222",
   email: "klocheinteriors@gmail.com",
-  address: "Karuna Road, Nairobi, Kenya",
+  address: "Karuna Road, Westlands, Nairobi, Kenya",
   hours: [
     { day: "Monday – Friday", time: "9:00 – 18:00" },
     { day: "Saturday", time: "10:00 – 15:00" },
@@ -231,7 +231,7 @@ export const SERVICES: Service[] = [
   {
     id: "interior-design",
     icon: "Home",
-    title: "Interior Design",
+    title: "Interior Design & Space Planning in Nairobi",
     short:
       "Thoughtful interiors that balance aesthetics, functionality and the way you live or work.",
     description:
@@ -250,7 +250,7 @@ export const SERVICES: Service[] = [
   {
     id: "renovation-construction",
     icon: "HardHat",
-    title: "Renovation & Construction",
+    title: "Renovation & Construction Management in Westlands",
     short:
       "Carefully managed renovation and construction works, from preparation to final handover.",
     description:
@@ -270,7 +270,7 @@ export const SERVICES: Service[] = [
   {
     id: "custom-interiors",
     icon: "Armchair",
-    title: "Custom Interiors & Fittings",
+    title: "Custom Kitchens & Joinery (Nairobi)",
     short:
       "Bespoke elements that bring character, functionality and cohesion to your space.",
     description:
@@ -289,7 +289,7 @@ export const SERVICES: Service[] = [
   {
     id: "commercial-hospitality",
     icon: "Building2",
-    title: "Commercial & Hospitality Spaces",
+    title: "Commercial & Office Fit-outs in Westlands & Nairobi",
     short:
       "Commercial environments designed to work, feel distinctive and leave a lasting impression.",
     description:
