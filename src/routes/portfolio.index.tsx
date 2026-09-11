@@ -28,11 +28,22 @@ export const Route = createFileRoute("/portfolio/")({
   head: ({ loaderData }) => {
     const seo = pageSeo({
       path: "/portfolio",
-      title: "Portfolio — Kloche Interiors Nairobi",
+      title: "Our Projects | Interior Designers Westlands, Nairobi",
       description:
-        "Residential, commercial, kitchen and living space projects designed by Kloche Interiors across Nairobi and Kenya.",
-      ogTitle: "Portfolio — Kloche Interiors",
-      ogDescription: "Selected interior design projects across Nairobi and Kenya.",
+        "Residential, commercial, kitchen and renovation projects by Kloche Interiors — interior designers in Westlands, Nairobi, working across Kenya.",
+      ogTitle: "Our Projects — Interior Designers in Westlands, Nairobi",
+      ogDescription:
+        "Selected interior design and renovation projects by Kloche Interiors, Westlands, Nairobi.",
+      keywords: [
+        "interior designers Westlands",
+        "residential interior design Kenya",
+        "commercial interior design Nairobi",
+        "home renovation Nairobi",
+        "Airbnb interior design Kenya",
+        "interior designers Kilimani",
+        "interior designers Lavington",
+        "interior designers Gigiri",
+      ],
       image: HERO,
       override: loaderData?.seo,
     });
