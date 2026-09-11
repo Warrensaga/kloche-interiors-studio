@@ -93,7 +93,7 @@ function Portfolio() {
     <>
       <PageHero
         eyebrow={copyOf(copy, "hero", "eyebrow", "Portfolio")}
-        title={copyOf(copy, "hero", "title", "Spaces We've Transformed.")}
+        title={copyOf(copy, "hero", "title", "Interior Design Projects in Nairobi")}
         subtitle={copyOf(
           copy,
           "hero",
