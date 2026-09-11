@@ -12,9 +12,9 @@ import { safeLoad } from "@/lib/supabase-env";
 import { listPageCopy } from "@/lib/content.functions";
 import { copyOf, type PageCopy } from "@/lib/content-map";
 
-const PAGE_TITLE = "Investment Guide — Kloche Interiors Nairobi";
+const PAGE_TITLE = "Interior Design Pricing & Quotes | Kloche Nairobi";
 const PAGE_DESC =
-  "How Kloche Interiors & Construction prices interior design, renovations, 3D visualisation and commercial fit-outs in Nairobi — plus what every project includes.";
+  "Interior design, renovation, 3D visualisation and fit-out rates from Kloche Interiors & Construction in Westlands, Nairobi — and how to get a quotation.";
 
 export const Route = createFileRoute("/pricing")({
   loader: async () => {
