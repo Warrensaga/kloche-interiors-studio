@@ -29,11 +29,19 @@ export const Route = createFileRoute("/contact")({
   head: ({ loaderData }) => {
     const seo = pageSeo({
       path: "/contact",
-      title: "Contact — Kloche Interiors, Nairobi",
+      title: "Contact Kloche Interiors | Westlands, Nairobi",
       description:
-        "Book a consultation with Kloche Interiors in Westlands, Nairobi. Call, WhatsApp, email or send us your project details.",
-      ogTitle: "Contact — Kloche Interiors",
-      ogDescription: "Book a consultation with our Nairobi interior design studio.",
+        "Book a consultation with Kloche Interiors & Construction on Karuna Rd, Westlands, Nairobi. Call 0717 634003, WhatsApp or email us your project.",
+      ogTitle: "Contact Kloche Interiors — Westlands, Nairobi",
+      ogDescription:
+        "Book a consultation with our interior design and construction studio in Westlands, Nairobi.",
+      keywords: [
+        "interior design company near me Nairobi",
+        "interior designers Westlands",
+        "interior design quotation Kenya",
+        "general contractor Nairobi",
+        "interior design Nairobi",
+      ],
       image: IMAGES.studio3,
       override: loaderData?.seo,
     });
