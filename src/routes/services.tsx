@@ -26,12 +26,23 @@ export const Route = createFileRoute("/services")({
   head: ({ loaderData }) => {
     const seo = pageSeo({
       path: "/services",
-      title: "Interior Design Services in Nairobi — Kloche Interiors",
+      title: "Interior Design & Renovation Services | Kloche Nairobi",
       description:
-        "Full home design, space planning, furniture sourcing and renovation consulting for homes and workplaces in Nairobi, Kenya.",
-      ogTitle: "Services — Kloche Interiors",
+        "Interior design, space planning, custom furniture, kitchen and bathroom renovation and construction finishes from our Westlands, Nairobi studio.",
+      ogTitle: "Interior Design & Renovation Services — Westlands, Nairobi",
       ogDescription:
-        "Full home design, space planning, sourcing and renovation consulting in Nairobi.",
+        "Design, space planning, custom furniture and renovation services across Nairobi, Kenya.",
+      keywords: [
+        "interior design and construction company Kenya",
+        "space planning services Kenya",
+        "custom furniture design Nairobi",
+        "kitchen renovation Nairobi",
+        "bathroom renovation Kenya",
+        "office interior design Nairobi",
+        "exterior renovation and painting Nairobi",
+        "turnkey interior design Nairobi",
+        "general contractor Nairobi",
+      ],
       image: HERO,
       override: loaderData?.seo,
     });
