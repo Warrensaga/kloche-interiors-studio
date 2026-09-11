@@ -21,12 +21,19 @@ export const Route = createFileRoute("/about")({
   head: ({ loaderData }) => {
     const seo = pageSeo({
       path: "/about",
-      title: "About the Studio — Kloche Interiors Nairobi",
+      title: "About Kloche Interiors | Interior Designers Westlands",
       description:
-        "Meet Keith Locho, founder and principal interior designer of Kloche Interiors — the story, philosophy and studio behind every project.",
-      ogTitle: "About — Kloche Interiors",
+        "Meet Keith Locho and the team behind Kloche Interiors & Construction — interior designers based in Westlands, Nairobi, working across Kenya.",
+      ogTitle: "About Kloche Interiors — Interior Designers in Westlands, Nairobi",
       ogDescription:
-        "The founder story, philosophy and studio behind Kloche Interiors in Nairobi.",
+        "The founder story, philosophy and studio behind Kloche Interiors in Westlands, Nairobi.",
+      keywords: [
+        "interior designers Westlands",
+        "interior designer Kenya",
+        "best interior designers in Nairobi",
+        "interior design and construction company Kenya",
+        "luxury interior design Nairobi",
+      ],
       image: IMAGES.studio1,
       override: loaderData?.seo,
     });
