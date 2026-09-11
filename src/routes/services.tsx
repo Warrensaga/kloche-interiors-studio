@@ -85,7 +85,7 @@ function Services() {
     <>
       <PageHero
         eyebrow={copyOf(copy, "hero", "eyebrow", "Services")}
-        title={copyOf(copy, "hero", "title", "Our key services")}
+        title={copyOf(copy, "hero", "title", "Interior Design & Renovation in Westlands, Nairobi")}
         subtitle={copyOf(
           copy,
           "hero",
