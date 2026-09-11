@@ -134,7 +134,7 @@ function Portfolio() {
                     {p.cover || p.gallery[0] ? (
                       <SmartImage
                         src={p.cover || p.gallery[0]}
-                        alt={`${p.name}, ${p.location}`}
+                        alt={`${p.name} — ${p.projectType || "interior design"} project in ${p.location}, by Kloche Interiors Nairobi`}
                         baseWidth={800}
                         sizes={SIZES.third}
                         ratio="4 / 3"
