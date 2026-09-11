@@ -30,8 +30,17 @@ export const Route = createFileRoute("/pricing")({
       path: "/pricing",
       title: PAGE_TITLE,
       description: PAGE_DESC,
-      ogTitle: "Investment Guide — Kloche Interiors",
+      ogTitle: "Interior Design Pricing — Kloche Interiors, Westlands Nairobi",
       ogDescription: PAGE_DESC,
+      keywords: [
+        "interior design quotation Kenya",
+        "affordable interior design Kenya",
+        "interior design Nairobi",
+        "house renovation contractors Nairobi",
+        "kitchen renovation Nairobi",
+        "bathroom renovation Kenya",
+        "turnkey interior design Nairobi",
+      ],
       image: IMAGES.studio4,
       override: loaderData?.seo,
     });
