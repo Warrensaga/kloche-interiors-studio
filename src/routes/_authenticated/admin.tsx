@@ -28,6 +28,7 @@ const PAGE_GROUPS: Array<{ heading: string; links: AdminLink[] }> = [
       { to: "/admin/pages", label: "About", search: { page: "about" } },
       { to: "/admin/pages", label: "Pricing", search: { page: "pricing" } },
       { to: "/admin/pages", label: "Contact", search: { page: "contact" } },
+      { to: "/admin/heroes", label: "Hero images" },
     ],
   },
   {

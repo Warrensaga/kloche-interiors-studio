@@ -37,6 +37,7 @@ import { Route as AuthenticatedAdminNavigationRouteImport } from './routes/_auth
 import { Route as AuthenticatedAdminMediaRouteImport } from './routes/_authenticated/admin.media'
 import { Route as AuthenticatedAdminInboxRouteImport } from './routes/_authenticated/admin.inbox'
 import { Route as AuthenticatedAdminHomepageRouteImport } from './routes/_authenticated/admin.homepage'
+import { Route as AuthenticatedAdminHeroesRouteImport } from './routes/_authenticated/admin.heroes'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as AuthenticatedAdminBlogIndexRouteImport } from './routes/_authenticated/admin.blog.index'
 import { Route as AuthenticatedAdminProjectsIdRouteImport } from './routes/_authenticated/admin.projects.$id'
@@ -188,6 +189,12 @@ const AuthenticatedAdminHomepageRoute =
     path: '/homepage',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminHeroesRoute =
+  AuthenticatedAdminHeroesRouteImport.update({
+    id: '/heroes',
+    path: '/heroes',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const Char91DotmcpChar93InvokeToolToolRoute =
   Char91DotmcpChar93InvokeToolToolRouteImport.update({
     id: '/.mcp/invoke-tool/$tool',
@@ -231,6 +238,7 @@ export interface FileRoutesByFullPath {
   '/journal/': typeof JournalIndexRoute
   '/portfolio/': typeof PortfolioIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/admin/heroes': typeof AuthenticatedAdminHeroesRoute
   '/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/admin/inbox': typeof AuthenticatedAdminInboxRoute
   '/admin/media': typeof AuthenticatedAdminMediaRoute
@@ -263,6 +271,7 @@ export interface FileRoutesByTo {
   '/journal': typeof JournalIndexRoute
   '/portfolio': typeof PortfolioIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/admin/heroes': typeof AuthenticatedAdminHeroesRoute
   '/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/admin/inbox': typeof AuthenticatedAdminInboxRoute
   '/admin/media': typeof AuthenticatedAdminMediaRoute
@@ -298,6 +307,7 @@ export interface FileRoutesById {
   '/journal/': typeof JournalIndexRoute
   '/portfolio/': typeof PortfolioIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/_authenticated/admin/heroes': typeof AuthenticatedAdminHeroesRoute
   '/_authenticated/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/_authenticated/admin/inbox': typeof AuthenticatedAdminInboxRoute
   '/_authenticated/admin/media': typeof AuthenticatedAdminMediaRoute
@@ -333,6 +343,7 @@ export interface FileRouteTypes {
     | '/journal/'
     | '/portfolio/'
     | '/.mcp/invoke-tool/$tool'
+    | '/admin/heroes'
     | '/admin/homepage'
     | '/admin/inbox'
     | '/admin/media'
@@ -365,6 +376,7 @@ export interface FileRouteTypes {
     | '/journal'
     | '/portfolio'
     | '/.mcp/invoke-tool/$tool'
+    | '/admin/heroes'
     | '/admin/homepage'
     | '/admin/inbox'
     | '/admin/media'
@@ -399,6 +411,7 @@ export interface FileRouteTypes {
     | '/journal/'
     | '/portfolio/'
     | '/.mcp/invoke-tool/$tool'
+    | '/_authenticated/admin/heroes'
     | '/_authenticated/admin/homepage'
     | '/_authenticated/admin/inbox'
     | '/_authenticated/admin/media'
@@ -633,6 +646,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminHomepageRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/heroes': {
+      id: '/_authenticated/admin/heroes'
+      path: '/heroes'
+      fullPath: '/admin/heroes'
+      preLoaderRoute: typeof AuthenticatedAdminHeroesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/.mcp/invoke-tool/$tool': {
       id: '/.mcp/invoke-tool/$tool'
       path: '/.mcp/invoke-tool/$tool'
@@ -665,6 +685,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminHeroesRoute: typeof AuthenticatedAdminHeroesRoute
   AuthenticatedAdminHomepageRoute: typeof AuthenticatedAdminHomepageRoute
   AuthenticatedAdminInboxRoute: typeof AuthenticatedAdminInboxRoute
   AuthenticatedAdminMediaRoute: typeof AuthenticatedAdminMediaRoute
@@ -682,6 +703,7 @@ interface AuthenticatedAdminRouteChildren {
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminHeroesRoute: AuthenticatedAdminHeroesRoute,
   AuthenticatedAdminHomepageRoute: AuthenticatedAdminHomepageRoute,
   AuthenticatedAdminInboxRoute: AuthenticatedAdminInboxRoute,
   AuthenticatedAdminMediaRoute: AuthenticatedAdminMediaRoute,
