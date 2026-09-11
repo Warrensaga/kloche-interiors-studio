@@ -26,12 +26,22 @@ export const Route = createFileRoute("/")({
   head: ({ loaderData }) => {
     const seo = pageSeo({
       path: "/",
-      title: "Kloche Interiors | Luxury Interior Design Studio, Nairobi",
+      title: "Interior Design Nairobi & Westlands | Kloche Interiors",
       description:
-        "Bespoke interior design and renovation for Nairobi's most discerning homeowners. Residential, commercial and renovation design across Kenya.",
-      ogTitle: "Kloche Interiors — Interiors that feel like home",
+        "Kloche Interiors is a luxury interior design and construction studio in Westlands, Nairobi — homes, offices and renovations across Kenya.",
+      ogTitle: "Interior Design in Westlands, Nairobi — Kloche Interiors",
       ogDescription:
-        "A Nairobi interior design studio creating warm, considered homes and workplaces across Kenya.",
+        "Luxury interior design, renovation and construction from our studio in Westlands, Nairobi.",
+      keywords: [
+        "interior design Nairobi",
+        "interior designers Westlands",
+        "interior design Westlands Nairobi",
+        "interior designer Kenya",
+        "luxury interior design Nairobi",
+        "interior design and construction company Kenya",
+        "best interior designers in Nairobi",
+        "interior design company near me Nairobi",
+      ],
       image: IMAGES.hero,
       override: loaderData?.seo,
     });
