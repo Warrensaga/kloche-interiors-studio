@@ -134,27 +134,6 @@ function About() {
 
 
 
-
-      <section className="pb-24">
-        <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <p className="eyebrow">Inside the Studio</p>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {[IMAGES.studio1, IMAGES.studio3, IMAGES.studio4, IMAGES.studio2].map((src, i) => (
-              <Reveal key={src} delay={i * 0.07}>
-                <SmartImage
-                  src={src}
-                  alt="Behind the scenes at the Kloche Interiors studio"
-                  baseWidth={600}
-                  sizes={SIZES.quarter}
-                  ratio="1 / 1"
-                  className="aspect-square w-full rounded-3xl object-cover shadow-soft"
-                />
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <CtaBanner title="Come and say hello." />
     </>
   );
