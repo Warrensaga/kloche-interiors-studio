@@ -70,12 +70,12 @@ function About() {
     <>
       <PageHero
         eyebrow={copyOf(copy, "hero", "eyebrow", "About")}
-        title={copyOf(copy, "hero", "title", "Meet the Founder")}
+        title={copyOf(copy, "hero", "title", "About Our Westlands, Nairobi Studio")}
         subtitle={copyOf(
           copy,
           "hero",
           "body",
-          "Keith Locho — Founder & Creative Director, Kloche Interiors & Construction.",
+          "Operating from our studio on Karuna Road in Westlands, Nairobi, we collaborate with local Kenyan artisans to deliver high-end residential and commercial interiors across Kenya.",
         )}
         image={copyOf(copy, "hero", "image_url", IMAGES.studio2)}
       />

@@ -93,12 +93,12 @@ function Portfolio() {
     <>
       <PageHero
         eyebrow={copyOf(copy, "hero", "eyebrow", "Portfolio")}
-        title={copyOf(copy, "hero", "title", "Interior Design Projects in Nairobi")}
+        title={copyOf(copy, "hero", "title", "Spaces We've Transformed Across Nairobi")}
         subtitle={copyOf(
           copy,
           "hero",
           "body",
-          "Every project begins with a vision and ends with a space that tells its own story. Explore a selection of our residential, commercial and hospitality projects, each shaped by thoughtful design, careful planning and considered execution.",
+          "Explore our residential and commercial interior projects in Westlands, Lavington, Kiambu, and greater Nairobi.",
         )}
         image={copyOf(copy, "hero", "image_url", HERO)}
       />

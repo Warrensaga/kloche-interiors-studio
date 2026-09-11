@@ -339,7 +339,7 @@ function Pricing() {
     <>
       <PageHero
         eyebrow={copyOf(copy, "hero", "eyebrow", "Investment Guide")}
-        title={copyOf(copy, "hero", "title", "Investing in Spaces That Last")}
+        title={copyOf(copy, "hero", "title", "Transparent Interior Design Pricing in Nairobi")}
         subtitle={copyOf(
           copy,
           "hero",
