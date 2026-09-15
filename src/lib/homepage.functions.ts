@@ -45,7 +45,7 @@ export const DEFAULT_SECTIONS: HomepageSection[] = [
     section_key: "hero",
     kind: "hero",
     eyebrow: "Interior Design Studio · Nairobi, Kenya",
-    title: "Interior Design & Renovation in Westlands, Nairobi",
+    title: "Where style meets lifestyle",
     body: "We design and transform residential and commercial spaces across Westlands, Lavington, and Nairobi.",
     content: { ctaLabel: "Start Your Transformation", showWhatsapp: true },
     sort_order: 0,
