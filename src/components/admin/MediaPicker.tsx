@@ -87,16 +87,17 @@ export function MediaPicker({
               <ImagePlus size={16} />
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-h-[80svh] max-w-3xl overflow-y-auto">
+          <DialogContent className="max-h-[85svh] w-[calc(100vw-1.5rem)] max-w-3xl overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Media library</DialogTitle>
             </DialogHeader>
             <div className="space-y-2">
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-3">
                 <Input
                   type="file"
                   accept={IMAGE_ACCEPT}
                   multiple
+                  className="min-w-0 flex-1 text-xs sm:text-sm"
                   onChange={(e) => {
                     handleFiles(e.target.files);
                     e.target.value = "";
