@@ -62,28 +62,28 @@ function AdminProjects() {
         {projects?.map((p) => (
           <div
             key={p.id}
-            className="flex flex-wrap items-center gap-4 rounded-2xl border border-border bg-card p-4"
+            className="flex flex-wrap items-center gap-3 rounded-2xl border border-border bg-card p-4 sm:gap-4"
           >
             <img
               src={p.cover_url}
               alt=""
-              className="h-16 w-24 shrink-0 rounded-xl bg-muted object-cover"
+              className="h-14 w-20 shrink-0 rounded-xl bg-muted object-cover sm:h-16 sm:w-24"
               loading="lazy"
             />
-            <div className="min-w-0 flex-1">
-              <p className="truncate font-display text-lg">{p.name}</p>
+            <div className="min-w-0 flex-1 basis-[55%]">
+              <p className="truncate font-display text-base sm:text-lg">{p.name}</p>
               <p className="truncate text-xs text-muted-foreground">
                 {p.location} · {p.project_type} · /{p.slug}
               </p>
             </div>
             <span
-              className={`rounded-full px-3 py-1 text-[0.65rem] uppercase tracking-[0.15em] ${
+              className={`shrink-0 rounded-full px-3 py-1 text-[0.65rem] uppercase tracking-[0.15em] ${
                 p.published ? "bg-accent/15 text-accent" : "bg-muted text-muted-foreground"
               }`}
             >
               {p.published ? "Published" : "Draft"}
             </span>
-            <div className="flex gap-2">
+            <div className="ml-auto flex shrink-0 gap-2">
               <Button variant="outline" size="sm" onClick={() => togglePublished(p.id, p.published)}>
                 {p.published ? <EyeOff size={15} /> : <Eye size={15} />}
               </Button>

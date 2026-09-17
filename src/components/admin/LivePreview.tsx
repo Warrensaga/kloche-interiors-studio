@@ -79,14 +79,14 @@ export function LivePreview() {
   return (
     <aside
       aria-label="Live preview"
-      className="fixed inset-x-0 bottom-0 z-40 flex h-[65svh] flex-col border-t border-border bg-card shadow-2xl lg:inset-y-0 lg:left-auto lg:right-0 lg:h-auto lg:w-[46vw] lg:max-w-[720px] lg:border-l lg:border-t-0"
+      className="fixed inset-x-0 bottom-0 z-40 flex h-[65svh] max-h-[100svh] flex-col border-t border-border bg-card shadow-2xl lg:inset-y-0 lg:left-auto lg:right-0 lg:h-auto lg:w-[46vw] lg:max-w-[720px] lg:border-l lg:border-t-0"
     >
-      <div className="flex items-center justify-between gap-2 border-b border-border px-4 py-2">
-        <div className="min-w-0">
+      <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 border-b border-border px-3 py-2 sm:px-4">
+        <div className="min-w-0 flex-1">
           <p className="text-[0.6rem] uppercase tracking-[0.22em] text-muted-foreground">Live preview</p>
           <p className="truncate text-xs text-foreground">{path}</p>
         </div>
-        <div className="flex items-center gap-1">
+        <div className="flex shrink-0 items-center gap-0.5 sm:gap-1">
           <Button
             size="icon"
             variant={device === "desktop" ? "secondary" : "ghost"}
@@ -121,7 +121,7 @@ export function LivePreview() {
         </div>
       </div>
 
-      <div className="flex flex-1 justify-center overflow-hidden bg-secondary/40 p-3">
+      <div className="flex min-h-0 flex-1 justify-center overflow-hidden bg-secondary/40 p-2 sm:p-3">
         <iframe
           key={src}
           title="Live site preview"
