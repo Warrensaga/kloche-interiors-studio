@@ -119,7 +119,7 @@ function Portfolio() {
                 alt="Tottenham Apartment Make-over — before and after comparison showing the ground floor transformation by Kloche Interiors"
                 baseWidth={1600}
                 sizes="(max-width: 768px) 100vw, 80vw"
-                ratio="16 / 9"
+                ratio="1808 / 625"
                 className="h-full w-full object-cover"
               />
             </div>
