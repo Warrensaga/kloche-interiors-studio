@@ -103,6 +103,33 @@ function Portfolio() {
         image={copyOf(copy, "hero", "image_url", HERO)}
       />
 
+      {baProject && (
+      <section className="section-y bg-secondary/50">
+        <div className="mx-auto max-w-6xl px-5 md:px-8">
+          <SectionHeading
+            eyebrow="Before & After"
+            title={baProject.name}
+            body="Drag the handle to see the ground floor before we opened it up."
+            align="center"
+          />
+          <Reveal delay={0.1} className="mt-12">
+            <BeforeAfter
+              before={baProject.beforeAfter!.before}
+              after={baProject.beforeAfter!.after}
+            />
+          </Reveal>
+          <Reveal delay={0.2} className="mt-8 text-center">
+            <Link
+              to="/portfolio/$projectId"
+              params={{ projectId: baProject.id }}
+              className="inline-flex rounded-full border border-border px-7 py-3.5 text-[0.72rem] uppercase tracking-[0.2em] transition-colors hover:bg-accent hover:text-accent-foreground"
+            >
+              View this project
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+      )}
 
       <section className="section-y">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
