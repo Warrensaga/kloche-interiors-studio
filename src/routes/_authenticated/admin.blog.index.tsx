@@ -44,20 +44,20 @@ function AdminBlogList() {
         {(data ?? []).map((p) => (
           <div
             key={p.id}
-            className="flex flex-wrap items-center gap-4 rounded-2xl border border-border bg-card p-4"
+            className="flex flex-wrap items-center gap-3 rounded-2xl border border-border bg-card p-4 sm:gap-4"
           >
             {p.cover_url ? (
-              <img src={p.cover_url} alt="" className="h-14 w-20 rounded-lg object-cover" />
+              <img src={p.cover_url} alt="" className="h-14 w-20 shrink-0 rounded-lg object-cover" />
             ) : (
-              <div className="h-14 w-20 rounded-lg bg-secondary" />
+              <div className="h-14 w-20 shrink-0 rounded-lg bg-secondary" />
             )}
-            <div className="min-w-40 flex-1">
-              <p className="font-display text-lg">{p.title}</p>
-              <p className="text-xs text-muted-foreground">
+            <div className="min-w-0 flex-1 basis-[55%]">
+              <p className="truncate font-display text-base sm:text-lg">{p.title}</p>
+              <p className="truncate text-xs text-muted-foreground">
                 /journal/{p.slug} {p.category && `· ${p.category}`}
               </p>
             </div>
-            <label className="flex items-center gap-2 text-xs uppercase tracking-[0.14em] text-muted-foreground">
+            <label className="flex shrink-0 items-center gap-2 text-xs uppercase tracking-[0.14em] text-muted-foreground">
               <Switch
                 checked={p.published}
                 onCheckedChange={async (v) => {

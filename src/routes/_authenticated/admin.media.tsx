@@ -89,7 +89,7 @@ function AdminMedia() {
             onFiles(e.target.files);
             e.target.value = "";
           }}
-          className="max-w-sm"
+          className="w-full text-xs sm:max-w-sm sm:text-sm"
           disabled={busy}
         />
         {busy && <Loader2 size={16} className="animate-spin" />}
@@ -97,7 +97,7 @@ function AdminMedia() {
           placeholder="Search files…"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="max-w-xs"
+          className="w-full sm:max-w-xs"
         />
       </div>
       <p className="mt-2 text-[0.7rem] text-muted-foreground">

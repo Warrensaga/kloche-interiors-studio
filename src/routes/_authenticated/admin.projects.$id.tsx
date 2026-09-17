@@ -181,19 +181,19 @@ function ProjectEditor() {
 
   return (
     <form onSubmit={save} className="space-y-10">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
+      <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
+        <div className="min-w-0">
           <Link
             to="/admin"
             className="inline-flex items-center gap-2 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground hover:text-accent"
           >
             <ArrowLeft size={14} /> Back to projects
           </Link>
-          <h1 className="mt-3 font-display text-3xl md:text-4xl">
+          <h1 className="mt-3 break-words font-display text-2xl sm:text-3xl md:text-4xl">
             {isNew ? "New project" : form.name || "Edit project"}
           </h1>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4">
           <label className="flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-muted-foreground">
             <Switch checked={form.published} onCheckedChange={(v) => set("published", v)} />
             Published

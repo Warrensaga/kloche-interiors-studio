@@ -145,15 +145,15 @@ function HomepageEditor() {
 
   return (
     <>
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
+      <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
+        <div className="min-w-0">
           <p className="text-[0.7rem] uppercase tracking-[0.2em] text-accent">Dashboard</p>
-          <h1 className="mt-2 font-display text-3xl md:text-4xl">Homepage</h1>
+          <h1 className="mt-2 font-display text-2xl sm:text-3xl md:text-4xl">Homepage</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             Drag sections to reorder, hide what you don't need, and edit the copy in place.
           </p>
         </div>
-        <Button onClick={saveAll} disabled={saving || !dirty}>
+        <Button className="shrink-0" onClick={saveAll} disabled={saving || !dirty}>
           <Save size={16} /> {saving ? "Saving…" : dirty ? "Save changes" : "Saved"}
         </Button>
       </div>

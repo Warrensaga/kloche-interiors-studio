@@ -56,15 +56,15 @@ function AdminTeam() {
         description="Public sign-up is closed. Add an email here, then send the person the /auth link so they can set a password."
       />
 
-      <div className="mt-8 flex flex-wrap items-end gap-3 rounded-3xl border border-border bg-card p-6">
+      <div className="mt-8 flex flex-wrap items-end gap-3 rounded-3xl border border-border bg-card p-5 sm:p-6">
         <Input
           placeholder="name@example.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="max-w-xs"
+          className="w-full sm:max-w-xs"
         />
         <Select value={role} onValueChange={(v) => setRole(v as "admin" | "editor")}>
-          <SelectTrigger className="w-40">
+          <SelectTrigger className="w-full sm:w-40">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -72,7 +72,7 @@ function AdminTeam() {
             <SelectItem value="admin">Admin</SelectItem>
           </SelectContent>
         </Select>
-        <Button onClick={invite}>
+        <Button className="w-full sm:w-auto" onClick={invite}>
           <Plus size={16} /> Invite
         </Button>
       </div>
@@ -83,8 +83,8 @@ function AdminTeam() {
             key={i.id}
             className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-card p-4"
           >
-            <div>
-              <p className="text-sm">{i.email}</p>
+            <div className="min-w-0">
+              <p className="break-all text-sm">{i.email}</p>
               <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">
                 {i.role} · {i.accepted ? "active" : "pending"}
               </p>

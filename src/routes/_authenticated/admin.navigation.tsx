@@ -84,7 +84,7 @@ function AdminNavigation() {
           const list = (data ?? []).filter((d) => d.location === g.key);
           return (
             <section key={g.key} className="rounded-3xl border border-border bg-card p-6">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-wrap items-center justify-between gap-2">
                 <h2 className="font-display text-xl">{g.title}</h2>
                 <Button size="sm" variant="outline" onClick={() => add(g.key, list.length)}>
                   <Plus size={14} /> Add
@@ -94,12 +94,12 @@ function AdminNavigation() {
                 {list.map((item, i) => (
                   <li key={item.id} className="flex flex-wrap items-center gap-2">
                     <Input
-                      className="w-32 flex-1"
+                      className="w-full min-w-0 sm:w-32 sm:flex-1"
                       value={item.label}
                       onChange={(e) => update(item.id, { label: e.target.value })}
                     />
                     <Input
-                      className="w-32 flex-1"
+                      className="w-full min-w-0 sm:w-32 sm:flex-1"
                       value={item.href}
                       onChange={(e) => update(item.id, { href: e.target.value })}
                     />

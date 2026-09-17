@@ -123,12 +123,12 @@ function AdminLayout() {
   return (
     <div className="min-h-[100svh] bg-secondary/30">
       <header className="sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 md:px-8">
-          <Logo className="h-8" />
-          <div className="flex items-center gap-3">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-5 sm:py-4 md:px-8">
+          <Logo className="h-7 min-w-0 shrink sm:h-8" />
+          <div className="flex shrink-0 items-center gap-3">
             <Link
               to="/"
-              className="text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground hover:text-accent"
+              className="whitespace-nowrap text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground hover:text-accent"
             >
               View site
             </Link>
@@ -140,13 +140,13 @@ function AdminLayout() {
         {/* Mobile / tablet nav */}
         <nav
           aria-label="Dashboard sections"
-          className="flex gap-2 overflow-x-auto border-t border-border px-4 py-2 lg:hidden"
+          className="flex snap-x gap-2 overflow-x-auto overscroll-x-contain border-t border-border px-4 py-2 [-ms-overflow-style:none] [scrollbar-width:none] lg:hidden [&::-webkit-scrollbar]:hidden"
         >
           {groups.flatMap((g) => g.links).map(navLink)}
         </nav>
       </header>
 
-      <div className="mx-auto flex max-w-7xl gap-8 px-5 py-8 md:px-8 md:py-12">
+      <div className="mx-auto flex max-w-7xl gap-8 px-4 pb-28 pt-6 sm:px-5 sm:pb-24 sm:pt-8 md:px-8 md:py-12 lg:pb-12">
         {/* Desktop sidebar */}
         <aside className="hidden w-56 shrink-0 lg:block">
           <nav

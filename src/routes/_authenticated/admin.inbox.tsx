@@ -72,13 +72,13 @@ function AdminInbox() {
             className={`rounded-2xl border p-5 ${r.read ? "border-border bg-card" : "border-accent/50 bg-card"}`}
           >
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <div>
+              <div className="min-w-0">
                 <p className="font-display text-lg">{r.name}</p>
-                <p className="text-xs text-muted-foreground">
+                <p className="break-words text-xs text-muted-foreground">
                   {new Date(r.created_at).toLocaleString()} · {r.email} · {r.phone}
                 </p>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex shrink-0 items-center gap-2">
                 <Button
                   size="sm"
                   variant="outline"

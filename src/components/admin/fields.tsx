@@ -76,13 +76,13 @@ export function AdminHeading({
   actions?: ReactNode;
 }) {
   return (
-    <div className="flex flex-wrap items-end justify-between gap-4">
-      <div>
+    <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
+      <div className="min-w-0">
         <p className="text-[0.7rem] uppercase tracking-[0.2em] text-accent">{eyebrow}</p>
-        <h1 className="mt-2 font-display text-3xl md:text-4xl">{title}</h1>
+        <h1 className="mt-2 font-display text-2xl sm:text-3xl md:text-4xl">{title}</h1>
         {description && <p className="mt-2 text-sm text-muted-foreground">{description}</p>}
       </div>
-      {actions}
+      {actions && <div className="flex shrink-0 flex-wrap gap-2">{actions}</div>}
     </div>
   );
 }
