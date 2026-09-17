@@ -12,7 +12,6 @@ import { SIZES, SmartImage } from "@/components/site/SmartImage";
 import { listPublishedProjects } from "@/lib/projects.functions";
 import { listPageCopy } from "@/lib/content.functions";
 import { copyOf, type PageCopy } from "@/lib/content-map";
-import tottenhamMakeover from "@/assets/tottenham-apartment-makeover.png.asset.json";
 
 const HERO = IMAGES.studio4;
 
@@ -104,28 +103,6 @@ function Portfolio() {
         image={copyOf(copy, "hero", "image_url", HERO)}
       />
 
-      <section className="section-y bg-secondary/50">
-        <div className="mx-auto max-w-6xl px-5 md:px-8">
-          <SectionHeading
-            eyebrow="Before & After"
-            title="Tottenham Apartment Make-over"
-            body="Drag the handle to see the ground floor before we opened it up."
-            align="center"
-          />
-          <Reveal delay={0.1} className="mt-10">
-            <div className="overflow-hidden rounded-3xl bg-charcoal shadow-soft">
-              <SmartImage
-                src={tottenhamMakeover.url}
-                alt="Tottenham Apartment Make-over — before and after comparison showing the ground floor transformation by Kloche Interiors"
-                baseWidth={1600}
-                sizes="(max-width: 768px) 100vw, 80vw"
-                ratio="1808 / 625"
-                className="h-full w-full object-cover"
-              />
-            </div>
-          </Reveal>
-        </div>
-      </section>
 
       <section className="section-y">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
