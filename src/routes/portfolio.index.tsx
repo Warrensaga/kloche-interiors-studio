@@ -12,6 +12,7 @@ import { SIZES, SmartImage } from "@/components/site/SmartImage";
 import { listPublishedProjects } from "@/lib/projects.functions";
 import { listPageCopy } from "@/lib/content.functions";
 import { copyOf, type PageCopy } from "@/lib/content-map";
+import tottenhamMakeover from "@/assets/tottenham-apartment-makeover.png.asset.json";
 
 const HERO = IMAGES.studio4;
 
