@@ -107,7 +107,7 @@ export const Route = createFileRoute("/")({
   errorComponent: ({ error }) => (
     <div className="section-y mx-auto max-w-3xl px-5 text-center" role="alert">
       <h2 className="text-2xl">Something went wrong</h2>
-      <p className="mt-3 text-sm text-muted-foreground">{error.message}</p>
+      <p className="mt-3 text-sm text-muted-foreground">{error instanceof Error ? error.message : String(error)}</p>
     </div>
   ),
   notFoundComponent: () => (
