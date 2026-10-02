@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { ArrowRight, Clock, Instagram, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { toast } from "sonner";
@@ -105,11 +105,7 @@ const BUDGET_OPTIONS = [
   "Above KES 3M",
 ];
 
-interface BookingResult {
-  summary: string;
-  whatsappUrl: string;
-  mailtoUrl: string;
-}
+const WEB3FORMS_KEY = "5a2f050e-f666-4f61-a6f7-a05b9d6d929b";
 
 function Contact() {
   const { posts, copy, services } = Route.useLoaderData() as {
@@ -119,54 +115,78 @@ function Contact() {
   };
   const { budget, service } = Route.useSearch();
   const [sending, setSending] = useState(false);
-  const [booking, setBooking] = useState<BookingResult | null>(null);
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [minDate, setMinDate] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    const d = new Date();
+    const pad = (n: number) => String(n).padStart(2, "0");
+    setMinDate(`${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`);
+  }, []);
   const budgetOptions =
     budget && !BUDGET_OPTIONS.includes(budget) ? [budget, ...BUDGET_OPTIONS] : BUDGET_OPTIONS;
-
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const fd = new FormData(form);
+    const get = (k: string) => String(fd.get(k) ?? "").trim();
+    if (get("botcheck")) return;
+    const name = get("name");
+    const phone = get("phone");
+    const email = get("email");
+    if (!name || !phone || !email || !/^\S+@\S+\.\S+$/.test(email)) {
+      toast.error("Please enter your name, phone and a valid email.");
+      return;
+    }
+    const preferredDate = get("preferredDate");
+    if (minDate && preferredDate && preferredDate < minDate) {
+      toast.error("Please choose a date from today onwards.");
+      return;
+    }
     setSending(true);
-    // Store the enquiry so the studio can read it in the dashboard inbox.
-    const { error: saveError } = await supabase.from("contact_submissions").insert({
-      name: String(fd.get("name") ?? ""),
-      email: String(fd.get("email") ?? ""),
-      phone: String(fd.get("phone") ?? ""),
-      budget: String(fd.get("budget") ?? ""),
-      property_type: String(fd.get("projectType") ?? ""),
-      message: String(fd.get("message") ?? ""),
-    });
-    if (saveError) console.error("Enquiry save failed:", saveError.message);
+    setStatus("idle");
+    // Also store the enquiry for the dashboard inbox.
+    void supabase
+      .from("contact_submissions")
+      .insert({
+        name,
+        email,
+        phone,
+        budget: get("budget"),
+        property_type: get("projectType"),
+        message: get("message"),
+      })
+      .then(({ error }) => {
+        if (error) console.error("Enquiry save failed:", error.message);
+      });
     try {
-
-      const res = await fetch("/.mcp/invoke-tool/create_consultation_request", {
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json, text/event-stream",
-        },
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          name: String(fd.get("name") ?? ""),
-          contact: `${fd.get("phone") ?? ""} / ${fd.get("email") ?? ""}`,
-          projectType: String(fd.get("projectType") ?? ""),
-          budgetRange: String(fd.get("budget") ?? ""),
-          preferredDate: String(fd.get("preferredDate") ?? ""),
-          preferredTime: String(fd.get("preferredTime") ?? ""),
-          notes: String(fd.get("message") ?? ""),
+          access_key: WEB3FORMS_KEY,
+          subject: "New Consultation Request: Kloche Interiors",
+          from_name: "Kloche Interiors Website",
+          replyto: email,
+          botcheck: "",
+          name,
+          phone,
+          email,
+          project_type: get("projectType"),
+          budget_range: get("budget"),
+          preferred_date: preferredDate,
+          preferred_time: get("preferredTime"),
+          message: get("message"),
         }),
       });
-      if (!res.ok) throw new Error(`Request failed (${res.status})`);
-      const data = (await res.json()) as {
-        isError?: boolean;
-        structuredContent?: BookingResult;
-      };
-      if (data.isError || !data.structuredContent) throw new Error("Could not build your request.");
-      setBooking(data.structuredContent);
-      toast.success("Booking request ready — send it via WhatsApp or email.");
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+      const data = (await res.json().catch(() => ({}))) as { success?: boolean };
+      if (!res.ok || !data.success) throw new Error("send failed");
+      form.reset();
+      setStatus("success");
+      toast.success("Thank you, we'll get back to you shortly");
+    } catch {
+      setStatus("error");
+      toast.error("We couldn't send your request. Please WhatsApp or call us instead.");
     } finally {
       setSending(false);
     }
