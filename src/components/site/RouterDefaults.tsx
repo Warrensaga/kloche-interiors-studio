@@ -1,4 +1,4 @@
-import { useRouter } from "@tanstack/react-router";
+import { useRouter, type ErrorComponentProps } from "@tanstack/react-router";
 import { ErrorState } from "./ErrorState";
 
 export function DefaultNotFound() {
@@ -15,10 +15,7 @@ export function DefaultNotFound() {
 export function DefaultCatchBoundary({
   error,
   reset,
-}: {
-  error: Error;
-  reset: () => void;
-}) {
+}: ErrorComponentProps) {
   const router = useRouter();
   console.error(error);
   return (
