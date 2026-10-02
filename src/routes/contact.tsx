@@ -281,7 +281,7 @@ function Contact() {
                 </label>
                 <label className="block text-xs uppercase tracking-[0.15em] text-muted-foreground">
                   Preferred date
-                  <input required name="preferredDate" type="date" className={inputClass} />
+                  <input required name="preferredDate" type="date" min={minDate} className={inputClass} />
                 </label>
                 <label className="block text-xs uppercase tracking-[0.15em] text-muted-foreground">
                   Preferred time
@@ -306,40 +306,40 @@ function Contact() {
                   />
                 </label>
               </div>
+              <input
+                type="checkbox"
+                name="botcheck"
+                tabIndex={-1}
+                autoComplete="off"
+                className="hidden"
+                style={{ display: "none" }}
+                aria-hidden="true"
+              />
               <button
                 type="submit"
                 disabled={sending}
                 className="mt-7 w-full rounded-full bg-accent py-4 text-[0.75rem] uppercase tracking-[0.2em] text-accent-foreground transition-opacity hover:opacity-90 disabled:opacity-60"
               >
-                {sending ? "Preparing…" : "Prepare booking request"}
+                {sending ? "Sending..." : "Send Booking Request"}
               </button>
-              <p className="mt-4 text-center text-xs text-muted-foreground">
-                Prefer voice notes? WhatsApp is usually fastest.
-              </p>
-
-              {booking && (
-                <div className="mt-7 rounded-2xl border border-border/70 bg-background p-5">
-                  <p className="eyebrow">Your booking request</p>
-                  <pre className="mt-4 whitespace-pre-wrap font-sans text-sm text-muted-foreground">
-                    {booking.summary}
-                  </pre>
-                  <div className="mt-5 flex flex-wrap gap-3">
-                    <a
-                      href={booking.whatsappUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full bg-forest px-5 py-3 text-[0.7rem] uppercase tracking-[0.2em] text-cream"
-                    >
-                      <MessageCircle size={14} /> Send on WhatsApp
-                    </a>
-                    <a
-                      href={booking.mailtoUrl}
-                      className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-3 text-[0.7rem] uppercase tracking-[0.2em]"
-                    >
-                      <Mail size={14} /> Open email draft
-                    </a>
-                  </div>
-                </div>
+              <a
+                href={whatsappLink()}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border border-border py-4 text-[0.75rem] uppercase tracking-[0.2em] transition-colors hover:border-accent"
+              >
+                <MessageCircle size={14} /> Send on WhatsApp
+              </a>
+              {status === "success" && (
+                <p role="status" className="mt-5 rounded-2xl border border-border/70 bg-background p-4 text-center text-sm">
+                  Thank you, we'll get back to you shortly.
+                </p>
+              )}
+              {status === "error" && (
+                <p role="alert" className="mt-5 rounded-2xl border border-destructive/40 bg-background p-4 text-center text-sm text-destructive">
+                  Sorry, we couldn't send your request. Please WhatsApp us or call{" "}
+                  <a href={`tel:${STUDIO.phoneLink}`} className="underline">{STUDIO.phoneDisplay}</a>.
+                </p>
               )}
             </form>
           </Reveal>
