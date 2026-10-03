@@ -1,5 +1,17 @@
 import { motion, useInView, useReducedMotion, useScroll, useSpring } from "motion/react";
-import { useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+
+/** Safety net: reveal content after this long even if the in-view observer never fires. */
+const FAILSAFE_MS = 1500;
+
+function useFailsafe() {
+  const [forced, setForced] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setForced(true), FAILSAFE_MS);
+    return () => clearTimeout(t);
+  }, []);
+  return forced;
+}
 import { cn } from "@/lib/utils";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -18,6 +30,7 @@ export function Reveal({
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
   const reduced = useReducedMotion();
+  const forced = useFailsafe();
 
   if (reduced) {
     return <div className={cn(className)}>{children}</div>;
@@ -27,7 +40,7 @@ export function Reveal({
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y }}
-      animate={inView ? { opacity: 1, y: 0 } : undefined}
+      animate={inView || forced ? { opacity: 1, y: 0 } : undefined}
       transition={{ duration: 0.7, delay, ease: EASE }}
       style={{ willChange: "transform, opacity" }}
       className={cn(className)}
@@ -50,6 +63,7 @@ export function Stagger({
   step?: number;
 }) {
   const reduced = useReducedMotion();
+  const forced = useFailsafe();
 
   if (reduced) {
     return <div className={cn(className)}>{children}</div>;
@@ -59,6 +73,7 @@ export function Stagger({
     <motion.div
       initial="hidden"
       whileInView="show"
+      animate={forced ? "show" : undefined}
       viewport={{ once: true, margin: "-40px" }}
       variants={{
         hidden: {},

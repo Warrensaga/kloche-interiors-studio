@@ -99,12 +99,19 @@ export const listHomepageSections = createServerFn({ method: "GET" }).handler(
     if (!hasServerSupabaseEnv()) return DEFAULT_SECTIONS;
     try {
       const supabase = publicClient();
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("homepage_sections")
         .select("*")
         .eq("visible", true)
         .order("sort_order");
-      if (!data?.length) return DEFAULT_SECTIONS;
+      if (error) {
+        console.error("[homepage] Failed to load sections, using bundled fallback:", error.message);
+        return DEFAULT_SECTIONS;
+      }
+      if (!data?.length) {
+        console.error("[homepage] No visible sections returned (check RLS/visibility), using bundled fallback.");
+        return DEFAULT_SECTIONS;
+      }
       return data.map((r) => ({
         id: r.id,
         section_key: r.section_key,
@@ -116,7 +123,8 @@ export const listHomepageSections = createServerFn({ method: "GET" }).handler(
         sort_order: r.sort_order,
         visible: r.visible,
       }));
-    } catch {
+    } catch (err) {
+      console.error("[homepage] Sections query threw, using bundled fallback:", err);
       return DEFAULT_SECTIONS;
     }
   },
