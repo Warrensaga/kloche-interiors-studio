@@ -1,3 +1,4 @@
+import { serverSupabaseKey, serverSupabaseUrl } from "@/lib/supabase-env";
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
@@ -13,8 +14,8 @@ interface SitemapEntry {
 
 async function dynamicPaths(): Promise<SitemapEntry[]> {
   try {
-    const key = process.env["SUPABASE_PUBLISHABLE_KEY"]!;
-    const supabase = createClient<Database>(process.env["SUPABASE_URL"]!, key, {
+    const key = serverSupabaseKey();
+    const supabase = createClient<Database>(serverSupabaseUrl(), key, {
       auth: { persistSession: false, autoRefreshToken: false },
       global: {
         fetch: (input, init) => {

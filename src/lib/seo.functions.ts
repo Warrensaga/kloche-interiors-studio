@@ -1,3 +1,4 @@
+import { serverSupabaseKey, serverSupabaseUrl } from "@/lib/supabase-env";
 import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
@@ -5,8 +6,8 @@ import type { SeoOverride } from "@/lib/seo";
 import { hasServerSupabaseEnv } from "@/lib/supabase-env";
 
 function publicClient() {
-  const key = process.env["SUPABASE_PUBLISHABLE_KEY"]!;
-  return createClient<Database>(process.env["SUPABASE_URL"]!, key, {
+  const key = serverSupabaseKey();
+  return createClient<Database>(serverSupabaseUrl(), key, {
     auth: { persistSession: false, autoRefreshToken: false },
     global: {
       fetch: (input, init) => {
