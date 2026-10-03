@@ -30,9 +30,31 @@ function readServerEnv(name: string): string | undefined {
   }
 }
 
+/**
+ * Resolve a server-side Supabase setting. Falls back to the VITE_* value
+ * (runtime env, then the build-time inlined value) so hosts that only define
+ * the VITE_ variables — e.g. Vercel — still reach the database during SSR.
+ * Both values are public (URL + publishable key), never secrets.
+ */
+function resolveServer(name: "SUPABASE_URL" | "SUPABASE_PUBLISHABLE_KEY"): string | undefined {
+  const inlined =
+    name === "SUPABASE_URL"
+      ? import.meta.env.VITE_SUPABASE_URL
+      : import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+  return readServerEnv(name) || readServerEnv(`VITE_${name}`) || inlined || undefined;
+}
+
+export function serverSupabaseUrl(): string {
+  return resolveServer("SUPABASE_URL") ?? "";
+}
+
+export function serverSupabaseKey(): string {
+  return resolveServer("SUPABASE_PUBLISHABLE_KEY") ?? "";
+}
+
 /** Names of required server env vars that are absent or empty. Never returns values. */
 export function missingServerSupabaseEnv(): string[] {
-  return REQUIRED_SERVER_VARS.filter((name) => !readServerEnv(name));
+  return REQUIRED_SERVER_VARS.filter((name) => !resolveServer(name));
 }
 
 /** Names of required browser env vars that are absent or empty. Never returns values. */

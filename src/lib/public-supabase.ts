@@ -1,13 +1,14 @@
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
+import { serverSupabaseKey, serverSupabaseUrl } from "@/lib/supabase-env";
 
 /**
  * Publishable-key Supabase client for server-side public reads.
  * Env is read inside the function so nothing is captured at module scope.
  */
 export function publicSupabase() {
-  const key = process.env["SUPABASE_PUBLISHABLE_KEY"]!;
-  return createClient<Database>(process.env["SUPABASE_URL"]!, key, {
+  const key = serverSupabaseKey();
+  return createClient<Database>(serverSupabaseUrl(), key, {
     auth: { persistSession: false, autoRefreshToken: false },
     global: {
       fetch: (input, init) => {
