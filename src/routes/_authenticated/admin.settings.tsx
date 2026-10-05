@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Trash2 } from "lucide-react";
 import { AdminHeading, AreaField, TextField } from "@/components/admin/fields";
 import { MediaPicker } from "@/components/admin/MediaPicker";
 import type { Hour, Socials } from "@/lib/cms";
@@ -75,7 +77,7 @@ function AdminSettings() {
         }
       />
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-2">
+      <div className="mt-8 grid min-w-0 grid-cols-1 gap-6 lg:grid-cols-2">
         <section className="min-w-0 space-y-4 rounded-3xl border border-border bg-card p-6">
           <h2 className="font-display text-xl">Business</h2>
           <TextField label="Business name" value={form["business_name"] ?? ""} onChange={set("business_name")} />
@@ -118,16 +120,20 @@ function AdminSettings() {
         <section className="min-w-0 space-y-4 rounded-3xl border border-border bg-card p-6">
           <h2 className="font-display text-xl">Opening hours</h2>
           {hours.map((h, i) => (
-            <div key={i} className="flex gap-2">
-              <input
-                className="h-10 flex-1 rounded-md border border-input bg-background px-3 text-sm"
+            <div key={i} className="grid min-w-0 grid-cols-[minmax(0,1fr)_auto] gap-2 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]">
+              <Input
+                aria-label="Day"
+                placeholder="Day"
+                className="min-w-0"
                 value={h.day}
                 onChange={(e) =>
                   setHours((prev) => prev.map((x, j) => (i === j ? { ...x, day: e.target.value } : x)))
                 }
               />
-              <input
-                className="h-10 flex-1 rounded-md border border-input bg-background px-3 text-sm"
+              <Input
+                aria-label="Hours"
+                placeholder="Hours"
+                className="min-w-0 col-start-1 sm:col-auto"
                 value={h.time}
                 onChange={(e) =>
                   setHours((prev) => prev.map((x, j) => (i === j ? { ...x, time: e.target.value } : x)))
@@ -135,10 +141,12 @@ function AdminSettings() {
               />
               <Button
                 variant="ghost"
-                size="sm"
+                size="icon"
+                className="row-span-2 self-center sm:row-span-1"
+                aria-label={`Remove ${h.day || "hours"}`}
                 onClick={() => setHours((prev) => prev.filter((_, j) => j !== i))}
               >
-                Remove
+                <Trash2 size={16} />
               </Button>
             </div>
           ))}

@@ -108,8 +108,8 @@ function SeoCard({ row, onSaved }: { row: Row; onSaved: () => void }) {
   }
 
   return (
-    <article className="grid gap-6 rounded-3xl border border-border bg-card p-6 lg:grid-cols-2">
-      <div className="space-y-3">
+    <article className="grid min-w-0 grid-cols-1 gap-6 rounded-3xl border border-border bg-card p-4 sm:p-6 lg:grid-cols-2">
+      <div className="min-w-0 space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="min-w-0 break-all text-xs uppercase tracking-[0.16em] text-accent">{draft.path}</p>
           <Button size="sm" onClick={save} disabled={!dirty || saving}>

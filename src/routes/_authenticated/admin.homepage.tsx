@@ -161,7 +161,7 @@ function HomepageEditor() {
       {isLoading && <p className="mt-10 text-sm text-muted-foreground">Loading sections…</p>}
       {error && <p className="mt-10 text-sm text-destructive">Couldn't load the homepage.</p>}
 
-      <div className="mt-8 grid gap-3">
+      <div className="mt-8 grid min-w-0 grid-cols-1 gap-3">
         {sections.map((s, i) => {
           const open = openId === s.id;
           return (
@@ -182,12 +182,12 @@ function HomepageEditor() {
                 if (dragId) reorder(dragId, s.id);
                 setOverId(null);
               }}
-              className={`rounded-2xl border bg-card transition-colors ${
+              className={`min-w-0 rounded-2xl border bg-card transition-colors ${
                 overId === s.id && dragId !== s.id ? "border-accent" : "border-border"
               } ${dragId === s.id ? "opacity-60" : ""}`}
             >
-              <div className="flex flex-wrap items-center gap-3 p-4">
-                <span className="cursor-grab text-muted-foreground active:cursor-grabbing">
+              <div className="grid min-w-0 grid-cols-[auto_minmax(0,1fr)] items-center gap-3 p-4 sm:flex sm:flex-wrap">
+                <span className="shrink-0 cursor-grab text-muted-foreground active:cursor-grabbing">
                   <GripVertical size={18} />
                 </span>
                 <div className="min-w-0 flex-1 basis-40">
@@ -198,7 +198,7 @@ function HomepageEditor() {
                     {KIND_LABEL[s.kind] ?? s.kind} · position {i + 1}
                   </p>
                 </div>
-                <div className="flex flex-wrap gap-1">
+                <div className="col-span-2 flex min-w-0 flex-wrap gap-1 sm:col-auto">
                   <Button
                     variant="outline"
                     size="sm"
