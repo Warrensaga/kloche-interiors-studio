@@ -123,8 +123,8 @@ function AdminLayout() {
   return (
     <div className="min-h-[100svh] bg-secondary/30">
       <header className="sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-5 sm:py-4 md:px-8">
-          <Logo className="h-7 min-w-0 shrink sm:h-8" />
+        <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 sm:px-5 sm:py-4 md:px-8">
+          <Logo className="h-7 min-w-0 shrink sm:h-8 [&>span:last-child]:hidden min-[420px]:[&>span:last-child]:inline" />
           <div className="flex shrink-0 items-center gap-3">
             <Link
               to="/"

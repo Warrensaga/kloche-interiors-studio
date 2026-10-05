@@ -44,20 +44,20 @@ function AdminBlogList() {
         {(data ?? []).map((p) => (
           <div
             key={p.id}
-            className="flex flex-wrap items-center gap-3 rounded-2xl border border-border bg-card p-4 sm:gap-4"
+            className="grid min-w-0 grid-cols-[auto_minmax(0,1fr)] items-center gap-3 rounded-2xl border border-border bg-card p-4 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:gap-4"
           >
             {p.cover_url ? (
               <img src={p.cover_url} alt="" className="h-14 w-20 shrink-0 rounded-lg object-cover" />
             ) : (
               <div className="h-14 w-20 shrink-0 rounded-lg bg-secondary" />
             )}
-            <div className="min-w-0 flex-1 basis-[55%]">
+            <div className="min-w-0">
               <p className="truncate font-display text-base sm:text-lg">{p.title}</p>
               <p className="truncate text-xs text-muted-foreground">
                 /journal/{p.slug} {p.category && `· ${p.category}`}
               </p>
             </div>
-            <label className="flex shrink-0 items-center gap-2 text-xs uppercase tracking-[0.14em] text-muted-foreground">
+            <label className="col-start-1 row-start-2 flex shrink-0 items-center gap-2 text-xs uppercase tracking-[0.14em] text-muted-foreground sm:col-start-3 sm:row-start-1">
               <Switch
                 checked={p.published}
                 onCheckedChange={async (v) => {
@@ -73,7 +73,7 @@ function AdminBlogList() {
               />
               Published
             </label>
-            <Button asChild variant="outline" size="sm">
+            <Button asChild variant="outline" size="sm" className="col-start-2 row-start-2 ml-auto sm:col-start-3 sm:row-start-2">
               <Link to="/admin/blog/$id" params={{ id: p.id }}>
                 Edit
               </Link>
@@ -81,6 +81,7 @@ function AdminBlogList() {
             <Button
               size="icon"
               variant="ghost"
+              className="col-start-2 row-start-3 ml-auto sm:col-start-3"
               aria-label="Delete"
               onClick={async () => {
                 if (!window.confirm(`Delete "${p.title}"?`)) return;

@@ -105,7 +105,7 @@ export function SeoPreview({ draft }: { draft: SeoDraft }) {
   const crumb = `${host}${draft.path === "/" ? "" : ` › ${draft.path.replace(/^\//, "").split("/").join(" › ")}`}`;
 
   return (
-    <div className="space-y-5 rounded-2xl border border-border bg-secondary/40 p-5">
+    <div className="min-w-0 space-y-5 rounded-2xl border border-border bg-secondary/40 p-4 sm:p-5">
       <div>
         <p className="flex items-center gap-2 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground">
           <Globe size={13} /> Google result preview
@@ -166,7 +166,7 @@ export function SeoPreview({ draft }: { draft: SeoDraft }) {
             Description length is in range
           </Issue>
           <Issue ok={/^https?:\/\//.test(r.canonical)}>
-            Canonical is an absolute URL — {r.canonical || "not set"}
+            <span className="break-all">Canonical is an absolute URL — {r.canonical || "not set"}</span>
           </Issue>
           <Issue ok={schemaValid}>Extra schema markup is valid JSON</Issue>
           <Issue ok={!draft.noindex}>

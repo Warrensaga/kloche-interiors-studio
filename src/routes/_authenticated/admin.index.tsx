@@ -62,7 +62,7 @@ function AdminProjects() {
         {projects?.map((p) => (
           <div
             key={p.id}
-            className="flex flex-wrap items-center gap-3 rounded-2xl border border-border bg-card p-4 sm:gap-4"
+            className="grid min-w-0 grid-cols-[auto_minmax(0,1fr)] items-center gap-3 rounded-2xl border border-border bg-card p-4 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:gap-4"
           >
             <img
               src={p.cover_url}
@@ -70,29 +70,29 @@ function AdminProjects() {
               className="h-14 w-20 shrink-0 rounded-xl bg-muted object-cover sm:h-16 sm:w-24"
               loading="lazy"
             />
-            <div className="min-w-0 flex-1 basis-[55%]">
+            <div className="min-w-0">
               <p className="truncate font-display text-base sm:text-lg">{p.name}</p>
               <p className="truncate text-xs text-muted-foreground">
                 {p.location} · {p.project_type} · /{p.slug}
               </p>
             </div>
             <span
-              className={`shrink-0 rounded-full px-3 py-1 text-[0.65rem] uppercase tracking-[0.15em] ${
+              className={`col-start-1 row-start-2 w-fit shrink-0 rounded-full px-3 py-1 text-[0.65rem] uppercase tracking-[0.15em] sm:col-start-3 sm:row-start-1 ${
                 p.published ? "bg-accent/15 text-accent" : "bg-muted text-muted-foreground"
               }`}
             >
               {p.published ? "Published" : "Draft"}
             </span>
-            <div className="ml-auto flex shrink-0 gap-2">
-              <Button variant="outline" size="sm" onClick={() => togglePublished(p.id, p.published)}>
+            <div className="col-start-2 row-start-2 ml-auto flex shrink-0 gap-2 sm:col-start-3 sm:row-start-2">
+              <Button variant="outline" size="sm" aria-label={p.published ? `Unpublish ${p.name}` : `Publish ${p.name}`} onClick={() => togglePublished(p.id, p.published)}>
                 {p.published ? <EyeOff size={15} /> : <Eye size={15} />}
               </Button>
               <Button variant="outline" size="sm" asChild>
-                <Link to="/admin/projects/$id" params={{ id: p.id }}>
+                <Link to="/admin/projects/$id" params={{ id: p.id }} aria-label={`Edit ${p.name}`}>
                   <Pencil size={15} />
                 </Link>
               </Button>
-              <Button variant="outline" size="sm" onClick={() => remove(p.id, p.name)}>
+              <Button variant="outline" size="sm" aria-label={`Delete ${p.name}`} onClick={() => remove(p.id, p.name)}>
                 <Trash2 size={15} />
               </Button>
             </div>

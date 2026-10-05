@@ -152,7 +152,7 @@ function AdminHeroes() {
 
       {isLoading && <p className="text-sm text-muted-foreground">Loading heroes…</p>}
 
-      <div className="grid gap-5 lg:grid-cols-2">
+      <div className="grid min-w-0 grid-cols-1 gap-5 lg:grid-cols-2">
         {PAGES.map((p) => (
           <HeroCard
             key={p.slug}
@@ -213,7 +213,7 @@ function HeroCard({
   }
 
   return (
-    <section className="space-y-4 rounded-2xl border border-border bg-card p-5">
+    <section className="min-w-0 space-y-4 rounded-2xl border border-border bg-card p-4 sm:p-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0">
           <h2 className="font-display text-xl">{page.label}</h2>
@@ -235,7 +235,7 @@ function HeroCard({
         {value ? (
           <img src={value} alt={`${page.label} hero preview`} className="h-40 w-full object-cover" />
         ) : (
-          <div className="flex h-40 w-full items-center justify-center text-xs text-muted-foreground">
+          <div className="flex h-40 w-full items-center justify-center px-3 text-center text-xs text-muted-foreground">
             No hero image set — the built-in photo is used.
           </div>
         )}
@@ -277,7 +277,7 @@ function HeroCard({
             />
           </label>
         </p>
-        <p className="mt-1 text-[0.65rem] text-muted-foreground">
+        <p className="mt-1 break-words text-[0.65rem] text-muted-foreground">
           {ALLOWED_LABEL} · max {formatBytes(MAX_FILE_BYTES)}
         </p>
         {busy && (
