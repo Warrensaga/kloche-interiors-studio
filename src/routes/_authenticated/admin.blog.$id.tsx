@@ -91,12 +91,22 @@ function AdminBlogEditor() {
       const current = heading.match(/^#+/)?.[0].length ?? 1;
       return current > previous + 1;
     });
+    const normalizedTitle = form.title.trim().toLowerCase();
+    const repeatsTitle = form.content
+      .split("\n")
+      .some((line) => line.replace(/^#{1,6}\s+/, "").trim().toLowerCase() === normalizedTitle);
+    const internalLinks = form.content.match(/\[[^\]]+\]\(\/(?!\/)[^)]+\)/g) ?? [];
+    const externalLinks = form.content.match(/\[[^\]]+\]\(https?:\/\/[^)]+\)/g) ?? [];
     if (hasH1) return toast.error("Remove the # heading. The post title is the only H1.");
+    if (repeatsTitle) return toast.error("Remove the repeated post title from the article body.");
     if (skippedLevel) return toast.error("Use ## for sections and ### only for their sub-points.");
     if (form.published) {
       const required = [form.title, form.excerpt, form.category, form.cover_url, form.cover_alt, form.seo_title, form.seo_description];
       if (required.some((value) => !value.trim())) {
         return toast.error("Complete the excerpt, category, cover image and alt text, SEO title, and meta description before publishing.");
+      }
+      if (internalLinks.length < 3 || externalLinks.length < 1) {
+        return toast.error("Published posts need at least three internal links and one authoritative external link.");
       }
     }
     setSaving(true);
