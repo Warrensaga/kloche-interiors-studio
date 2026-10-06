@@ -21,6 +21,7 @@ type Form = {
   excerpt: string;
   content: string;
   cover_url: string;
+  cover_alt: string;
   category: string;
   tags: string;
   author: string;
@@ -35,6 +36,7 @@ const EMPTY: Form = {
   excerpt: "",
   content: "",
   cover_url: "",
+  cover_alt: "",
   category: "",
   tags: "",
   author: "Kloche Interiors",
@@ -68,6 +70,7 @@ function AdminBlogEditor() {
       excerpt: data.excerpt,
       content: data.content,
       cover_url: data.cover_url,
+      cover_alt: data.cover_alt,
       category: data.category,
       tags: data.tags.join(", "),
       author: data.author,
@@ -80,6 +83,22 @@ function AdminBlogEditor() {
   const set = <K extends keyof Form>(k: K, v: Form[K]) => setForm((f) => ({ ...f, [k]: v }));
 
   async function save() {
+    const bodyHeadings = form.content.match(/^#{1,6}\s+/gm) ?? [];
+    const hasH1 = bodyHeadings.some((heading) => heading.startsWith("# "));
+    const skippedLevel = bodyHeadings.some((heading, index) => {
+      if (index === 0) return heading.trimStart().startsWith("###");
+      const previous = bodyHeadings[index - 1]?.match(/^#+/)?.[0].length ?? 1;
+      const current = heading.match(/^#+/)?.[0].length ?? 1;
+      return current > previous + 1;
+    });
+    if (hasH1) return toast.error("Remove the # heading. The post title is the only H1.");
+    if (skippedLevel) return toast.error("Use ## for sections and ### only for their sub-points.");
+    if (form.published) {
+      const required = [form.title, form.excerpt, form.category, form.cover_url, form.cover_alt, form.seo_title, form.seo_description];
+      if (required.some((value) => !value.trim())) {
+        return toast.error("Complete the excerpt, category, cover image and alt text, SEO title, and meta description before publishing.");
+      }
+    }
     setSaving(true);
     const payload = {
       title: form.title,
@@ -87,6 +106,7 @@ function AdminBlogEditor() {
       excerpt: form.excerpt,
       content: form.content,
       cover_url: form.cover_url,
+      cover_alt: form.cover_alt,
       category: form.category,
       tags: form.tags
         .split(",")
@@ -125,7 +145,7 @@ function AdminBlogEditor() {
       />
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[2fr_1fr]">
-        <section className="space-y-4 rounded-3xl border border-border bg-card p-6">
+        <section className="min-w-0 space-y-4 rounded-3xl border border-border bg-card p-4 sm:p-6">
           <Input
             value={form.title}
             placeholder="Title"
@@ -146,13 +166,21 @@ function AdminBlogEditor() {
           <Textarea
             rows={18}
             value={form.content}
-            placeholder="Write the article. Leave a blank line between paragraphs."
+            placeholder={"Write in Markdown.\n\n## Main section\n\nParagraph with **key terms** and *soft emphasis*.\n\n### Sub-point\n\n- A useful point\n- Another point"}
             onChange={(e) => set("content", e.target.value)}
           />
+          <p className="text-xs leading-relaxed text-muted-foreground">
+            Start sections with ## and sub-points with ###. Do not add a # title. Include at least three internal links and one authoritative external link; consultation actions are added automatically.
+          </p>
         </section>
 
-        <aside className="space-y-4 rounded-3xl border border-border bg-card p-6">
+        <aside className="min-w-0 space-y-4 rounded-3xl border border-border bg-card p-4 sm:p-6">
           <MediaPicker label="Featured image" value={form.cover_url} onChange={(v) => set("cover_url", v)} />
+          <Input
+            value={form.cover_alt}
+            placeholder="Cover image description for screen readers"
+            onChange={(e) => set("cover_alt", e.target.value)}
+          />
           <Input value={form.category} placeholder="Category" onChange={(e) => set("category", e.target.value)} />
           <Input value={form.tags} placeholder="Tags, comma separated" onChange={(e) => set("tags", e.target.value)} />
           <Input value={form.author} placeholder="Author" onChange={(e) => set("author", e.target.value)} />

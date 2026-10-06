@@ -1,6 +1,7 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -245,5 +246,47 @@
   &:hover::after {
     transform: scaleX(1);
     transform-origin: left;
+  }
+}
+
+@layer components {
+  .journal-prose {
+    --tw-prose-body: var(--color-muted-foreground);
+    --tw-prose-headings: var(--color-foreground);
+    --tw-prose-lead: var(--color-muted-foreground);
+    --tw-prose-links: var(--color-accent);
+    --tw-prose-bold: var(--color-foreground);
+    --tw-prose-counters: var(--color-accent);
+    --tw-prose-bullets: var(--color-accent);
+    --tw-prose-hr: var(--color-border);
+    --tw-prose-quotes: var(--color-foreground);
+    --tw-prose-quote-borders: var(--color-accent);
+    --tw-prose-captions: var(--color-muted-foreground);
+  }
+
+  .journal-prose h2 {
+    margin-top: 3.5rem;
+    color: var(--color-accent);
+    font-family: var(--font-display);
+  }
+
+  .journal-prose h3 {
+    margin-top: 2.25rem;
+    font-family: var(--font-display);
+  }
+
+  .journal-prose a {
+    color: var(--color-accent);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  .journal-prose a:hover {
+    color: var(--color-foreground);
+  }
+
+  .journal-prose li {
+    margin-block: 0.5rem;
   }
 }

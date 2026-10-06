@@ -9,6 +9,7 @@ export type PostSummary = {
   title: string;
   excerpt: string;
   cover_url: string;
+  cover_alt: string;
   category: string;
   author: string;
   published_at: string | null;
@@ -43,7 +44,7 @@ export const listPublishedPosts = createServerFn({ method: "GET" }).handler(
     try {
       const { data } = await publicClient()
         .from("blog_posts")
-        .select("slug, title, excerpt, cover_url, category, author, published_at")
+        .select("slug, title, excerpt, cover_url, cover_alt, category, author, published_at")
         .eq("published", true)
         .order("published_at", { ascending: false });
       return data ?? [];
@@ -61,7 +62,7 @@ export const getPublishedPost = createServerFn({ method: "GET" })
       const { data: row } = await publicClient()
         .from("blog_posts")
         .select(
-          "slug, title, excerpt, cover_url, category, author, published_at, content, tags, seo_title, seo_description",
+          "slug, title, excerpt, cover_url, cover_alt, category, author, published_at, content, tags, seo_title, seo_description",
         )
         .eq("published", true)
         .eq("slug", data.slug)
