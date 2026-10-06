@@ -65,7 +65,7 @@ function JournalIndex() {
                     <div className="overflow-hidden rounded-2xl">
                       <SmartImage
                         src={p.cover_url}
-                        alt={p.title}
+                        alt={p.cover_alt || `${p.title} interior design article`}
                         ratio="4/3"
                         className="transition-transform duration-700 group-hover:scale-105"
                       />
