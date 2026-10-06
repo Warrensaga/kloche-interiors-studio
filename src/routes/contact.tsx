@@ -433,7 +433,7 @@ function Contact() {
                       <div className="overflow-hidden rounded-2xl shadow-soft">
                         <SmartImage
                           src={p.cover_url}
-                          alt={p.title}
+                          alt={p.cover_alt || `${p.title} interior design article`}
                           baseWidth={640}
                           sizes={SIZES.third}
                           ratio="4/3"

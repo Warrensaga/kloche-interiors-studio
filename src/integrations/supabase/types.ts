@@ -46,6 +46,7 @@ export type Database = {
           author: string
           category: string
           content: string
+          cover_alt: string
           cover_url: string
           created_at: string
           excerpt: string
@@ -63,6 +64,7 @@ export type Database = {
           author?: string
           category?: string
           content?: string
+          cover_alt?: string
           cover_url?: string
           created_at?: string
           excerpt?: string
@@ -80,6 +82,7 @@ export type Database = {
           author?: string
           category?: string
           content?: string
+          cover_alt?: string
           cover_url?: string
           created_at?: string
           excerpt?: string

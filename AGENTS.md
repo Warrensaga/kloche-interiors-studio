@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Render journal bodies through the shared Markdown component so heading, link-safety, and typography rules remain consistent across every post.
