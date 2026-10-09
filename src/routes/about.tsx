@@ -134,7 +134,7 @@ function About() {
 
 
 
-      <CtaBanner title="Come and say hello." />
+      <CtaBanner title="Reach out to us." />
     </>
   );
 }
